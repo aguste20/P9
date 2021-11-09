@@ -12,6 +12,7 @@ import java.util.List;
  * and a path to an .XML file in which the documentation is stored.
  */
 
+//TODO: Annotate with Hibernate JPA
 public class EObjectDoc {
 
     // ----- Properties -----

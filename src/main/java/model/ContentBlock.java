@@ -12,6 +12,7 @@ import java.util.List;
  * The classes TextBlock and ImageBlock are concrete subclasses of ContentBlocks.
  */
 
+//TODO: Annotate with Hibernate JPA
 public abstract class ContentBlock {
 
     // ----- Properties -----

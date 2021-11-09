@@ -8,6 +8,7 @@ import java.util.List;
  * Its properties hold basic information about the organisation.
  */
 
+//TODO: Annotate with Hibernate JPA
 public class Organisation {
 
     // ----- Properties -----

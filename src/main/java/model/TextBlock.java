@@ -5,6 +5,7 @@ package model;
  * TextBlock is a concrete implementation of the superclass ContentBlock.
  */
 
+//TODO: Annotate with Hibernate JPA
 public class TextBlock extends ContentBlock{
 
     // ----- Properties -----

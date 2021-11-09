@@ -13,6 +13,7 @@ import java.util.List;
  * An EObject holds information we assume is available in the Bluestar PLM solution.
  */
 
+//TODO: Annotate with Hibernate JPA
 public class EObject {
 
     // ----- Properties -----

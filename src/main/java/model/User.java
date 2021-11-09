@@ -8,6 +8,7 @@ import java.util.List;
  * A user has access to a number of engineering objects.
  */
 
+//TODO: Annotate with Hibernate JPA
 public class User {
 
     // ----- Properties -----
