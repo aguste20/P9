@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane prefHeight="720.0" prefWidth="1280.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17">
+<GridPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="460.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.0" minWidth="10.0" prefWidth="820.0" />
@@ -27,7 +27,7 @@
          <children>
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Overview" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets bottom="2.0" left="5.0" right="4.0" top="2.0" />
+                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Contents" HBox.hgrow="ALWAYS">
@@ -37,7 +37,7 @@
             </Button>
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Placeholders" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets bottom="2.0" left="4.0" right="5.0" top="2.0" />
+                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
          </children>
@@ -51,7 +51,7 @@
          <children>
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Full Text" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets bottom="2.0" left="5.0" right="4.0" top="2.0" />
+                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Annotaited text" HBox.hgrow="ALWAYS">
@@ -61,22 +61,28 @@
             </Button>
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Export PDF" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets bottom="2.0" left="4.0" right="5.0" top="2.0" />
+                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
       <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="395.0" prefWidth="625.0">
+               <children>
+                  <Label layoutX="66.0" layoutY="147.0" prefHeight="135.0" prefWidth="515.0" text="Some kind of text editor goes in this pane XD" wrapText="true" />
+               </children></AnchorPane>
         </content>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </ScrollPane>
-      <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+      <ScrollPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="NEVER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="320.0" prefWidth="388.0">
+               <children>
+                  <Label layoutX="17.0" layoutY="127.0" prefHeight="97.0" prefWidth="355.0" text="This pane is filled by sub-pages 'Overview', 'Contents' or 'Placeholders', depending on what the user has chosen" wrapText="true" />
+               </children></AnchorPane>
         </content>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
