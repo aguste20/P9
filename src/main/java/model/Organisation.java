@@ -7,6 +7,8 @@ package model;
 
 public class Organisation {
 
+    // ----- Properties -----
+
     private Integer organisationId;
     private String name;
     private String address;
@@ -15,6 +17,7 @@ public class Organisation {
 
 
     // ----- Constructors -----
+
     /**
      * Empty constructor
      */
@@ -23,6 +26,7 @@ public class Organisation {
 
 
     // ----- Getters and setters -----
+
     public Integer getOrganisationId() {
         return organisationId;
     }
