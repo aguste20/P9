@@ -2,7 +2,7 @@ package model;
 
 /**
  * TextBlock implements a block of text which can be reused across different EObjects (engineering objects).
- * It is a concrete implementation of ContentBlock.
+ * TextBlock is a concrete implementation of ContentBlock.
  */
 
 public class TextBlock extends ContentBlock{
