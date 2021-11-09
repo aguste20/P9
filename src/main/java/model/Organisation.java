@@ -1,8 +1,8 @@
 package model;
 
 /**
- * Organisation implements an organisation or company using Bluestar PLM.
- * Its properties holds basic information about the organisation.
+ * Organisation implements an organisation/company that uses Bluestar PLM for their engineering processes.
+ * Its properties hold basic information about the organisation.
  */
 
 public class Organisation {
