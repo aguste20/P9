@@ -45,4 +45,20 @@ public class EObjectCategory {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<EObject> geteObjectList() {
+        return eObjectList;
+    }
+
+    public void seteObjectList(List<EObject> eObjectList) {
+        this.eObjectList = eObjectList;
+    }
+
+    public List<ContentBlock> getContentBlockList() {
+        return contentBlockList;
+    }
+
+    public void setContentBlockList(List<ContentBlock> contentBlockList) {
+        this.contentBlockList = contentBlockList;
+    }
 }

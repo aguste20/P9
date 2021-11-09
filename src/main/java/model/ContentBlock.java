@@ -45,4 +45,12 @@ public abstract class ContentBlock {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<EObjectDoc> geteObjectDocList() {
+        return eObjectDocList;
+    }
+
+    public void seteObjectDocList(List<EObjectDoc> eObjectDocList) {
+        this.eObjectDocList = eObjectDocList;
+    }
 }

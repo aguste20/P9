@@ -63,4 +63,12 @@ public class EObjectDoc {
     public void setLastEdit(Date lastEdit) {
         this.lastEdit = lastEdit;
     }
+
+    public List<ContentBlock> getContentBlockList() {
+        return contentBlockList;
+    }
+
+    public void setContentBlockList(List<ContentBlock> contentBlockList) {
+        this.contentBlockList = contentBlockList;
+    }
 }

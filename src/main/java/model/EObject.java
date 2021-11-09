@@ -102,4 +102,28 @@ public class EObject {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
+
+    public List<EObject> getComponentList() {
+        return componentList;
+    }
+
+    public void setComponentList(List<EObject> componentList) {
+        this.componentList = componentList;
+    }
+
+    public EObjectCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(EObjectCategory category) {
+        this.category = category;
+    }
+
+    public EObjectDoc getDoc() {
+        return doc;
+    }
+
+    public void setDoc(EObjectDoc doc) {
+        this.doc = doc;
+    }
 }

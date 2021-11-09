@@ -42,4 +42,12 @@ public class User {
     public void setName(String name) {
         this.name = name;
     }
+
+    public List<EObject> geteObjectList() {
+        return eObjectList;
+    }
+
+    public void seteObjectList(List<EObject> eObjectList) {
+        this.eObjectList = eObjectList;
+    }
 }
