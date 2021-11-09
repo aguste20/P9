@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Organisation implements an organisation/company that uses Bluestar PLM for their engineering processes.
  * Its properties hold basic information about the organisation.
@@ -14,6 +17,8 @@ public class Organisation {
     private String address;
     private String phone;
     private String email;
+    private List<User> userList = new ArrayList<>();
+
 
 
     // ----- Constructors -----
@@ -65,5 +70,13 @@ public class Organisation {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 }

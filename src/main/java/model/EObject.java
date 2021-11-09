@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * EObject implements an 'engineering object' - the name is derived from Bluestar PLM.
  * Engineering objects are the objects that engineers work with in the Bluestar PLM solution.
@@ -7,7 +10,7 @@ package model;
  * A single EObject can either represent a product that the organisation sells
  * or a component that is part of another engineering object.
  *
- * An Eobject holds information we assume is available in the Bluestar PLM solution.
+ * An EObject holds information we assume is available in the Bluestar PLM solution.
  */
 
 public class EObject {
@@ -21,6 +24,9 @@ public class EObject {
     private Double width;
     private Double weight;
     private String imagePath;
+    private List<EObject> componentList = new ArrayList<>();
+    private EObjectCategory category;
+    private EObjectDoc doc;
 
     // ----- Constructors -----
 

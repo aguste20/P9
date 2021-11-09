@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * EObjectCategory implements categories that apply to the engineering objects in the organisation (eg. boat, car).
  *
@@ -13,6 +16,8 @@ public class EObjectCategory {
     // ----- Properties -----
     private Integer eObjectCatId;
     private String name;
+    private List<EObject> eObjectList = new ArrayList<>();
+    private List<ContentBlock> contentBlockList = new ArrayList<>();
 
     // ----- Constructors -----
 

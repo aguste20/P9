@@ -2,7 +2,7 @@ package model;
 
 /**
  * TextBlock implements an image which can be reused across different EObjects (engineering objects).
- * ImageBlock is a concrete implementation of ContentBlock.
+ * ImageBlock is a concrete implementation of the superclass ContentBlock.
  */
 
 public class ImageBlock extends ContentBlock{

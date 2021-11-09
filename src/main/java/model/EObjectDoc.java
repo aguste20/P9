@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * EObjectDoc implements the documentation that is related to a given EObject (engineering object).
@@ -17,6 +19,7 @@ public class EObjectDoc {
     private Boolean published;
     private String xmlPath;
     private Date lastEdit;
+    private List<ContentBlock> contentBlockList = new ArrayList<>();
 
     // ----- Constructors -----
 

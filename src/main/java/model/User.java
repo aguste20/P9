@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * User implements a user in the system (eg. engineer, technical writer, sales person).
  * A user has access to a number of engineering objects.
@@ -10,6 +13,7 @@ public class User {
     // ----- Properties -----
     private Integer userId;
     private String name;
+    private List<EObject> eObjectList = new ArrayList<>();
 
 
     // ----- Constructors -----
