@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 //TODO: Annotate with Hibernate JPA
 public class EObject {
 
-    // ----- Properties -----
+    // ----- Properties ----
     private Integer eObjectId;
     private String name;
     private Double version;
