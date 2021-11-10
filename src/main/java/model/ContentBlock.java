@@ -18,6 +18,8 @@ public abstract class ContentBlock {
     // ----- Properties -----
     private Integer contentBlockID;
     private String name;
+
+    private List<EObjectCategory> categoryList = new ArrayList<>();
     private List<EObjectDoc> eObjectDocList = new ArrayList<>();
 
     // ----- Constructors -----
@@ -53,5 +55,13 @@ public abstract class ContentBlock {
 
     public void seteObjectDocList(List<EObjectDoc> eObjectDocList) {
         this.eObjectDocList = eObjectDocList;
+    }
+
+    public List<EObjectCategory> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<EObjectCategory> categoryList) {
+        this.categoryList = categoryList;
     }
 }
