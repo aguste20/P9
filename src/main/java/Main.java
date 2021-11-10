@@ -8,9 +8,11 @@ public class Main extends Application {
      * @param args command line arguments
      */
     public static void main(String[] args){
+        TestAnne test = new TestAnne();
+        test.metode();
+
         launch();
     }
-
 
     /**
      * Implements abstract method inherited from Application
