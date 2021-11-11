@@ -9,8 +9,6 @@ import java.util.List;
  * A user has access to a number of engineering objects.
  */
 
-//TODO: Annotate with Hibernate JPA
-
 @Entity
 @Table(name = "user")
 public class User {
