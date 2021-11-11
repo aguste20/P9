@@ -26,12 +26,17 @@ public class EObjectCategory {
 
     private String name;
 
+    // Maps a one to many relation between category and eObject
+    // The association is mapped by the field "category" in EObject.java
     @OneToMany(mappedBy = "category")
     private List<EObject> eObjectList = new ArrayList<>();
 
+    // Maps a many to many relation between category and content blocks, cascading all actions
     @ManyToMany(cascade = { CascadeType.ALL})
-    @JoinTable(
-            name = "e_object_category_has_content_block",
+    // The association uses the join/link table "e_object_category_has_content_block"
+    @JoinTable(name = "e_object_category_has_content_block",
+            // The two columns are foreign keys to id columns in the category table and the content block table
+            // The category is the "owning" part of the association. The content block is the inverse part.
             joinColumns = { @JoinColumn(name = "e_object_category_id")},
             inverseJoinColumns = { @JoinColumn(name = "content_block_id")}
     )
