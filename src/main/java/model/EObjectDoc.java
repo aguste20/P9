@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,9 +14,16 @@ import java.util.List;
  */
 
 //TODO: Annotate with Hibernate JPA
+
+@Entity
+@Table(name = "e_object_doc")
 public class EObjectDoc {
 
     // ----- Properties -----
+
+    @Id
+    @Column(name = "e_object_doc_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer eObjectDocId;
     private Boolean published;
     private String xmlPath;

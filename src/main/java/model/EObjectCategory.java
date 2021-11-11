@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,16 @@ import java.util.List;
  */
 
 //TODO: Annotate with Hibernate JPA
+
+@Entity
+@Table(name = "e_object_category")
 public class EObjectCategory {
 
     // ----- Properties -----
+
+    @Id
+    @Column(name = "e_object_category_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer eObjectCatId;
     private String name;
     private List<EObject> eObjectList = new ArrayList<>();

@@ -15,9 +15,16 @@ import java.util.List;
  */
 
 //TODO: Annotate with Hibernate JPA
+
+@Entity
+@Table(name = "e_object")
 public class EObject {
 
     // ----- Properties ----
+
+    @Id
+    @Column(name = "e_object_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer eObjectId;
     private String name;
     private Double version;

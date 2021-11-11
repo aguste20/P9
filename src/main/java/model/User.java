@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +10,16 @@ import java.util.List;
  */
 
 //TODO: Annotate with Hibernate JPA
+
+@Entity
+@Table(name = "user")
 public class User {
 
     // ----- Properties -----
+
+    @Id
+    @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer userId;
     private String name;
     private List<EObject> eObjectList = new ArrayList<>();

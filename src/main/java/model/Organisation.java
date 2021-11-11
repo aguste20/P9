@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +10,16 @@ import java.util.List;
  */
 
 //TODO: Annotate with Hibernate JPA
+
+@Entity
+@Table(name = "organisation")
 public class Organisation {
 
     // ----- Properties -----
 
+    @Id
+    @Column(name = "organisation_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer organisationId;
     private String name;
     private String address;

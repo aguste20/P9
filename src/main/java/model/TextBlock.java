@@ -1,11 +1,17 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * TextBlock implements a block of text which can be reused across different EObjects (engineering objects).
  * TextBlock is a concrete implementation of the superclass ContentBlock.
  */
 
 //TODO: Annotate with Hibernate JPA
+
+@Entity
+@Table(name = "text")
 public class TextBlock extends ContentBlock{
 
     // ----- Properties -----
