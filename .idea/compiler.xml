@@ -7,9 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="P9" />
+        <module name="HTMLEditor" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="HTMLEditor" target="16" />
       <module name="P9" target="16" />
     </bytecodeTargetLevel>
   </component>
