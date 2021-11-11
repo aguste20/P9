@@ -9,8 +9,6 @@ import java.util.List;
  * Its properties hold basic information about the organisation.
  */
 
-//TODO: Annotate with Hibernate JPA
-
 @Entity
 @Table(name = "organisation")
 public class Organisation {
@@ -21,12 +19,15 @@ public class Organisation {
     @Column(name = "organisation_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer organisationId;
+
     private String name;
     private String address;
     private String phone;
     private String email;
-    private List<User> userList = new ArrayList<>();
 
+    @OneToMany(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "organisation_id", referencedColumnName = "organisation_id")
+    private List<User> userList = new ArrayList<>();
 
 
     // ----- Constructors -----

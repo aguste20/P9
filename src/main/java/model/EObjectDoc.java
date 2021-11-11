@@ -13,8 +13,6 @@ import java.util.List;
  * and a path to an .XML file in which the documentation is stored.
  */
 
-//TODO: Annotate with Hibernate JPA
-
 @Entity
 @Table(name = "e_object_doc")
 public class EObjectDoc {
@@ -25,6 +23,7 @@ public class EObjectDoc {
     @Column(name = "e_object_doc_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer eObjectDocId;
+
     private Boolean published;
     private String xmlPath;
     private Date lastEdit;
@@ -40,6 +39,7 @@ public class EObjectDoc {
     @OneToOne
     @JoinColumn(name = "e_object_id", referencedColumnName = "e_object_id")
     private EObject eObject;
+
 
     // ----- Constructors -----
 
