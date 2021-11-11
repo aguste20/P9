@@ -8,13 +8,5 @@ import java.io.IOException;
 
 public class TestBjorn {
 
-    @FXML
-    private BorderPane paneTextEditor;
-
-    public void insertTextEditorMainPage() throws IOException {
-        BorderPane pane = FXMLLoader.load(getClass().getResource("view/textEditor.fxml"));
-        paneTextEditor.getChildren().setAll(pane);
-    }
-
 
 }

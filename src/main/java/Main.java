@@ -1,14 +1,9 @@
-import controller.MainPageController;
-import controller.TextEditorController;
+import controller.*;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -16,14 +11,39 @@ public class Main extends Application {
 
     //roots being declared, which will later hold .fxml files.
     private static Parent mainPageParent;
+    private static Parent textEditorParent;
+    private static Parent contentsSubPageParent;
+    private static Parent overviewSubPageParent;
+    private static Parent placeholdersSubPageParent;
 
 
-
-    // References to controllers
-    private static TextEditorController textEditorController;
+    // References to controllers.
     private static MainPageController mainPageController;
+    private static TextEditorController textEditorController;
+    private static ContentsSubPageController contentsSubPageController;
+    private static OverviewSubPageController overviewSubPageController;
+    private static PlaceholdersSubPageController placeholdersSubPageController;
 
 
+    // ---- Getters ----
+    public static MainPageController getMainPageController() {
+        return mainPageController;
+    }
+    public static TextEditorController getTextEditorController() {
+        return textEditorController;
+    }
+    public static ContentsSubPageController getContentsSubPageController() {
+        return contentsSubPageController;
+    }
+    public static OverviewSubPageController getOverviewSubPageController() {
+        return overviewSubPageController;
+    }
+    public static PlaceholdersSubPageController getPlaceholdersSubPageController() {
+        return placeholdersSubPageController;
+    }
+
+
+    //TODO: are these needed? - Bjørn
     //References to the current active stage and scene are held here.
     private static Stage stage;
     private static Scene scene;
@@ -37,7 +57,35 @@ public class Main extends Application {
      */
     @Override
     public void init() throws IOException {
-        mainPageParent = FXMLLoader.load(getClass().getResource("view/mainPage.fxml"));
+        //We fill the roots with respective .fxml files from harddrive.
+
+
+        // We create an FXMLLoader which fills the empty mainPageParent reference with its respective .fxml file
+        // We also fill the empty mainPageController reference with the controller of the .fxml file
+        FXMLLoader loader1 = new FXMLLoader();
+        mainPageParent = loader1.load(getClass().getResource("view/mainPage.fxml").openStream());
+        mainPageController = loader1.getController();
+
+        //Same as above
+        FXMLLoader loader2 = new FXMLLoader();
+        textEditorParent = loader2.load(getClass().getResource("view/textEditor.fxml").openStream());
+        textEditorController = loader2.getController();
+
+        //Same as above
+        FXMLLoader loader3 = new FXMLLoader();
+        contentsSubPageParent = loader3.load(getClass().getResource("view/contentsSubPage.fxml").openStream());
+        contentsSubPageController = loader3.getController();
+
+        //Same as above
+        FXMLLoader loader4 = new FXMLLoader();
+        overviewSubPageParent = loader4.load(getClass().getResource("view/overviewSubPage.fxml").openStream());
+        overviewSubPageController = loader4.getController();
+
+        //Same as above
+        FXMLLoader loader5 = new FXMLLoader();
+        placeholdersSubPageParent = loader5.load(getClass().getResource("view/placeholdersSubPage.fxml").openStream());
+        placeholdersSubPageController = loader5.getController();
+
     }
 
 
@@ -49,10 +97,6 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        TestBjorn testBjorn = new TestBjorn();
-
-        testBjorn.insertTextEditorMainPage();
-
         scene = new Scene(mainPageParent);
         stage.setTitle("Documentation Assist 😎");
         //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
@@ -60,21 +104,8 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-
-
-
-
-        /*
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/mainPage.fxml"));
-        Parent root = loader.load();
-        //TextEditorController controller = loader.getController();
-        //controller.init(stage);
-
-
-        stage.setTitle("JavaFX Text Editor");
-        stage.setScene(new Scene(root));
-        stage.show();
-        */
+        //Inserts the textEditor into the right-side pane of the main page.
+        mainPageController.getPaneTextEditor().getChildren().setAll(textEditorParent);
 
     }
 
