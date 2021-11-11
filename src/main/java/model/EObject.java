@@ -12,6 +12,8 @@ import java.util.List;
  * or a component that is part of another engineering object.
  *
  * An EObject holds information we assume is available in the Bluestar PLM solution.
+ *
+ * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
  */
 
 @Entity

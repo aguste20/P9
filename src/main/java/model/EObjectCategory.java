@@ -10,6 +10,7 @@ import java.util.List;
  * The categories are used to differentiate engineering objects
  * and display relevant reusable content for these - in the form of ContentBlocks.
  *
+ * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
  */
 
 @Entity

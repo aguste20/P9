@@ -7,6 +7,8 @@ import java.util.List;
 /**
  * Organisation implements an organisation/company that uses Bluestar PLM for their engineering processes.
  * Its properties hold basic information about the organisation.
+ *
+ * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
  */
 
 @Entity

@@ -11,6 +11,8 @@ import java.util.List;
  *
  * An EObjectDoc holds meta information about the documentation
  * and a path to an .XML file in which the documentation is stored.
+ *
+ * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
  */
 
 @Entity

@@ -5,6 +5,9 @@ import javax.persistence.*;
 /**
  * TextBlock implements a block of text which can be reused across different EObjects (engineering objects).
  * TextBlock is a concrete implementation of the superclass ContentBlock.
+ *
+ * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
+ * JPA inheritance mapping: https://www.baeldung.com/hibernate-inheritance
  */
 
 //TODO: Annotate with Hibernate JPA
