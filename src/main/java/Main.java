@@ -14,6 +14,7 @@ public class Main extends Application {
     public static void main(String[] args){
         TestAnne test = new TestAnne();
         test.metode();
+        test.createOrg();
 
         launch(args);
     }

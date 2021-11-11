@@ -12,7 +12,7 @@ import java.util.List;
 //TODO: Annotate with Hibernate JPA
 @Entity
 @Table(name = "organisation")
-public class Organisation extends DaoModel {
+public class Organisation {
 
     // ----- Properties -----
 
