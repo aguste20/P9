@@ -86,6 +86,15 @@ public class Main extends Application {
         placeholdersSubPageParent = loader5.load(getClass().getResource("view/placeholdersSubPage.fxml").openStream());
         placeholdersSubPageController = loader5.getController();
 
+
+
+        /*
+        //Relates to Old textEditor
+        FXMLLoader loader2 = new FXMLLoader();
+        textEditorParent = loader2.load(getClass().getResource("view/textEditorOLD.fxml").openStream());
+        textEditorController = loader2.getController();
+         */
+
     }
 
 
