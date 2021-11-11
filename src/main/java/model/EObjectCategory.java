@@ -12,8 +12,6 @@ import java.util.List;
  *
  */
 
-//TODO: Annotate with Hibernate JPA
-
 @Entity
 @Table(name = "e_object_category")
 public class EObjectCategory {
@@ -24,7 +22,10 @@ public class EObjectCategory {
     @Column(name = "e_object_category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer eObjectCatId;
+
     private String name;
+
+    @OneToMany(mappedBy = "category")
     private List<EObject> eObjectList = new ArrayList<>();
 
     @ManyToMany(cascade = { CascadeType.ALL})
@@ -34,6 +35,7 @@ public class EObjectCategory {
             inverseJoinColumns = { @JoinColumn(name = "content_block_id")}
     )
     private List<ContentBlock> contentBlockList = new ArrayList<>();
+
 
     // ----- Constructors -----
 
