@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,16 +10,21 @@ import java.util.List;
  */
 
 //TODO: Annotate with Hibernate JPA
-public class Organisation {
+@Entity
+@Table(name = "organisation")
+public class Organisation extends DaoModel {
 
     // ----- Properties -----
 
+    @Id
+    @Column(name = "organisation_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer organisationId;
     private String name;
     private String address;
     private String phone;
     private String email;
-    private List<User> userList = new ArrayList<>();
+    //private List<User> userList = new ArrayList<>();
 
 
 
@@ -28,6 +34,10 @@ public class Organisation {
      * Empty constructor
      */
     public Organisation() {
+    }
+
+    public Organisation(String name){
+        this.name = name;
     }
 
 
@@ -73,11 +83,13 @@ public class Organisation {
         this.email = email;
     }
 
-    public List<User> getUserList() {
+    /*public List<User> getUserList() {
         return userList;
     }
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
     }
+
+     */
 }
