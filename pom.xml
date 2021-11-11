@@ -27,7 +27,7 @@
                 <!--Including JavaFX through the maven compiler-->
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.6</version>
+                <version>0.0.8</version>
                 <configuration>
                     <!--Defining the main class for JavaFX-->
                     <mainClass>Main</mainClass>
@@ -44,13 +44,13 @@
             <!--Including JavaFX controls library-->
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>16</version>
+            <version>17.0.1</version>
         </dependency>
         <!--Including JavaFX FXML library-->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>16</version>
+            <version>17.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.controlsfx</groupId>
