@@ -22,6 +22,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer userId;
     private String name;
+
+    @ManyToMany(cascade = { CascadeType.ALL})
+    @JoinTable(
+            name = "user_has_e_object",
+            joinColumns = { @JoinColumn(name = "user_id")},
+            inverseJoinColumns = { @JoinColumn(name = "e_object_id")}
+    )
     private List<EObject> eObjectList = new ArrayList<>();
 
 
