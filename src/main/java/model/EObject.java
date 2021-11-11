@@ -14,6 +14,7 @@ import java.util.List;
  * An EObject holds information we assume is available in the Bluestar PLM solution.
  *
  * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
+ * JPA many to many mapping: https://www.baeldung.com/hibernate-many-to-many
  */
 
 @Entity
@@ -35,18 +36,27 @@ public class EObject {
     private Double weight;
     private String imagePath;
 
+    // Maps a many to many relation between eObject and other eObjects (components), cascading all actions
+    // An eObject has a list of all its "first-layer" components
     @ManyToMany(cascade = { CascadeType.ALL })
-    @JoinTable(
-            name = "e_object_has_e_object",
+    // The association uses the join/link table "e_object_has_e_object"
+    @JoinTable(name = "e_object_has_e_object",
+            // The two columns are foreign keys to id columns in the user table and the eObject table
+            // The parent e_object is the "owning" part of the association. The component e_object is the inverse part.
             joinColumns = { @JoinColumn(name = "e_object_id")},
             inverseJoinColumns = { @JoinColumn(name = "e_object_id_1")}
     )
     private List<EObject> componentList = new ArrayList<>();
 
+    // Maps a many to one relation between eObject and category, cascading all actions
     @ManyToOne(cascade = { CascadeType.ALL })
+    // The association uses the join column "e_object_category_id" in the e_object table
+    // which references the id column in the category table
     @JoinColumn(name = "e_object_category_id", referencedColumnName = "e_object_category_id")
     private EObjectCategory category;
 
+    // Maps a one to one relation betweem eObject and eObjecDoc
+    // The association is mapped by the field "eObject" in EObjectDoc.java
     @OneToOne(mappedBy = "eObject")
     private EObjectDoc doc;
 
