@@ -10,10 +10,10 @@ import javax.persistence.*;
  * JPA inheritance mapping: https://www.baeldung.com/hibernate-inheritance
  */
 
-//TODO: Annotate with Hibernate JPA
-
 @Entity
 @Table(name = "image")
+// Maps inheritance between content block and image block,
+// using the join column "image_id" in the content block table
 @PrimaryKeyJoinColumn(name = "image_id")
 public class ImageBlock extends ContentBlock{
 
