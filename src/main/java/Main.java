@@ -34,6 +34,7 @@ public class Main extends Application {
 
         stage.setTitle("JavaFX Text Editor");
         stage.setScene(new Scene(root, 700, 500));
+        stage.getScene().getStylesheets().add("css/textEditStyle.css");
         stage.show();
     }
 }
