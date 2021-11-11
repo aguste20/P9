@@ -1,0 +1,15 @@
+model\EObjectCategory.class
+TestBjorn.class
+model\EObject.class
+model\TextBlock.class
+TestAnne.class
+controller\test.class
+Main.class
+controller\MainPageController.class
+controller\TextEditorController.class
+model\EObjectDoc.class
+model\ImageBlock.class
+model\Organisation.class
+model\ContentBlock.class
+model\User.class
+persistence\Setup.class

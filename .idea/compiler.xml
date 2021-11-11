@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="HTMLEditor" target="16" />
+      <module name="HTMLEditor" target="1.5" />
       <module name="P9" target="16" />
     </bytecodeTargetLevel>
   </component>
