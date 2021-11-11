@@ -11,6 +11,7 @@ import java.util.List;
  * and display relevant reusable content for these - in the form of ContentBlocks.
  *
  * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
+ * JPA many to many mapping: https://www.baeldung.com/hibernate-many-to-many
  */
 
 @Entity
