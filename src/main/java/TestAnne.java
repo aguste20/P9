@@ -11,8 +11,8 @@ public class TestAnne {
 
     public void createOrg(){
         Organisation org = new Organisation("XD");
-        org.setOrganisationId(2);
-        orgDaO.deleteOrg(org);
+        org.setOrganisationId(4);
+        orgDaO.updateOrg(org);
     }
 
 }
