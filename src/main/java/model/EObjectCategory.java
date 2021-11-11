@@ -26,6 +26,13 @@ public class EObjectCategory {
     private Integer eObjectCatId;
     private String name;
     private List<EObject> eObjectList = new ArrayList<>();
+
+    @ManyToMany(cascade = { CascadeType.ALL})
+    @JoinTable(
+            name = "e_object_category_has_content_block",
+            joinColumns = { @JoinColumn(name = "e_object_category_id")},
+            inverseJoinColumns = { @JoinColumn(name = "content_block_id")}
+    )
     private List<ContentBlock> contentBlockList = new ArrayList<>();
 
     // ----- Constructors -----

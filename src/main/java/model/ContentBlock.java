@@ -28,7 +28,10 @@ public abstract class ContentBlock {
 
     private String name;
 
+    @ManyToMany(mappedBy = "contentBlockList")
     private List<EObjectCategory> categoryList = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "contentBlockList")
     private List<EObjectDoc> eObjectDocList = new ArrayList<>();
 
     // ----- Constructors -----

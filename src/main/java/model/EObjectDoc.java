@@ -28,6 +28,13 @@ public class EObjectDoc {
     private Boolean published;
     private String xmlPath;
     private Date lastEdit;
+
+    @ManyToMany(cascade = { CascadeType.ALL})
+    @JoinTable(
+            name = "e_object_doc_has_content_block",
+            joinColumns = { @JoinColumn(name = "e_object_doc_id")},
+            inverseJoinColumns = { @JoinColumn(name = "content_block_id")}
+    )
     private List<ContentBlock> contentBlockList = new ArrayList<>();
 
     // ----- Constructors -----
