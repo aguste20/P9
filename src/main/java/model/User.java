@@ -22,7 +22,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer userId;
 
-
     private String name;
 
     // Maps a many to many relationship between user and eObjects, cascading all actions

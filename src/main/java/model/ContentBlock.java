@@ -13,6 +13,7 @@ import java.util.List;
  * The classes TextBlock and ImageBlock are concrete subclasses of ContentBlocks.
  *
  * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
+ * JPA many to many mapping: https://www.baeldung.com/hibernate-many-to-many
  */
 
 @Entity
@@ -34,6 +35,8 @@ public abstract class ContentBlock {
     @ManyToMany(mappedBy = "contentBlockList")
     private List<EObjectCategory> categoryList = new ArrayList<>();
 
+    // Maps a many to many relation between contentBlock and eObject doc
+    // The association is mapped by the field "contentBlockList" in EObjectDoc.java
     @ManyToMany(mappedBy = "contentBlockList")
     private List<EObjectDoc> eObjectDocList = new ArrayList<>();
 
