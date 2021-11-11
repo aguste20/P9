@@ -26,6 +26,7 @@ public class EObject {
     @Column(name = "e_object_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer eObjectId;
+
     private String name;
     private Double version;
     private Double length;
@@ -33,8 +34,20 @@ public class EObject {
     private Double width;
     private Double weight;
     private String imagePath;
+
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "e_object_has_e_object",
+            joinColumns = { @JoinColumn(name = "e_object_id")},
+            inverseJoinColumns = { @JoinColumn(name = "e_object_id_1")}
+    )
     private List<EObject> componentList = new ArrayList<>();
+
+    @ManyToOne(cascade = { CascadeType.ALL })
+    @JoinColumn(name = "e_object_category_id", referencedColumnName = "e_object_category_id")
     private EObjectCategory category;
+
+    @OneToOne(mappedBy = "eObject")
     private EObjectDoc doc;
 
     // ----- Constructors -----

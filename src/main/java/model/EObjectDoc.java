@@ -37,6 +37,10 @@ public class EObjectDoc {
     )
     private List<ContentBlock> contentBlockList = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "e_object_id", referencedColumnName = "e_object_id")
+    private EObject eObject;
+
     // ----- Constructors -----
 
     /**
@@ -86,5 +90,13 @@ public class EObjectDoc {
 
     public void setContentBlockList(List<ContentBlock> contentBlockList) {
         this.contentBlockList = contentBlockList;
+    }
+
+    public EObject geteObject() {
+        return eObject;
+    }
+
+    public void seteObject(EObject eObject) {
+        this.eObject = eObject;
     }
 }
