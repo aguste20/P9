@@ -104,8 +104,10 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-        //Inserts the textEditor into the right-side pane of the main page.
-        mainPageController.getPaneTextEditor().getChildren().setAll(textEditorParent);
+
+
+        //Inserts the textEditor into the right-side scrollPane of the main page.
+        mainPageController.getPaneTextEditor().setContent(textEditorParent);
 
     }
 

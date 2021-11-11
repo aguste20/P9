@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="master-pane" stylesheets="@css/textEditStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TextEditorController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="master-pane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TextEditorController">
    <center>
       <TextArea fx:id="textArea" nodeOrientation="LEFT_TO_RIGHT" styleClass="editor-text" wrapText="true">
          <font>
@@ -27,7 +27,7 @@
       </TextArea>
    </center>
    <top>
-       <MenuBar prefHeight="25.0" prefWidth="600.0" stylesheets="@css/textEditStyle.css" BorderPane.alignment="CENTER">
+       <MenuBar prefHeight="25.0" prefWidth="600.0" BorderPane.alignment="CENTER">
            <Menu text="File">
                <MenuItem fx:id="newFile" mnemonicParsing="false" onAction="#newFile" text="New">
                    <accelerator>
