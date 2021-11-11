@@ -15,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "content_block")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ContentBlock {
 
     // ----- Properties -----

@@ -1,7 +1,6 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * TextBlock implements a block of text which can be reused across different EObjects (engineering objects).
@@ -12,6 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "text")
+@PrimaryKeyJoinColumn(name = "text_id")
 public class TextBlock extends ContentBlock{
 
     // ----- Properties -----

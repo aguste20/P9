@@ -1,17 +1,20 @@
 package model;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * TextBlock implements an image which can be reused across different EObjects (engineering objects).
  * ImageBlock is a concrete implementation of the superclass ContentBlock.
+ *
+ * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
+ * JPA inheritance mapping: https://www.baeldung.com/hibernate-inheritance
  */
 
 //TODO: Annotate with Hibernate JPA
 
 @Entity
 @Table(name = "image")
+@PrimaryKeyJoinColumn(name = "image_id")
 public class ImageBlock extends ContentBlock{
 
     // ----- Properties -----
