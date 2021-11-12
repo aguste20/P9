@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,17 +11,44 @@ import java.util.List;
  *
  * An EObjectDoc holds meta information about the documentation
  * and a path to an .XML file in which the documentation is stored.
+ *
+ * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
+ * JPA many to many mapping: https://www.baeldung.com/hibernate-many-to-many
  */
 
-//TODO: Annotate with Hibernate JPA
+@Entity
+@Table(name = "e_object_doc")
 public class EObjectDoc {
 
     // ----- Properties -----
+
+    @Id
+    @Column(name = "e_object_doc_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer eObjectDocId;
+
     private Boolean published;
     private String xmlPath;
     private Date lastEdit;
+
+    // Maps a many to many relation between eObject doc and content blocks, cascading all actions
+    @ManyToMany(cascade = { CascadeType.ALL})
+    // The association uses the join/link table "e_object_doc_has_content_block"
+    @JoinTable(name = "e_object_doc_has_content_block",
+            // The two columns are foreign keys to id columns in the eObject doc table and the content block table
+            // The eObject doc is the "owning" part of the association. The content block is the inverse part.
+            joinColumns = { @JoinColumn(name = "e_object_doc_id")},
+            inverseJoinColumns = { @JoinColumn(name = "content_block_id")}
+    )
     private List<ContentBlock> contentBlockList = new ArrayList<>();
+
+    // Maps a one to one relation between eObject doc and eObject
+    @OneToOne
+    // The association uses the join column "e_object_id" in the e_object_doc table
+    // which references the id column in the eObject table
+    @JoinColumn(name = "e_object_id", referencedColumnName = "e_object_id")
+    private EObject eObject;
+
 
     // ----- Constructors -----
 
@@ -71,5 +99,13 @@ public class EObjectDoc {
 
     public void setContentBlockList(List<ContentBlock> contentBlockList) {
         this.contentBlockList = contentBlockList;
+    }
+
+    public EObject geteObject() {
+        return eObject;
+    }
+
+    public void seteObject(EObject eObject) {
+        this.eObject = eObject;
     }
 }
