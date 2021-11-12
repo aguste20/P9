@@ -42,6 +42,9 @@ public class Organisation {
     public Organisation() {
     }
 
+    public Organisation(String name){
+        this.name = name;
+    }
 
     // ----- Getters and setters -----
 
