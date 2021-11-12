@@ -1,5 +1,6 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,16 +11,33 @@ import java.util.List;
  * The content be an image or text (from a single word to several paragraphs or pages)
  *
  * The classes TextBlock and ImageBlock are concrete subclasses of ContentBlocks.
+ *
+ * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
+ * JPA many to many mapping: https://www.baeldung.com/hibernate-many-to-many
  */
 
-//TODO: Annotate with Hibernate JPA
+@Entity
+@Table(name = "content_block")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ContentBlock {
 
     // ----- Properties -----
+
+    @Id
+    @Column(name = "content_block_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer contentBlockID;
+
     private String name;
 
+    // Maps a many to many relation between contentBlock and category
+    // The association is mapped by the field "contentBlockList" in EObjectCategory.java
+    @ManyToMany(mappedBy = "contentBlockList")
     private List<EObjectCategory> categoryList = new ArrayList<>();
+
+    // Maps a many to many relation between contentBlock and eObject doc
+    // The association is mapped by the field "contentBlockList" in EObjectDoc.java
+    @ManyToMany(mappedBy = "contentBlockList")
     private List<EObjectDoc> eObjectDocList = new ArrayList<>();
 
     // ----- Constructors -----

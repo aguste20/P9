@@ -7,9 +7,10 @@ import java.util.List;
 /**
  * Organisation implements an organisation/company that uses Bluestar PLM for their engineering processes.
  * Its properties hold basic information about the organisation.
+ *
+ * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
  */
 
-//TODO: Annotate with Hibernate JPA
 @Entity
 @Table(name = "organisation")
 public class Organisation {
@@ -18,14 +19,19 @@ public class Organisation {
 
     @Id
     @Column(name = "organisation_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
     private Integer organisationId;
+
     private String name;
     private String address;
     private String phone;
     private String email;
-    //private List<User> userList = new ArrayList<>();
 
+    // Maps a one to many relation between organisation and user
+    @OneToMany(cascade = { CascadeType.ALL })
+    // The association uses the join column "organisation_id" in the user table
+    @JoinColumn(name = "organisation_id", referencedColumnName = "organisation_id")
+    private List<User> userList = new ArrayList<>();
 
 
     // ----- Constructors -----
@@ -34,10 +40,6 @@ public class Organisation {
      * Empty constructor
      */
     public Organisation() {
-    }
-
-    public Organisation(String name){
-        this.name = name;
     }
 
 
@@ -83,13 +85,11 @@ public class Organisation {
         this.email = email;
     }
 
-    /*public List<User> getUserList() {
+    public List<User> getUserList() {
         return userList;
     }
 
     public void setUserList(List<User> userList) {
         this.userList = userList;
     }
-
-     */
 }
