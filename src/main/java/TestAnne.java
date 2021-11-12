@@ -10,7 +10,7 @@ public class TestAnne {
     }
 
     public void createOrg(){
-        Organisation org = new Organisation("XD");
+        Organisation org = new Organisation("Lmao");
         org.setOrganisationId(4);
         orgDaO.updateOrg(org);
     }
