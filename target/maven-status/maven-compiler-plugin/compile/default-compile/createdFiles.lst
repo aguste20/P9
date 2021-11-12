@@ -1,0 +1,17 @@
+Main.class
+model\EObjectDoc.class
+model\ImageBlock.class
+controller\OverviewSubPageController.class
+controller\ContentsSubPageController.class
+model\Organisation.class
+model\ContentBlock.class
+model\User.class
+persistence\Setup.class
+controller\PlaceholdersSubPageController.class
+model\EObjectCategory.class
+TestBjorn.class
+model\EObject.class
+model\TextBlock.class
+TestAnne.class
+controller\MainPageController.class
+controller\TextEditorController.class
