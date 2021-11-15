@@ -1,7 +1,12 @@
 import model.EObject;
+import model.EObjectDoc;
 import model.Organisation;
 import persistence.EObjectDao;
+import persistence.EObjectDocDao;
 import persistence.OrganisationDao;
+
+import java.sql.Date;
+import java.time.LocalDate;
 
 public class TestAnne {
 
@@ -10,6 +15,7 @@ public class TestAnne {
     public void metode(){
         readCategoryFromEobject();
         readComponentsFromEobject();
+        dateTest();
     }
 
     public void createOrg(){
@@ -35,6 +41,22 @@ public class TestAnne {
 
         System.out.println("Cateogory: " + motor.getCategory().getName());
 
+    }
+
+    public void dateTest(){
+
+        EObject motor = new EObjectDao().getById(1);
+
+        EObjectDoc doc = new EObjectDoc();
+
+        Date date = Date.valueOf(LocalDate.now());
+
+        doc.setLastEdit(date);
+
+        doc.seteObject(motor);
+
+        EObjectDocDao dao = new EObjectDocDao();
+        dao.addEObjectDoc(doc);
     }
 
 }
