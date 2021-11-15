@@ -5,20 +5,37 @@ import org.hibernate.Session;
 
 import java.util.List;
 
+/**
+ * The ImageBlockDao class enables data exchange between the application and the SQL database.
+ * It has 3 different Hibernate operations that allows for data transfer between SQL elements and Java objects.
+ */
+
 public class ImageBlockDao {
 
+    /**
+     * Adds a ImageBlock object to the database
+     * @param img The ImageBlock object that is to be added
+     */
     public void addImageBlock(ImageBlock img){
         Session session = Setup.getSession();
         session.save(img);
         Setup.closeSession(session);
     }
 
+    /**
+     * Updating a ImageBlock object in the database
+     * @param img The ImageBlock object that is to be added
+     */
     public void updateImageBlock(ImageBlock img){
         Session session = Setup.getSession();
         session.update(img);
         Setup.closeSession(session);
     }
 
+    /**
+     * Method for deleting a ImageBlock object by ID
+     * @param img The ID of the ImageBlock object that is being searched for
+     */
     public void deleteImageBlock(ImageBlock img){
         Session session = Setup.getSession();
         session.delete(img);

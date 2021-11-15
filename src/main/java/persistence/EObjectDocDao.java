@@ -5,20 +5,37 @@ import org.hibernate.Session;
 
 import java.util.List;
 
+/**
+ * The EObjectDocDao class enables data exchange between the application and the SQL database.
+ * It has 3 different Hibernate operations that allows for data transfer between SQL elements and Java objects.
+ */
+
 public class EObjectDocDao {
 
+    /**
+     * Adds a EObjectDoc object to the database
+     * @param doc The EObjectDoc object that is to be added
+     */
     public void addEObjectDoc(EObjectDoc doc){
         Session session = Setup.getSession();
         session.save(doc);
         Setup.closeSession(session);
     }
 
+    /**
+     * Updating a EObjectDoc object in the database
+     * @param doc The EObjectDoc object that is to be added
+     */
     public void updateEObjectDoc(EObjectDoc doc){
         Session session = Setup.getSession();
         session.update(doc);
         Setup.closeSession(session);
     }
 
+    /**
+     * Method for deleting a EObjectDoc object by ID
+     * @param doc The ID of the EObjectDoc object that is being searched for
+     */
     public void deleteEObjectDoc(EObjectDoc doc){
         Session session = Setup.getSession();
         session.delete(doc);

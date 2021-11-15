@@ -12,18 +12,30 @@ import java.util.List;
 
 public class ContentBlockDao {
 
+    /**
+     * Adds a ContentBlock object to the database
+     * @param block The ContentBlock object that is to be added
+     */
     public void addBlock(ContentBlockDao block){
         Session session = Setup.getSession();
         session.save(block);
         Setup.closeSession(session);
     }
 
+    /**
+     * Updating a ContentBlock object in the database
+     * @param block The ContentBlock object that is to be added
+     */
     public void updateBlock(ContentBlockDao block){
         Session session = Setup.getSession();
         session.update(block);
         Setup.closeSession(session);
     }
 
+    /**
+     * Method for deleting a ContentBlock object by ID
+     * @param block The ID of the ContentBlock object that is being searched for
+     */
     public void deleteBlock(ContentBlockDao block){
         Session session = Setup.getSession();
         session.delete(block);
