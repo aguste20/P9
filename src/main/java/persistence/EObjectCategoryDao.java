@@ -12,18 +12,30 @@ import java.util.List;
 
 public class EObjectCategoryDao {
 
+    /**
+     * Adds a EobjectCat object to the database
+     * @param category The EobjectCat object that is to be added
+     */
     public void addEobjectCat(EObjectCategory category){
         Session session = Setup.getSession();
         session.save(category);
         Setup.closeSession(session);
     }
 
+    /**
+     * Updating a ContentBlock object in the database
+     * @param category The ContentBlock object that is to be added
+     */
     public void updateEObjectCat(EObjectCategory category){
         Session session = Setup.getSession();
         session.update(category);
         Setup.closeSession(session);
     }
 
+    /**
+     * Method for deleting a ContentBlock object by ID
+     * @param category The ID of the ContentBlock object that is being searched for
+     */
     public void deleteEObjectCat(EObjectCategory category){
         Session session = Setup.getSession();
         session.delete(category);

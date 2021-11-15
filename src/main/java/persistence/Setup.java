@@ -6,6 +6,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+/**
+ * This class is responsible for creating the connection to the database by creating a sessionfactory
+ * and allowing the creation of sessions.
+ */
 public class Setup {
 
     //Creating a Sessionfactory object, which is defined in the setSessionFactory method

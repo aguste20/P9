@@ -5,20 +5,37 @@ import org.hibernate.Session;
 
 import java.util.List;
 
+/**
+ * The OrganisationDao class enables data exchange between the application and the SQL database.
+ * It has 3 different Hibernate operations that allows for data transfer between SQL elements and Java objects.
+ */
+
 public class OrganisationDao {
 
+    /**
+     * Adds an Organisation object to the database
+     * @param org The Organisation object that is to be added
+     */
     public void addOrg(Organisation org){
         Session session = Setup.getSession();
         session.save(org);
         Setup.closeSession(session);
     }
 
+    /**
+     * Updating a Organisation object in the database
+     * @param org The Organisation object that is to be added
+     */
     public void updateOrg(Organisation org){
         Session session = Setup.getSession();
         session.update(org);
         Setup.closeSession(session);
     }
 
+    /**
+     * Method for deleting an Organisation object by ID
+     * @param org The ID of the Organisation object that is being searched for
+     */
     public void deleteOrg(Organisation org){
         Session session = Setup.getSession();
         session.delete(org);

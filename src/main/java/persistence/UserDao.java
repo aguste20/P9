@@ -5,21 +5,37 @@ import org.hibernate.Session;
 
 import java.util.List;
 
+/**
+ * The UserDao class enables data exchange between the application and the SQL database.
+ * It has 3 different Hibernate operations that allows for data transfer between SQL elements and Java objects.
+ */
+
 public class UserDao {
 
+    /**
+     * Adds a User object to the database
+     * @param user The User object that is to be added
+     */
     public void addUser(User user){
         Session session = Setup.getSession();
         session.save(user);
         Setup.closeSession(session);
     }
 
+    /**
+     * Updating a User object in the database
+     * @param user The User object that is to be added
+     */
     public void updateUser(User user){
         Session session = Setup.getSession();
         session.update(user);
         Setup.closeSession(session);
     }
 
-
+    /**
+     * Method for deleting a User object by ID
+     * @param user The ID of the User object that is being searched for
+     */
     public void deleteUser(User user){
         Session session = Setup.getSession();
         session.delete(user);
