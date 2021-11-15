@@ -18,6 +18,7 @@ import javax.persistence.*;
 public class ImageBlock extends ContentBlock{
 
     // ----- Properties -----
+    @Column(name = "image_path")
     private String imagePath;
 
 

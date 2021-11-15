@@ -33,7 +33,7 @@ public class EObjectCategory {
     private List<EObject> eObjectList = new ArrayList<>();
 
     // Maps a many to many relation between category and content blocks, cascading all actions
-    @ManyToMany(cascade = { CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY,cascade = { CascadeType.ALL})
     // The association uses the join/link table "e_object_category_has_content_block"
     @JoinTable(name = "e_object_category_has_content_block",
             // The two columns are foreign keys to id columns in the category table and the content block table
