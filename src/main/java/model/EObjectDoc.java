@@ -28,7 +28,11 @@ public class EObjectDoc {
     private Integer eObjectDocId;
 
     private Boolean published;
+
+    @Column(name = "xml_path")
     private String xmlPath;
+
+    @Column(name = "last_edit")
     private Date lastEdit;
 
     // Maps a many to many relation between eObject doc and content blocks, cascading all actions
