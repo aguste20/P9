@@ -28,11 +28,15 @@ public class EObjectDoc {
     private Integer eObjectDocId;
 
     private Boolean published;
+
+    @Column(name = "xml_path")
     private String xmlPath;
+
+    @Column(name = "last_edit")
     private Date lastEdit;
 
     // Maps a many to many relation between eObject doc and content blocks, cascading all actions
-    @ManyToMany(cascade = { CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL})
     // The association uses the join/link table "e_object_doc_has_content_block"
     @JoinTable(name = "e_object_doc_has_content_block",
             // The two columns are foreign keys to id columns in the eObject doc table and the content block table
@@ -43,7 +47,7 @@ public class EObjectDoc {
     private List<ContentBlock> contentBlockList = new ArrayList<>();
 
     // Maps a one to one relation between eObject doc and eObject
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL})
     // The association uses the join column "e_object_id" in the e_object_doc table
     // which references the id column in the eObject table
     @JoinColumn(name = "e_object_id", referencedColumnName = "e_object_id")

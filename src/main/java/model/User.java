@@ -25,7 +25,7 @@ public class User {
     private String name;
 
     // Maps a many to many relationship between user and eObjects, cascading all actions
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
     // The association uses the join/link table "user_has_object"
     @JoinTable(name = "user_has_e_object",
             // The two columns are foreign keys to id columns in the user table and the eObject table
