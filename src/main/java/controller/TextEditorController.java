@@ -7,7 +7,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.xml.sax.SAXException;
 
+import javax.xml.transform.sax.SAXTransformerFactory;
+import javax.xml.transform.sax.TransformerHandler;
 import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -144,6 +147,25 @@ public class TextEditorController implements Initializable {
                 textArea.setStyle("-fx-font-size: 22px");
                 break;
             case "large":
+                textArea.setStyle("-fx-font-size: 30px");
+                break;
+            default:
+                textArea.setStyle("-fx-font-size: 22px");
+        }
+    }
+
+    @FXML
+    public void createHeader(ActionEvent e) {
+        String choice = ((CheckMenuItem) e.getSource()).getId();
+
+        IndexRange range = textArea.getSelection();
+
+        switch (choice) {
+            case "h1":
+                textArea.insertText(range.getEnd(),"</h1>");
+                textArea.insertText(range.getStart(),"<h1>");
+                break;
+            case "h2":
                 textArea.setStyle("-fx-font-size: 30px");
                 break;
             default:
