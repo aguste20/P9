@@ -9,6 +9,7 @@ P9\persistence\EObjectCategoryDao.class
 P9\Main.class
 P9\model\EObject.class
 P9\persistence\TextBlockDao.class
+P9\controller\RegisterNewContentBlockController.class
 P9\controller\PlaceholdersSubPageController.class
 P9\persistence\EObjectDao.class
 P9\persistence\EObjectDocDao.class
@@ -19,6 +20,7 @@ P9\persistence\UserDao.class
 P9\persistence\ContentBlockDao.class
 P9\persistence\OrganisationDao.class
 P9\model\ImageBlock.class
+P9\controller\ContentsSubPageController$1.class
 P9\TestBjorn.class
 P9\controller\TextEditorController.class
 P9\model\EObjectCategory.class

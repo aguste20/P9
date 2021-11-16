@@ -17,6 +17,7 @@ public class Main extends Application {
     private static Parent contentsSubPageParent;
     private static Parent overviewSubPageParent;
     private static Parent placeholdersSubPageParent;
+    private static Parent registerNewContentBlockPageParent;
 
 
     // References to controllers.
@@ -25,6 +26,7 @@ public class Main extends Application {
     private static ContentsSubPageController contentsSubPageController;
     private static OverviewSubPageController overviewSubPageController;
     private static PlaceholdersSubPageController placeholdersSubPageController;
+    private static RegisterNewContentBlockController registerNewContentBlockController;
 
 
     // ---- Getters ----
@@ -41,8 +43,8 @@ public class Main extends Application {
     public static OverviewSubPageController getOverviewSubPageController() {
         return overviewSubPageController;
     }
-    public static PlaceholdersSubPageController getPlaceholdersSubPageController() { return placeholdersSubPageController;
-    }
+    public static PlaceholdersSubPageController getPlaceholdersSubPageController() { return placeholdersSubPageController; }
+    public static RegisterNewContentBlockController getRegisterNewContentBlockController() { return registerNewContentBlockController; }
 
     //Getters for each Parent
     public static Parent getMainPageParent() { return mainPageParent; }
@@ -50,6 +52,7 @@ public class Main extends Application {
     public static Parent getContentsSubPageParent() { return contentsSubPageParent; }
     public static Parent getOverviewSubPageParent() { return overviewSubPageParent; }
     public static Parent getPlaceholdersSubPageParent() { return placeholdersSubPageParent; }
+    public static Parent getRegisterNewContentBlockPageParent() { return registerNewContentBlockPageParent; }
 
     //TODO: are these needed? - Bjørn
     //References to the current active stage and scene are held here.
@@ -94,14 +97,10 @@ public class Main extends Application {
         placeholdersSubPageParent = loader5.load(getClass().getResource("../view/placeholdersSubPage.fxml").openStream());
         placeholdersSubPageController = loader5.getController();
 
-
-
-        /*
-        //Relates to Old textEditor
-        FXMLLoader loader2 = new FXMLLoader();
-        textEditorParent = loader2.load(getClass().getResource("view/textEditorOLD.fxml").openStream());
-        textEditorController = loader2.getController();
-         */
+        //Same as above
+        FXMLLoader loader6 = new FXMLLoader();
+        registerNewContentBlockPageParent = loader6.load(getClass().getResource("../view/registerNewContentBlockPage.fxml").openStream());
+        registerNewContentBlockController = loader6.getController();
 
     }
 
