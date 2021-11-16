@@ -154,19 +154,22 @@ public class TextEditorController implements Initializable {
         }
     }
 
+    public void tagSelectedText(String tag){
+        IndexRange range = textArea.getSelection();
+        textArea.insertText(range.getEnd(),"</"+ tag + ">");
+        textArea.insertText(range.getStart(),"<" + tag + ">");
+    }
+
     @FXML
     public void createHeader(ActionEvent e) {
         String choice = ((CheckMenuItem) e.getSource()).getId();
 
-        IndexRange range = textArea.getSelection();
-
         switch (choice) {
             case "h1":
-                textArea.insertText(range.getEnd(),"</h1>");
-                textArea.insertText(range.getStart(),"<h1>");
+                tagSelectedText("h1");
                 break;
             case "h2":
-                textArea.setStyle("-fx-font-size: 30px");
+                tagSelectedText("h2");
                 break;
             default:
                 textArea.setStyle("-fx-font-size: 22px");
