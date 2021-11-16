@@ -1,4 +1,5 @@
-package controller;
+package P9.controller;
+
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
