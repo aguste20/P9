@@ -34,11 +34,12 @@ public class EObject {
     private Double height;
     private Double width;
     private Double weight;
+    @Column(name ="image_path")
     private String imagePath;
 
     // Maps a many to many relation between eObject and other eObjects (components), cascading all actions
     // An eObject has a list of all its "first-layer" components
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     // The association uses the join/link table "e_object_has_e_object"
     @JoinTable(name = "e_object_has_e_object",
             // The two columns are foreign keys to id columns in the user table and the eObject table
@@ -49,7 +50,7 @@ public class EObject {
     private List<EObject> componentList = new ArrayList<>();
 
     // Maps a many to one relation between eObject and category, cascading all actions
-    @ManyToOne(cascade = { CascadeType.ALL })
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     // The association uses the join column "e_object_category_id" in the e_object table
     // which references the id column in the category table
     @JoinColumn(name = "e_object_category_id", referencedColumnName = "e_object_category_id")

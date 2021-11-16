@@ -28,7 +28,7 @@ public class Organisation {
     private String email;
 
     // Maps a one to many relation between organisation and user
-    @OneToMany(cascade = { CascadeType.ALL })
+    @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
     // The association uses the join column "organisation_id" in the user table
     @JoinColumn(name = "organisation_id", referencedColumnName = "organisation_id")
     private List<User> userList = new ArrayList<>();
