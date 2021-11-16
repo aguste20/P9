@@ -35,7 +35,7 @@ public abstract class ContentBlock {
     @ManyToMany(mappedBy = "contentBlockList")
     private List<EObjectCategory> categoryList = new ArrayList<>();
 
-    // Maps a many to many relation between contentBlock and eObject doc
+    // Maps a many-to-many relation between contentBlock and eObject doc
     // The association is mapped by the field "contentBlockList" in EObjectDoc.java
     @ManyToMany(mappedBy = "contentBlockList")
     private List<EObjectDoc> eObjectDocList = new ArrayList<>();

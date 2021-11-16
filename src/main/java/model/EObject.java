@@ -25,7 +25,7 @@ public class EObject {
 
     @Id
     @Column(name = "e_object_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generates an unique value for every identity
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
     private Integer eObjectId;
 
     private String name;
