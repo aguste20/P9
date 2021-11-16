@@ -30,6 +30,7 @@ public class User {
     @JoinTable(name = "user_has_e_object",
             // The two columns are foreign keys to id columns in the user table and the eObject table
             // User is the "owning" part of the association. eObject is the inverse part.
+            // TODO: Please explain this @Anne because I am stupid
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns =  { @JoinColumn(name = "e_object_id") }
     )
