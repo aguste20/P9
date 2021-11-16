@@ -27,6 +27,8 @@
                   <CheckMenuItem fx:id="small" mnemonicParsing="false" onAction="#fontSize" text="Small ( 14px )" />
                   <CheckMenuItem fx:id="default" mnemonicParsing="false" onAction="#fontSize" text="Default ( 22px )" />
                   <CheckMenuItem fx:id="large" mnemonicParsing="false" onAction="#fontSize" text="Large ( 30px )" />
+                   <CheckMenuItem fx:id="h1" mnemonicParsing="false" onAction="#createHeader" text="Heading 1 ( 30px )" />
+                   <CheckMenuItem fx:id="h2" mnemonicParsing="false" onAction="#createHeader" text="Heading 2 ( 30px )" />
                </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
