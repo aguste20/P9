@@ -1,5 +1,7 @@
 import controller.*;
 import javafx.application.Application;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -110,10 +112,14 @@ public class Main extends Application {
         stage.setTitle("Documentation Assist 😎");
         //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
         //stage.getIcons().add(icon);
+
+        /*
+         */
+
         stage.setScene(scene);
         stage.show();
 
-
+        mainPageController.setTextArea(textEditorController.getTextArea());
 
         //Inserts the textEditor into the right-side scrollPane of the main page.
         mainPageController.getPaneTextEditor().setContent(textEditorParent);
@@ -133,6 +139,7 @@ public class Main extends Application {
      */
     public static void main(String[] args){
         launch(args);
+
     }
 
 }

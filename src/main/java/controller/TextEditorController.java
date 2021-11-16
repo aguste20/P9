@@ -4,10 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -17,8 +14,10 @@ import java.util.ResourceBundle;
 
 public class TextEditorController implements Initializable {
 
+
+
     @FXML
-    private TextArea textArea;
+    public TextArea textArea;
 
     private Stage stage;
     private final FileChooser fileChooser = new FileChooser();
@@ -35,6 +34,10 @@ public class TextEditorController implements Initializable {
 
     public void init(Stage myStage) {
         this.stage = myStage;
+    }
+
+    public TextArea getTextArea() {
+        return textArea;
     }
 
     @FXML
@@ -94,7 +97,6 @@ public class TextEditorController implements Initializable {
         }
     }
 
-
     // sets the textArea to the text of the opened file
     private void readText(File file) {
         String text;
@@ -109,6 +111,9 @@ public class TextEditorController implements Initializable {
     }
 
     //TODO add confirmation window if text editor has text and wasn't saved
+
+
+
 
     @FXML
     public void newFile() {
