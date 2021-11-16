@@ -26,6 +26,7 @@ public class Main extends Application {
 
 
     // ---- Getters ----
+    //Getters for each controller
     public static MainPageController getMainPageController() {
         return mainPageController;
     }
@@ -38,10 +39,15 @@ public class Main extends Application {
     public static OverviewSubPageController getOverviewSubPageController() {
         return overviewSubPageController;
     }
-    public static PlaceholdersSubPageController getPlaceholdersSubPageController() {
-        return placeholdersSubPageController;
+    public static PlaceholdersSubPageController getPlaceholdersSubPageController() { return placeholdersSubPageController;
     }
 
+    //Getters for each Parent
+    public static Parent getMainPageParent() { return mainPageParent; }
+    public static Parent getTextEditorParent() { return textEditorParent; }
+    public static Parent getContentsSubPageParent() { return contentsSubPageParent; }
+    public static Parent getOverviewSubPageParent() { return overviewSubPageParent; }
+    public static Parent getPlaceholdersSubPageParent() { return placeholdersSubPageParent; }
 
     //TODO: are these needed? - Bjørn
     //References to the current active stage and scene are held here.
