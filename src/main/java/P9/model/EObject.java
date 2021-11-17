@@ -162,5 +162,6 @@ public class EObject {
 
     public void createNewDoc(){
         doc = new EObjectDoc();
+        doc.seteObject(this);
     }
 }

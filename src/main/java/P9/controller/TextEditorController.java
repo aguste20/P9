@@ -32,6 +32,7 @@ public class TextEditorController implements Initializable {
     private final FileChooser fileChooser = new FileChooser();
 
     private EObject eObject;
+    private EObjectDoc doc;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -89,28 +90,29 @@ public class TextEditorController implements Initializable {
         }
     }
 
+    /**
+     * Method that saves content from text area in the database
+     */
     @FXML
     private void save() {
 
-        // Get text from text area
-        String txt = textArea.getText();
-
-        // Create new eObject doc, if eObject doesn't already have doc
+        // If eObject doesn't already have a persisted doc, create one
         if(eObject.getDoc() == null){
             eObject.createNewDoc();
         }
 
         // Get doc from eObject
-        EObjectDoc doc = eObject.getDoc();
+        doc = eObject.getDoc();
+
+        // Get text from text area
+        String txt = textArea.getText();
 
         // Set xml text in doc
         doc.setXmlText(txt);
 
-        // Update eObject with the new doc
-        //TODO Anne - er det dumt at den opdaterer det hele? Måske skal den kun opdatere hele eObject hvis doc ikke allerede findes
+        // Update the database with the changed doc
         EObjectDocDao dao = new EObjectDocDao();
-        dao.updateEObjectDoc(doc);
-
+        dao.addOrUpdateEObjectDoc(doc);
 
 
         //TODO Anne - har bare udkommenteret for nu. Tænker det skal slettes?

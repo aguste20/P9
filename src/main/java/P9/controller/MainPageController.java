@@ -47,6 +47,8 @@ public class MainPageController implements Initializable{
 
         // Load engineering object from database with id = 1
         EObjectDao dao = new EObjectDao();
+        //TODO Anne - skal jo ikke være hardcoded i virkelig løsning.
+        // Men giver ikke mening at gøre dynamisk lige nu
         eObject = dao.getById(1);
     }
 
