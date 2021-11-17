@@ -25,17 +25,17 @@ public abstract class ContentBlock {
 
     @Id
     @Column(name = "content_block_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
     private Integer contentBlockID;
 
     private String name;
 
-    // Maps a many to many relation between contentBlock and category
+    // Maps a many-to-many relation between contentBlock and category
     // The association is mapped by the field "contentBlockList" in EObjectCategory.java
     @ManyToMany(mappedBy = "contentBlockList")
     private List<EObjectCategory> categoryList = new ArrayList<>();
 
-    // Maps a many to many relation between contentBlock and eObject doc
+    // Maps a many-to-many relation between contentBlock and eObject doc
     // The association is mapped by the field "contentBlockList" in EObjectDoc.java
     @ManyToMany(mappedBy = "contentBlockList")
     private List<EObjectDoc> eObjectDocList = new ArrayList<>();
@@ -47,7 +47,6 @@ public abstract class ContentBlock {
      */
     public ContentBlock() {
     }
-
 
     // ----- Getters and setters -----
 

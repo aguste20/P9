@@ -19,7 +19,7 @@ public class Organisation {
 
     @Id
     @Column(name = "organisation_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
     private Integer organisationId;
 
     private String name;
@@ -27,12 +27,11 @@ public class Organisation {
     private String phone;
     private String email;
 
-    // Maps a one to many relation between organisation and user
+    // Maps a one-to-many relation between organisation and user
     @OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
     // The association uses the join column "organisation_id" in the user table
     @JoinColumn(name = "organisation_id", referencedColumnName = "organisation_id")
     private List<User> userList = new ArrayList<>();
-
 
     // ----- Constructors -----
 

@@ -24,7 +24,7 @@ public class EObjectDoc {
 
     @Id
     @Column(name = "e_object_doc_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
     private Integer eObjectDocId;
 
     private Boolean published;
@@ -35,24 +35,24 @@ public class EObjectDoc {
     @Column(name = "last_edit")
     private Date lastEdit;
 
-    // Maps a many to many relation between eObject doc and content blocks, cascading all actions
+    // Maps a many-to-many relation between eObject doc and content blocks, cascading all actions
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL})
     // The association uses the join/link table "e_object_doc_has_content_block"
     @JoinTable(name = "e_object_doc_has_content_block",
             // The two columns are foreign keys to id columns in the eObject doc table and the content block table
             // The eObject doc is the "owning" part of the association. The content block is the inverse part.
+            // TODO: Please explain this @Anne because I am stupid
             joinColumns = { @JoinColumn(name = "e_object_doc_id")},
             inverseJoinColumns = { @JoinColumn(name = "content_block_id")}
     )
     private List<ContentBlock> contentBlockList = new ArrayList<>();
 
-    // Maps a one to one relation between eObject doc and eObject
+    // Maps a one-to-one relation between eObject doc and eObject
     @OneToOne(fetch = FetchType.LAZY, cascade = { CascadeType.ALL})
     // The association uses the join column "e_object_id" in the e_object_doc table
     // which references the id column in the eObject table
     @JoinColumn(name = "e_object_id", referencedColumnName = "e_object_id")
     private EObject eObject;
-
 
     // ----- Constructors -----
 
@@ -61,7 +61,6 @@ public class EObjectDoc {
      */
     public EObjectDoc() {
     }
-
 
     // ----- Getters and setters -----
 

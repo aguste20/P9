@@ -22,17 +22,17 @@ public class EObjectCategory {
 
     @Id
     @Column(name = "e_object_category_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
     private Integer eObjectCatId;
 
     private String name;
 
-    // Maps a one to many relation between category and eObject
+    // Maps a one-to-many relation between category and eObject
     // The association is mapped by the field "category" in EObject.java
     @OneToMany(mappedBy = "category")
     private List<EObject> eObjectList = new ArrayList<>();
 
-    // Maps a many to many relation between category and content blocks, cascading all actions
+    // Maps a many-to-many relation between category and content blocks, cascading all actions
     @ManyToMany(fetch = FetchType.LAZY,cascade = { CascadeType.ALL})
     // The association uses the join/link table "e_object_category_has_content_block"
     @JoinTable(name = "e_object_category_has_content_block",
@@ -43,7 +43,6 @@ public class EObjectCategory {
     )
     private List<ContentBlock> contentBlockList = new ArrayList<>();
 
-
     // ----- Constructors -----
 
     /**
@@ -51,7 +50,6 @@ public class EObjectCategory {
      */
     public EObjectCategory() {
     }
-
 
     // ----- Getters and setters -----
 

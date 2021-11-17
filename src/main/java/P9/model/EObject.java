@@ -25,7 +25,7 @@ public class EObject {
 
     @Id
     @Column(name = "e_object_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
     private Integer eObjectId;
 
     private String name;
@@ -37,8 +37,9 @@ public class EObject {
     @Column(name ="image_path")
     private String imagePath;
 
-    // Maps a many to many relation between eObject and other eObjects (components), cascading all actions
+    // Maps a many-to-many relation between eObject and other eObjects (components), cascading all actions
     // An eObject has a list of all its "first-layer" components
+    // TODO: Please explain this @Anne because I am stupid
     @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     // The association uses the join/link table "e_object_has_e_object"
     @JoinTable(name = "e_object_has_e_object",
@@ -49,14 +50,14 @@ public class EObject {
     )
     private List<EObject> componentList = new ArrayList<>();
 
-    // Maps a many to one relation between eObject and category, cascading all actions
+    // Maps a many-to-one relation between eObject and category, cascading all actions
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     // The association uses the join column "e_object_category_id" in the e_object table
     // which references the id column in the category table
     @JoinColumn(name = "e_object_category_id", referencedColumnName = "e_object_category_id")
     private EObjectCategory category;
 
-    // Maps a one to one relation betweem eObject and eObjecDoc
+    // Maps a one-to-one relation between eObject and eObjecDoc
     // The association is mapped by the field "eObject" in EObjectDoc.java
     @OneToOne(mappedBy = "eObject")
     private EObjectDoc doc;
@@ -68,7 +69,6 @@ public class EObject {
      */
     public EObject() {
     }
-
 
     // ----- Getters and setters -----
 

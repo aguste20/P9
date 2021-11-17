@@ -19,22 +19,22 @@ public class User {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //Generate unique value for every identity
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
     private Integer userId;
 
     private String name;
 
-    // Maps a many to many relationship between user and eObjects, cascading all actions
+    // Maps a many-to-many relationship between user and eObjects, cascading all actions
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
     // The association uses the join/link table "user_has_object"
     @JoinTable(name = "user_has_e_object",
             // The two columns are foreign keys to id columns in the user table and the eObject table
             // User is the "owning" part of the association. eObject is the inverse part.
+            // TODO: Please explain this @Anne because I am stupid
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns =  { @JoinColumn(name = "e_object_id") }
     )
     private List<EObject> eObjectList = new ArrayList<>();
-
 
     // ----- Constructors -----
 
@@ -43,7 +43,6 @@ public class User {
      */
     public User() {
     }
-
 
     // ----- Getters and setters -----
 

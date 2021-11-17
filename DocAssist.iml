@@ -6,7 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="DocAssist" />
+          <factory-entry name="DocAssist" value="5b634c59-4469-4868-aec8-20f5ccaa01b8" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
