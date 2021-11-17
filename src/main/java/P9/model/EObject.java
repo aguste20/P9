@@ -159,4 +159,8 @@ public class EObject {
     public void setDoc(EObjectDoc doc) {
         this.doc = doc;
     }
+
+    public void createNewDoc(){
+        doc = new EObjectDoc();
+    }
 }

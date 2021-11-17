@@ -2,6 +2,8 @@ package P9.controller;
 
 import P9.Main;
 import P9.model.*;
+import P9.persistence.EObjectDao;
+import P9.persistence.EObjectDocDao;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +31,8 @@ public class TextEditorController implements Initializable {
     private Stage stage;
     private final FileChooser fileChooser = new FileChooser();
 
+    private EObject eObject;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -39,7 +43,7 @@ public class TextEditorController implements Initializable {
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
 
         // Load xml text from the eObject that the user is working on
-        loadXmlTextToTextArea();
+        insertXmlTextInTextArea();
     }
 
     public void init(Stage myStage) {
@@ -87,7 +91,31 @@ public class TextEditorController implements Initializable {
 
     @FXML
     private void save() {
-        try {
+
+        // Get text from text area
+        String txt = textArea.getText();
+
+        // Create new eObject doc, if eObject doesn't already have doc
+        if(eObject.getDoc() == null){
+            eObject.createNewDoc();
+        }
+
+        // Get doc from eObject
+        EObjectDoc doc = eObject.getDoc();
+
+        // Set xml text in doc
+        doc.setXmlText(txt);
+
+        // Update eObject with the new doc
+        //TODO Anne - er det dumt at den opdaterer det hele? Måske skal den kun opdatere hele eObject hvis doc ikke allerede findes
+        EObjectDocDao dao = new EObjectDocDao();
+        dao.updateEObjectDoc(doc);
+
+
+
+        //TODO Anne - har bare udkommenteret for nu. Tænker det skal slettes?
+        /*
+         try {
             fileChooser.setTitle("Save As");
             File file = fileChooser.showSaveDialog(stage);
 
@@ -102,6 +130,7 @@ public class TextEditorController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+         */
     }
 
     @FXML
@@ -200,16 +229,19 @@ public class TextEditorController implements Initializable {
         }
     }
 
-    public void loadXmlTextToTextArea() {
+    /**
+     * Method that gets xml text from the loaded eObject
+     * and inserts it into the textArea
+     */
+    public void insertXmlTextInTextArea() {
         // Get loaded eObject from mainPageController
-        EObject eObject = Main.getMainPageController().geteObject();
+        eObject = Main.getMainPageController().geteObject();
 
         // Ensure that eObject, documentation, and xml text are not null
-        // TODO Anne - måske lidt i overkanten med tjek i vores tilfælde
         if (eObject != null && eObject.getDoc() != null && eObject.getDoc().getXmlText() != null) {
+            //Insert the loaded xml text at index 0
             textArea.insertText(0, eObject.getDoc().getXmlText());
         }
-
     }
 
 }
