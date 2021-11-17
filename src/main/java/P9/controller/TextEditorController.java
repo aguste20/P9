@@ -17,6 +17,9 @@ import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.sax.TransformerHandler;
 import java.io.*;
 import java.net.URL;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -109,6 +112,9 @@ public class TextEditorController implements Initializable {
 
         // Set xml text in doc
         doc.setXmlText(txt);
+
+        // Set last edit to today's date
+        doc.setLastEdit(Date.valueOf(LocalDate.now()));
 
         // Update the database with the changed doc
         EObjectDocDao dao = new EObjectDocDao();
