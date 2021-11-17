@@ -165,9 +165,18 @@ public class TextEditorController implements Initializable {
         }
     }
 
+    /**
+     * Method to enclose selected text in tags (<> </>)
+     * @param tag String for the tag (eg. "h1")
+     */
     public void tagSelectedText(String tag){
+        // Get index range for selected text in text area
         IndexRange range = textArea.getSelection();
+
+        // Insert closing tag after index range
         textArea.insertText(range.getEnd(),"</"+ tag + ">");
+
+        // Insert opening tag before index range
         textArea.insertText(range.getStart(),"<" + tag + ">");
     }
 
