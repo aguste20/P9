@@ -120,7 +120,7 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
 
-
+        mainPageController.setTextArea(textEditorController.getTextArea());
 
         //Inserts the textEditor into the right-side scrollPane of the main page.
         mainPageController.getPaneTextEditor().setContent(textEditorParent);

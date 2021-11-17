@@ -1,24 +1,29 @@
 package P9.controller;
 
+import P9.Main;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.xml.sax.SAXException;
 
+import javax.xml.transform.sax.SAXTransformerFactory;
+import javax.xml.transform.sax.TransformerHandler;
 import java.io.*;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TextEditorController implements Initializable {
 
+
+
+
     @FXML
-    private TextArea textArea;
+    public TextArea textArea;
 
     private Stage stage;
     private final FileChooser fileChooser = new FileChooser();
@@ -29,7 +34,7 @@ public class TextEditorController implements Initializable {
         fileChooser
                 .getExtensionFilters()
                 .addAll(
-                        new FileChooser.ExtensionFilter("Text", "*.txt"),
+                        new FileChooser.ExtensionFilter("XML", "*.xml"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
     }
 
@@ -37,30 +42,42 @@ public class TextEditorController implements Initializable {
         this.stage = myStage;
     }
 
+    public TextArea getTextArea() {
+        return textArea;
+    }
+
     @FXML
     public void exit() {
         if (textArea.getText().isEmpty()) {
-            Platform.exit();
             return;
         }
+        ButtonType button1 = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType button2 = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        ButtonType button3 = new ButtonType("Don't save", ButtonBar.ButtonData.NO);
 
         Alert alert = new Alert(
                 Alert.AlertType.CONFIRMATION,
-                "Exit without saving?",
-                ButtonType.YES,
-                ButtonType.NO,
-                ButtonType.CANCEL
-        );
+                "Close without saving?",
+                button1,
+                button2,
+                button3);
+        /*
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Yes, do not save");
+                ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("No, I want to save");
+                ((Button) alert.getDialogPane().lookupButton(ButtonType.NO)).setText("Cancel");
 
-        alert.setTitle("Confirm");
+         */
+        alert.setHeaderText("Are you sure you want to close without saving?");
         alert.showAndWait();
 
-        if (alert.getResult() == ButtonType.YES) {
-            Platform.exit();
+        if (alert.getResult() == button1) {
+            alert.close();
         }
-        if (alert.getResult() == ButtonType.NO) {
+        if (alert.getResult() == button2) {
             save();
-            Platform.exit();
+        }
+        if (alert.getResult() == button3){
+            textArea.clear();
         }
     }
 
@@ -94,7 +111,6 @@ public class TextEditorController implements Initializable {
         }
     }
 
-
     // sets the textArea to the text of the opened file
     private void readText(File file) {
         String text;
@@ -109,6 +125,9 @@ public class TextEditorController implements Initializable {
     }
 
     //TODO add confirmation window if text editor has text and wasn't saved
+
+
+
 
     @FXML
     public void newFile() {
@@ -140,6 +159,28 @@ public class TextEditorController implements Initializable {
                 break;
             case "large":
                 textArea.setStyle("-fx-font-size: 30px");
+                break;
+            default:
+                textArea.setStyle("-fx-font-size: 22px");
+        }
+    }
+
+    public void tagSelectedText(String tag){
+        IndexRange range = textArea.getSelection();
+        textArea.insertText(range.getEnd(),"</"+ tag + ">");
+        textArea.insertText(range.getStart(),"<" + tag + ">");
+    }
+
+    @FXML
+    public void createHeader(ActionEvent e) {
+        String choice = ((CheckMenuItem) e.getSource()).getId();
+
+        switch (choice) {
+            case "h1":
+                tagSelectedText("h1");
+                break;
+            case "h2":
+                tagSelectedText("h2");
                 break;
             default:
                 textArea.setStyle("-fx-font-size: 22px");
