@@ -14,9 +14,11 @@ import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.sax.TransformerHandler;
 import java.io.*;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TextEditorController implements Initializable {
+
 
 
 
@@ -32,7 +34,7 @@ public class TextEditorController implements Initializable {
         fileChooser
                 .getExtensionFilters()
                 .addAll(
-                        new FileChooser.ExtensionFilter("Text", "*.txt"),
+                        new FileChooser.ExtensionFilter("XML", "*.xml"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
     }
 
@@ -47,27 +49,35 @@ public class TextEditorController implements Initializable {
     @FXML
     public void exit() {
         if (textArea.getText().isEmpty()) {
-            Platform.exit();
             return;
         }
+        ButtonType button1 = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        ButtonType button2 = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        ButtonType button3 = new ButtonType("Don't save", ButtonBar.ButtonData.NO);
 
         Alert alert = new Alert(
                 Alert.AlertType.CONFIRMATION,
-                "Exit without saving?",
-                ButtonType.YES,
-                ButtonType.NO,
-                ButtonType.CANCEL
-        );
+                "Close without saving?",
+                button1,
+                button2,
+                button3);
+        /*
+        ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Yes, do not save");
+                ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("No, I want to save");
+                ((Button) alert.getDialogPane().lookupButton(ButtonType.NO)).setText("Cancel");
 
-        alert.setTitle("Confirm");
+         */
+        alert.setHeaderText("Are you sure you want to close without saving?");
         alert.showAndWait();
 
-        if (alert.getResult() == ButtonType.YES) {
-            Platform.exit();
+        if (alert.getResult() == button1) {
+            alert.close();
         }
-        if (alert.getResult() == ButtonType.NO) {
+        if (alert.getResult() == button2) {
             save();
-            Platform.exit();
+        }
+        if (alert.getResult() == button3){
+            textArea.clear();
         }
     }
 
