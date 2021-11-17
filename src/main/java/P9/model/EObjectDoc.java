@@ -29,7 +29,7 @@ public class EObjectDoc {
 
     private Boolean published;
 
-    @Column(name = "xml_path")
+    @Column(name = "xml_text")
     private String xmlPath;
 
     @Column(name = "last_edit")
