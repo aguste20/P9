@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TextEditorController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.TextEditorController">
    <top>
       <MenuBar maxHeight="-Infinity" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
         <menus>
@@ -22,11 +22,13 @@
                   <MenuItem mnemonicParsing="false" onAction="#exit" text="Close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Typography">
                <items>
-                  <CheckMenuItem fx:id="small" mnemonicParsing="false" onAction="#fontSize" text="Small ( 14px )" />
+                  <CheckMenuItem fx:id="small" mnemonicParsing="false" onAction="#fontSize" selected="true" text="Small ( 14px )" />
                   <CheckMenuItem fx:id="default" mnemonicParsing="false" onAction="#fontSize" text="Default ( 22px )" />
                   <CheckMenuItem fx:id="large" mnemonicParsing="false" onAction="#fontSize" text="Large ( 30px )" />
+                   <CheckMenuItem fx:id="h1" mnemonicParsing="false" onAction="#createHeader" text="Heading 1 ( 30px )" />
+                   <CheckMenuItem fx:id="h2" mnemonicParsing="false" onAction="#createHeader" text="Heading 2 ( 30px )" />
                </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
