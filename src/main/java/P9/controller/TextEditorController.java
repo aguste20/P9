@@ -1,6 +1,7 @@
 package P9.controller;
 
 import P9.Main;
+import P9.model.*;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -36,6 +37,9 @@ public class TextEditorController implements Initializable {
                 .addAll(
                         new FileChooser.ExtensionFilter("XML", "*.xml"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
+
+        // Load xml text from the eObject that the user is working on
+        loadXmlTextToTextArea();
     }
 
     public void init(Stage myStage) {
@@ -195,4 +199,17 @@ public class TextEditorController implements Initializable {
                 textArea.setStyle("-fx-font-size: 22px");
         }
     }
+
+    public void loadXmlTextToTextArea() {
+        // Get loaded eObject from mainPageController
+        EObject eObject = Main.getMainPageController().geteObject();
+
+        // Ensure that eObject, documentation, and xml text are not null
+        // TODO Anne - måske lidt i overkanten med tjek i vores tilfælde
+        if (eObject != null && eObject.getDoc() != null && eObject.getDoc().getXmlText() != null) {
+            textArea.insertText(0, eObject.getDoc().getXmlText());
+        }
+
+    }
+
 }
