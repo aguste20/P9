@@ -61,4 +61,12 @@ public class TestAnne {
         dao.addEObjectDoc(doc);
     }
 
+    public void loadEObject(){
+        EObjectDao dao = new EObjectDao();
+
+        EObject eob = dao.getById(1);
+
+        System.out.println("Xml content is: " + eob.getDoc().getXmlText());
+    }
+
 }
