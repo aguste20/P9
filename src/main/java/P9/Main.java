@@ -2,8 +2,6 @@ package P9;
 
 import P9.controller.*;
 import javafx.application.Application;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +17,7 @@ public class Main extends Application {
     private static Parent contentsSubPageParent;
     private static Parent overviewSubPageParent;
     private static Parent placeholdersSubPageParent;
+    private static Parent registerNewContentBlockPageParent;
 
 
     // References to controllers.
@@ -27,9 +26,11 @@ public class Main extends Application {
     private static ContentsSubPageController contentsSubPageController;
     private static OverviewSubPageController overviewSubPageController;
     private static PlaceholdersSubPageController placeholdersSubPageController;
+    private static RegisterNewContentBlockController registerNewContentBlockController;
 
 
     // ---- Getters ----
+    //Getters for each controller
     public static MainPageController getMainPageController() {
         return mainPageController;
     }
@@ -42,10 +43,16 @@ public class Main extends Application {
     public static OverviewSubPageController getOverviewSubPageController() {
         return overviewSubPageController;
     }
-    public static PlaceholdersSubPageController getPlaceholdersSubPageController() {
-        return placeholdersSubPageController;
-    }
+    public static PlaceholdersSubPageController getPlaceholdersSubPageController() { return placeholdersSubPageController; }
+    public static RegisterNewContentBlockController getRegisterNewContentBlockController() { return registerNewContentBlockController; }
 
+    //Getters for each Parent
+    public static Parent getMainPageParent() { return mainPageParent; }
+    public static Parent getTextEditorParent() { return textEditorParent; }
+    public static Parent getContentsSubPageParent() { return contentsSubPageParent; }
+    public static Parent getOverviewSubPageParent() { return overviewSubPageParent; }
+    public static Parent getPlaceholdersSubPageParent() { return placeholdersSubPageParent; }
+    public static Parent getRegisterNewContentBlockPageParent() { return registerNewContentBlockPageParent; }
 
     //TODO: are these needed? - Bjørn
     //References to the current active stage and scene are held here.
@@ -90,6 +97,11 @@ public class Main extends Application {
         placeholdersSubPageParent = loader5.load(getClass().getResource("../view/placeholdersSubPage.fxml").openStream());
         placeholdersSubPageController = loader5.getController();
 
+        //Same as above
+        FXMLLoader loader6 = new FXMLLoader();
+        registerNewContentBlockPageParent = loader6.load(getClass().getResource("../view/registerNewContentBlockPage.fxml").openStream());
+        registerNewContentBlockController = loader6.getController();
+
     }
 
 
@@ -105,10 +117,6 @@ public class Main extends Application {
         stage.setTitle("Documentation Assist 😎");
         //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
         //stage.getIcons().add(icon);
-
-        /*
-         */
-
         stage.setScene(scene);
         stage.show();
 
@@ -132,7 +140,6 @@ public class Main extends Application {
      */
     public static void main(String[] args){
         launch(args);
-
     }
 
 }
