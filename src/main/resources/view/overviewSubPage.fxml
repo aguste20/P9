@@ -31,6 +31,6 @@
          </children>
       </HBox>
       <Label prefHeight="77.0" prefWidth="401.0" text="Insert overview of table of content. Allow user to add content to the table." wrapText="true" GridPane.rowIndex="1" />
-      <Accordion fx:id="tocAccordion" GridPane.rowIndex="1" />
+      <Accordion fx:id="tocAccordion" nodeOrientation="LEFT_TO_RIGHT" GridPane.rowIndex="1" />
    </children>
 </GridPane>

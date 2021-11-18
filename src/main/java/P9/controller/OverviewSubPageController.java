@@ -4,13 +4,15 @@ import P9.Main;
 import P9.model.EObjectDoc;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.Region;
 
 import java.net.URL;
 import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class OverviewSubPageController implements Initializable {
 
@@ -41,9 +43,32 @@ public class OverviewSubPageController implements Initializable {
     Header h = new Header("Hej", 1);
 
     public void updateToc() {
+        // Get text from doc from eObject
+        String txt = doc.getXmlText();
+
+        // Find all h1 headers
+        List<String> headerList = findHeaders(txt, 1);
+
+        for(String headerString : headerList){
+            addHeaderToAccordion(headerString);
+
+            //TODO Anne: Find h2 for denne h1
+            //TODO Anne: Tilføj accordion til h1-tp + tilføj h2-tp til accordion
+            /*
+            TitledPane tp2 = new TitledPane();
+            tp2.setText("h2");
+
+            Accordion h1Acc = new Accordion();
+            h1Acc.getPanes().add(tp2);
+
+            tp.setContent(h1Acc);
+             */
 
 
-        String headerString = getHeader("1");
+
+        }
+
+    }
 
 
 
@@ -60,22 +85,21 @@ public class OverviewSubPageController implements Initializable {
             }
              */
 
-    }
 
 
-    public String getHeader(String type) {
-        // String to be returned by the method
-        String headerString = "";
+    public List<String> findHeaders(String txt, int type) {
 
-        // Get text from doc from eObject
-        String txt = doc.getXmlText();
+        ArrayList<String> headerList = new ArrayList<>();
 
-        // Create tags strings to look for
+        // Create tag strings to look for
         String hTag = ("<h" + type + ">");
         String hClosingTag = ("</h" + type + ">");
 
         // Parse string for substrings
         if (txt.contains(hTag)) {
+
+            // String to be returned by the method
+            String headerString = "";
 
             int j = 0;
 
@@ -88,28 +112,31 @@ public class OverviewSubPageController implements Initializable {
                 firstIndex = txt.indexOf(hTag, j);
                 lastIndex = txt.indexOf(hClosingTag, j);
 
-                // If no header found, break fo loop
-                if(firstIndex == -1){
+                // If no header found, break for loop
+                if (firstIndex == -1) {
                     break;
                 }
 
                 // Get substring at specified index
                 headerString = txt.substring(firstIndex + 4, lastIndex);
 
-                // Create titled pane from found heading string
-                TitledPane tp = new TitledPane();
-                tp.setText(headerString);
-
-                // Append new titled pane to accordion in scene
-                tocAccordion.getPanes().add(tp);
+                headerList.add(headerString);
 
                 // Increment j (index position to look from)
                 j = lastIndex + 5;
             }
 
         }
+        return headerList;
+    }
 
-        return headerString;
+    public void addHeaderToAccordion(String header){
+        // Create titled pane from found heading string
+        TitledPane tp = new TitledPane();
+        tp.setText(header);
+
+        // Append new titled pane to accordion in scene
+        tocAccordion.getPanes().add(tp);
 
     }
 
