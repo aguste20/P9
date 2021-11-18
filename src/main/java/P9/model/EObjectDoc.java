@@ -41,7 +41,6 @@ public class EObjectDoc {
     @JoinTable(name = "e_object_doc_has_content_block",
             // The two columns are foreign keys to id columns in the eObject doc table and the content block table
             // The eObject doc is the "owning" part of the association. The content block is the inverse part.
-            // TODO: Please explain this @Anne because I am stupid
             joinColumns = { @JoinColumn(name = "e_object_doc_id")},
             inverseJoinColumns = { @JoinColumn(name = "content_block_id")}
     )

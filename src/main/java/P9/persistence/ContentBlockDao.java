@@ -16,7 +16,7 @@ public class ContentBlockDao {
      * Adds a ContentBlock object to the database
      * @param block The ContentBlock object that is to be added
      */
-    public void addBlock(ContentBlockDao block){
+    public void addBlock(ContentBlock block){
         Session session = Setup.getSession();
         session.save(block);
         Setup.closeSession(session);
@@ -26,7 +26,7 @@ public class ContentBlockDao {
      * Updating a ContentBlock object in the database
      * @param block The ContentBlock object that is to be added
      */
-    public void updateBlock(ContentBlockDao block){
+    public void updateBlock(ContentBlock block){
         Session session = Setup.getSession();
         session.update(block);
         Setup.closeSession(session);
@@ -36,7 +36,7 @@ public class ContentBlockDao {
      * Method for deleting a ContentBlock object by ID
      * @param block The ID of the ContentBlock object that is being searched for
      */
-    public void deleteBlock(ContentBlockDao block){
+    public void deleteBlock(ContentBlock block){
         Session session = Setup.getSession();
         session.delete(block);
         Setup.closeSession(session);
