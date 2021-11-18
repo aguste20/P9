@@ -4,6 +4,7 @@ import P9.Main;
 import P9.model.*;
 import P9.persistence.EObjectDao;
 import P9.persistence.EObjectDocDao;
+import P9.persistence.UserDao;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +29,10 @@ public class TextEditorController implements Initializable {
     public TextArea textArea;
 
     @FXML
-    public Label previouslyEditedLabel;
+    public Label lastEditLabel;
+
+    @FXML
+    public Label lastUserLabel;
 
     private Stage stage;
     private final FileChooser fileChooser = new FileChooser();
@@ -47,6 +51,9 @@ public class TextEditorController implements Initializable {
 
         // Load xml text from the eObject that the user is working on
         insertXmlTextInTextArea();
+        //Load the date and the responsible user of the last edit into labels.
+        insertLastEditUserInLabels();
+
     }
 
     public void init(Stage myStage) {
@@ -57,7 +64,7 @@ public class TextEditorController implements Initializable {
         return textArea;
     }
 
-    @FXML
+
     public void exit() {
         if (textArea.getText().isEmpty()) {
             return;
@@ -102,9 +109,6 @@ public class TextEditorController implements Initializable {
         if(eObject.getDoc() == null){
             eObject.createNewDoc();
         }
-
-        // Get doc from eObject
-        doc = eObject.getDoc();
 
         // Get text from text area
         String txt = textArea.getText();
@@ -244,11 +248,34 @@ public class TextEditorController implements Initializable {
         // Get loaded eObject from mainPageController
         eObject = Main.getMainPageController().geteObject();
 
+        // Get doc from eObject
+        doc = eObject.getDoc();
+
         // Ensure that eObject, documentation, and xml text are not null
         if (eObject != null && eObject.getDoc() != null && eObject.getDoc().getXmlText() != null) {
             //Insert the loaded xml text at index 0
             textArea.insertText(0, eObject.getDoc().getXmlText());
         }
     }
+
+    /**
+     * Method for inserting the date of the last time the document was saved.
+     */
+    public void insertLastEditUserInLabels(){
+        //Variable that stores the last edit of the document.
+        Date editDate = doc.getLastEdit();
+        //If the variable is not null, its value is inserted into the label.
+        if (editDate != null){
+            lastEditLabel.setText("Last edit " + editDate);
+
+            //This part is pretty dumb at the moment. It is not dynamic.
+            //It gets the name of a user, and in this case the user with id = 1
+            UserDao userDao = Main.getMainPageController().userDAO;
+            User user = userDao.getById(1);
+            lastUserLabel.setText(" performed by: " + user.getName());
+        }
+    }
+
+
 
 }

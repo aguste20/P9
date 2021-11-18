@@ -3,6 +3,7 @@ package P9.controller;
 import P9.Main;
 import P9.model.EObject;
 import P9.persistence.EObjectDao;
+import P9.persistence.UserDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +25,8 @@ public class MainPageController implements Initializable{
 
     // Reference to the engineering object that the user is working on
     EObject eObject;
+    // Reference to the DAO for our user.
+    UserDao userDAO = new UserDao();
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
@@ -34,6 +37,7 @@ public class MainPageController implements Initializable{
     public EObject geteObject() {
         return eObject;
     }
+    public UserDao getUserDAO() { return userDAO; }
 
     /**
      * This method initializes a controller after its root element has already been processed.
