@@ -29,7 +29,7 @@ public class EObjectCategory {
 
     // Maps a one-to-many relation between category and eObject
     // The association is mapped by the field "category" in EObject.java
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REFRESH)
     private List<EObject> eObjectList = new ArrayList<>();
 
     // Maps a many-to-many relation between category and content blocks, cascading all actions
