@@ -46,7 +46,7 @@ public class EObject {
             // The two columns are foreign keys to id columns in the user table and the eObject table
             // The parent e_object is the "owning" part of the association. The component e_object is the inverse part.
             joinColumns = { @JoinColumn(name = "e_object_id")},
-            inverseJoinColumns = { @JoinColumn(name = "e_object_id_1")}
+            inverseJoinColumns = { @JoinColumn(name = "e_object_id_child")}
     )
     private List<EObject> componentList = new ArrayList<>();
 
