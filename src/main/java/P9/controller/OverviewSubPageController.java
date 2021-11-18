@@ -12,7 +12,7 @@ import java.text.CharacterIterator;
 import java.text.StringCharacterIterator;
 import java.util.ResourceBundle;
 
-public class OverviewSubPageController implements Initializable{
+public class OverviewSubPageController implements Initializable {
 
     private EObjectDoc doc;
 
@@ -28,7 +28,7 @@ public class OverviewSubPageController implements Initializable{
         updateToc();
     }
 
-    private class Header{
+    private class Header {
         String txt;
         Integer startIndex;
 
@@ -40,30 +40,13 @@ public class OverviewSubPageController implements Initializable{
 
     Header h = new Header("Hej", 1);
 
-    public void updateToc(){
-        //Get text from doc from eobject
-        String txt = doc.getXmlText();
+    public void updateToc() {
 
-        System.out.println(txt);
 
-        // Parse string for substrings
-        if(txt.contains("<h1>")){
+        String headerString = getHeader("1");
 
-            int i = 0;
 
-            //Iterate over txt string
-            int j = txt.indexOf("<h2>");
-            System.out.println(j);
-            int h = txt.indexOf("</h2>");
-            System.out.println(h);
 
-            String headerString = txt.substring(j+4, h);
-            System.out.println(headerString);
-
-            TitledPane tp = new TitledPane();
-            tp.setText(headerString);
-
-            tocAccordion.getPanes().add(tp);
             /*
                 //Parse text for headings with iterator, save in list
             CharacterIterator it = new StringCharacterIterator(txt);
@@ -77,13 +60,57 @@ public class OverviewSubPageController implements Initializable{
             }
              */
 
-        }
-
-        //create titledPane for each heading in list
     }
 
 
+    public String getHeader(String type) {
+        // String to be returned by the method
+        String headerString = "";
 
+        // Get text from doc from eObject
+        String txt = doc.getXmlText();
 
+        // Create tags strings to look for
+        String hTag = ("<h" + type + ">");
+        String hClosingTag = ("</h" + type + ">");
+
+        // Parse string for substrings
+        if (txt.contains(hTag)) {
+
+            int j = 0;
+
+            int firstIndex;
+            int lastIndex;
+
+            // Iterate over text, looking for headers
+            for (int i = 0; i < txt.length(); i += j) {
+                // Find index of the header string, looking from index j
+                firstIndex = txt.indexOf(hTag, j);
+                lastIndex = txt.indexOf(hClosingTag, j);
+
+                // If no header found, break fo loop
+                if(firstIndex == -1){
+                    break;
+                }
+
+                // Get substring at specified index
+                headerString = txt.substring(firstIndex + 4, lastIndex);
+
+                // Create titled pane from found heading string
+                TitledPane tp = new TitledPane();
+                tp.setText(headerString);
+
+                // Append new titled pane to accordion in scene
+                tocAccordion.getPanes().add(tp);
+
+                // Increment j (index position to look from)
+                j = lastIndex + 5;
+            }
+
+        }
+
+        return headerString;
+
+    }
 
 }
