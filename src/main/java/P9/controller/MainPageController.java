@@ -50,6 +50,11 @@ public class MainPageController implements Initializable{
         //TODO Anne - skal jo ikke være hardcoded i virkelig løsning.
         // Men giver ikke mening at gøre dynamisk lige nu
         eObject = dao.getById(1);
+
+        // If eObject has no doc, create one for it
+        if (eObject.getDoc() == null){
+            eObject.createNewDoc();
+        }
     }
 
 
