@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.xml.sax.SAXException;
 
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.sax.TransformerHandler;
@@ -24,9 +23,6 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TextEditorController implements Initializable {
-
-
-
 
     @FXML
     public TextArea textArea;
