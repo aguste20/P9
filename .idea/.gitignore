@@ -2,6 +2,7 @@
 /shelf/
 /workspace.xml
 /.name
+.idea/target/
 # Datasource local storage ignored files
 /../../../../../../:\Users\anneg\IdeaProjects\P9\.idea/dataSources/
 /dataSources.local.xml
