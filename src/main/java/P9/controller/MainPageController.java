@@ -1,6 +1,8 @@
 package P9.controller;
 
 import P9.Main;
+import P9.model.EObject;
+import P9.persistence.EObjectDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +22,18 @@ public class MainPageController implements Initializable{
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
 
+    // Reference to the engineering object that the user is working on
+    EObject eObject;
+
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
     public ScrollPane getPaneTextEditor() { return paneTextEditor; }
     public ScrollPane getPaneOverviewSubPage() { return paneOverviewSubPage; }
     public ScrollPane getPaneContentsPlaceholders() { return paneContentsPlaceholders; }
 
+    public EObject geteObject() {
+        return eObject;
+    }
 
     /**
      * This method initializes a controller after its root element has already been processed.
@@ -36,6 +44,12 @@ public class MainPageController implements Initializable{
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
         //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
+
+        // Load engineering object from database with id = 1
+        EObjectDao dao = new EObjectDao();
+        //TODO Anne - skal jo ikke være hardcoded i virkelig løsning.
+        // Men giver ikke mening at gøre dynamisk lige nu
+        eObject = dao.getById(1);
     }
 
 
