@@ -72,4 +72,14 @@ public class EObjectDocDao {
         //Returning list of objects retrieved from the database
         return objList;
     }
+
+    /**
+     * Saving or updating a EObjectDoc object in the database
+     * @param doc The EObjectDoc object that is to be added or updated if already persistent
+     */
+    public void addOrUpdateEObjectDoc(EObjectDoc doc){
+        Session session = Setup.getSession();
+        session.saveOrUpdate(doc);
+        Setup.closeSession(session);
+    }
 }

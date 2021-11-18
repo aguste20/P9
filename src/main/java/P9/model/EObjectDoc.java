@@ -30,7 +30,7 @@ public class EObjectDoc {
     private Boolean published;
 
     @Column(name = "xml_text")
-    private String xmlPath;
+    private String xmlText;
 
     @Column(name = "last_edit")
     private Date lastEdit;
@@ -80,12 +80,12 @@ public class EObjectDoc {
         this.published = published;
     }
 
-    public String getXmlPath() {
-        return xmlPath;
+    public String getXmlText() {
+        return xmlText;
     }
 
-    public void setXmlPath(String xmlPath) {
-        this.xmlPath = xmlPath;
+    public void setXmlText(String xmlPath) {
+        this.xmlText = xmlPath;
     }
 
     public Date getLastEdit() {
