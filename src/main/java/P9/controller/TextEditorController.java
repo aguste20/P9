@@ -27,6 +27,9 @@ public class TextEditorController implements Initializable {
     @FXML
     public TextArea textArea;
 
+    @FXML
+    public Label previouslyEditedLabel;
+
     private Stage stage;
     private final FileChooser fileChooser = new FileChooser();
 
