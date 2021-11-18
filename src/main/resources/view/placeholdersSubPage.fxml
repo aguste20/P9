@@ -32,9 +32,12 @@
       </HBox>
       <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
         <columns>
-          <TableColumn minWidth="50.0" prefWidth="200.0" resizable="false" text="Dette er en test" />
-          <TableColumn minWidth="50.0" prefWidth="200.0" resizable="false" text="Også en test" />
+          <TableColumn minWidth="50.0" prefWidth="-1.0" text="Placeholder" />
+          <TableColumn minWidth="50.0" prefWidth="-1.0" text="Values" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
    </children>
 </GridPane>
