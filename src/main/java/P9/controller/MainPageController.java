@@ -66,7 +66,12 @@ public class MainPageController implements Initializable{
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
     public void switchToContentsSubPage (ActionEvent event){
+        System.out.println("Test1");
+        paneContentsPlaceholders.setContent(null);
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
+        System.out.println("Test2");
+        //TODO: Bjørn efterlod det her. Lortet kan ikke skifte frem og tilbage XD
+
     }
 
 }
