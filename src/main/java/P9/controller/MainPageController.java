@@ -19,7 +19,6 @@ public class MainPageController implements Initializable{
     @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
-    TextArea textArea;
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
@@ -39,14 +38,6 @@ public class MainPageController implements Initializable{
         //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
     }
 
-    public void setTextArea(TextArea textArea) {
-        this.textArea = textArea;
-    }
-
-    public void getSelected(){
-        System.out.println("selected text:"
-                + textArea.getSelectedText());
-    }
 
     /**
      * Methods for changing the contents of the middle pane of the mainPage.fxml.
