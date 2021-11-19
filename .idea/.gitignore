@@ -11,3 +11,8 @@
 ../target
 # Editor-based HTTP Client requests
 /httpRequests/
+# Ignoring Maven targets
+.classpath
+.project
+.settings/
+target/
