@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import javafx.scene.control.Accordion?>
 <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.OverviewSubPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -30,6 +31,7 @@
             </Button>
          </children>
       </HBox>
-      <Label text="Table of contents" />
+       <Label prefHeight="77.0" prefWidth="401.0" text="Insert overview of table of content. Allow user to add content to the table." wrapText="true" GridPane.rowIndex="1" />
+       <Accordion fx:id="tocAccordion" nodeOrientation="LEFT_TO_RIGHT" GridPane.rowIndex="1" />
    </children>
 </GridPane>

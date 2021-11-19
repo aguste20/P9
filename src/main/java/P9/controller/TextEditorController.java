@@ -105,11 +105,6 @@ public class TextEditorController implements Initializable {
     @FXML
     private void save() {
 
-        // If eObject doesn't already have a persisted doc, create one
-        if(eObject.getDoc() == null){
-            eObject.createNewDoc();
-        }
-
         // Get text from text area
         String txt = textArea.getText();
 
