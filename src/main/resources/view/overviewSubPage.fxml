@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -9,28 +8,30 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.OverviewSubPageController">
+<?import javafx.scene.control.Accordion?>
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.OverviewSubPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="562.0" minHeight="10.0" prefHeight="554.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="35.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="2.0" prefHeight="554.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+      <HBox alignment="CENTER" maxHeight="40.0" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Add Section">
+            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="35.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Add Section">
                <HBox.margin>
                   <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <Label prefHeight="77.0" prefWidth="401.0" text="Insert overview of table of content. Allow user to add content to the table." wrapText="true" GridPane.rowIndex="1" />
-      <Accordion fx:id="tocAccordion" nodeOrientation="LEFT_TO_RIGHT" GridPane.rowIndex="1" />
+       <Label prefHeight="77.0" prefWidth="401.0" text="Insert overview of table of content. Allow user to add content to the table." wrapText="true" GridPane.rowIndex="1" />
+       <Accordion fx:id="tocAccordion" nodeOrientation="LEFT_TO_RIGHT" GridPane.rowIndex="1" />
    </children>
 </GridPane>

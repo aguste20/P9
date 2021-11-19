@@ -13,11 +13,12 @@
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints maxHeight="295.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="30.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="35.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="562.0" minHeight="10.0" prefHeight="554.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+      <HBox alignment="CENTER" maxHeight="40.0" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
@@ -29,6 +30,6 @@
             </Button>
          </children>
       </HBox>
-      <Label prefHeight="77.0" prefWidth="401.0" text="Insert directory of categories and currently existing content blocks" wrapText="true" GridPane.rowIndex="1" />
+      <Label text="List of existing content blocks" />
    </children>
 </GridPane>
