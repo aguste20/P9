@@ -5,6 +5,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.metadata.ClassMetadata;
+import org.hibernate.metamodel.spi.MetamodelImplementor;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class is responsible for creating the connection to the database by creating a sessionfactory
@@ -71,6 +76,14 @@ public class Setup {
     public static void closeSession(Session session){
         session.getTransaction().commit();
         session.close();
+    }
+
+    public static List<String> getColumnName(){
+        String entityName = EObject.class.getName();
+        MetamodelImplementor metamodel = (MetamodelImplementor) sf.getMetamodel();
+        ClassMetadata classMetadata = (ClassMetadata) metamodel.entityPersister(entityName);
+        List<String> columns = Arrays.stream(classMetadata.getPropertyNames()).toList();
+        return columns;
     }
 
     /**

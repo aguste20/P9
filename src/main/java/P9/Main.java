@@ -1,6 +1,7 @@
 package P9;
 
 import P9.controller.*;
+import P9.persistence.Setup;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
