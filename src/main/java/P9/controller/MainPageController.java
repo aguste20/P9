@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
@@ -66,10 +67,16 @@ public class MainPageController implements Initializable{
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
     public void switchToContentsSubPage (ActionEvent event){
-        System.out.println("Test1");
-        paneContentsPlaceholders.setContent(null);
+        //These 2 lines are a messy solution, but in lack of a better one xd.
+        //Before setting our pane to contain the ContentsSubPage, we SOME change
+        // to the one currently being showed. We add 0.001 width to the showed pane,
+        // so JavaFX registers a change to the content of the Node.
+        Scene placeholderScene = Main.getPlaceholdersSubPageParent().getScene();
+        placeholderScene.getWindow().setWidth(placeholderScene.getWidth() + 0.001);
+
+        //Make the switch
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
-        System.out.println("Test2");
+
         //TODO: Bjørn efterlod det her. Lortet kan ikke skifte frem og tilbage XD
 
     }
