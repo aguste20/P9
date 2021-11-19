@@ -46,7 +46,7 @@
                   <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Export PDF" HBox.hgrow="ALWAYS">
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToPreviewSubPage" text="Export PDF" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>

@@ -6,6 +6,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class Main extends Application {
     private static Parent overviewSubPageParent;
     private static Parent placeholdersSubPageParent;
     private static Parent registerNewContentBlockPageParent;
+    private static Parent previewSubPageParent;
 
 
     // References to controllers.
@@ -28,6 +31,7 @@ public class Main extends Application {
     private static OverviewSubPageController overviewSubPageController;
     private static PlaceholdersSubPageController placeholdersSubPageController;
     private static RegisterNewContentBlockController registerNewContentBlockController;
+    private static PreviewSubPageController previewSubPageController;
 
 
     // ---- Getters ----
@@ -46,6 +50,7 @@ public class Main extends Application {
     }
     public static PlaceholdersSubPageController getPlaceholdersSubPageController() { return placeholdersSubPageController; }
     public static RegisterNewContentBlockController getRegisterNewContentBlockController() { return registerNewContentBlockController; }
+    public static PreviewSubPageController getPreviewSubPageController() {return previewSubPageController;}
 
     //Getters for each Parent
     public static Parent getMainPageParent() { return mainPageParent; }
@@ -54,13 +59,20 @@ public class Main extends Application {
     public static Parent getOverviewSubPageParent() { return overviewSubPageParent; }
     public static Parent getPlaceholdersSubPageParent() { return placeholdersSubPageParent; }
     public static Parent getRegisterNewContentBlockPageParent() { return registerNewContentBlockPageParent; }
+    public static Parent getPreviewSubPageParent () {return previewSubPageParent;}
 
     //TODO: are these needed? - Bjørn
     //References to the current active stage and scene are held here.
     private static Stage stage;
     private static Scene scene;
 
+    public static WebView getWebview() {
+        return webview;
+    }
 
+    private static WebView webview;
+
+    private WebEngine engine;
     /**
      * Overrides the init() method inherited from Application.
      * Loads all .fxml files into memory and stores static references to them
@@ -70,7 +82,6 @@ public class Main extends Application {
     @Override
     public void init() throws IOException {
         //We fill the roots with respective .fxml files from harddrive.
-
 
         // We create an FXMLLoader which fills the empty mainPageParent reference with its respective .fxml file
         // We also fill the empty mainPageController reference with the P9.controller of the .fxml file
@@ -103,6 +114,11 @@ public class Main extends Application {
         registerNewContentBlockPageParent = loader6.load(getClass().getResource("../view/registerNewContentBlockPage.fxml").openStream());
         registerNewContentBlockController = loader6.getController();
 
+        //Same as above
+        FXMLLoader loader7 = new FXMLLoader();
+        previewSubPageParent = loader7.load(getClass().getResource("../view/previewSubPage.fxml").openStream());
+        previewSubPageController = loader7.getController();
+
     }
 
 
@@ -113,6 +129,11 @@ public class Main extends Application {
      */
     @Override
     public void start(Stage stage) throws Exception {
+
+        webview = new WebView();
+
+        engine = webview.getEngine();
+        engine.load("http://www.google.com");
 
         scene = new Scene(mainPageParent);
         stage.setTitle("Documentation Assist 😎");
