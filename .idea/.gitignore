@@ -3,8 +3,9 @@
 /workspace.xml
 /.name
 .idea/target/
-.idea/dataSources/
-/DocAssist.iml
+.idea/dataSources/5b634c59-4469-4868-aec8-20f5ccaa01b8.xml
+.idea/runConfigurations.xml
+DocAssist.iml
 # Datasource local storage ignored files
 /../../../../../../:\Users\anneg\IdeaProjects\P9\.idea/dataSources/
 /dataSources.local.xml
