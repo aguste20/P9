@@ -133,7 +133,8 @@ public class Main extends Application {
         webview = new WebView();
 
         engine = webview.getEngine();
-        engine.load("http://www.google.com");
+        engine.load("file:///C:\\Users\\ando1\\IdeaProjects\\P9\\src\\main\\java\\P9\\data3.xml");
+
 
         scene = new Scene(mainPageParent);
         stage.setTitle("Documentation Assist 😎");
