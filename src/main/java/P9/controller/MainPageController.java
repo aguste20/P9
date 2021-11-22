@@ -5,13 +5,19 @@ import P9.model.EObject;
 import P9.persistence.EObjectDao;
 import P9.persistence.UserDao;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -62,6 +68,49 @@ public class MainPageController implements Initializable{
         }
     }
 
+    // Attribute to hold the secondary stage for the "Register new Content Block" window
+    private Stage newWebView;
+
+    /*
+    public void openPreview(ActionEvent event) {
+        // If register new content block window hasn't been opened before
+        if (newWebView == null) {
+            // Create new stage, set scene with fxml root, set title
+            Stage stage = new Stage();
+            stage.setScene(new Scene(Main.getPreviewSubPageParent()));
+            stage.setTitle("Register a new preview");
+
+
+            //https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Stage.html#initModality-javafx.stage.Modality-
+            //Set stage to have the modality of WINDOW_MODAL.
+            //The stage blocks input events from being delivered to all windows from its owner (parent) to its root. Its root is the closest ancestor window without an owner.
+            stage.initModality(Modality.WINDOW_MODAL);
+            //initOwner specifies the owner Window for this stage. In this case we set dataInsertionPage to be the owner.
+            //This one 'locks' the user to the window, so they can't click elsewhere.
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+
+            //When the user tries to close the window
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    //TODO: Specify here what we want to happen when the window is closed.
+                    // An example is, that we want to update the original list of content blocks.
+
+                    //Close stage/window
+                    newWebView.close();
+                }
+            });
+
+            // If stage already exists, update reference to the stage
+            newWebView = stage;
+        }
+
+        // Show stage
+        newWebView.show();
+    }
+
+     */
+
 
     /**
      * Methods for changing the contents of the middle pane of the mainPage.fxml.
@@ -71,6 +120,12 @@ public class MainPageController implements Initializable{
     public void switchToPlaceholdersSubPage (ActionEvent event){
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
+
+    public void switchToPreviewSubPage (ActionEvent event){
+        Main.getPreviewSubPageController().getWebGridPane().add(Main.getWebview(), 0 , 0);
+        paneTextEditor.setContent(Main.getPreviewSubPageParent());
+    }
+
     public void switchToContentsSubPage (ActionEvent event){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
