@@ -10,7 +10,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_X">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_16">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -47,9 +47,9 @@
     <orderEntry type="library" name="Maven: com.sun.xml.fastinfoset:FastInfoset:1.2.15" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.27" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:13" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:win:13" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:13" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:win:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:17.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-web:win:17.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:17.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-media:win:17.0.1" level="project" />
   </component>
 </module>
