@@ -76,7 +76,7 @@ public class MainPageController implements Initializable{
         //TODO: Lav nedenstående dynamisk
 
         eObject.seteObjectId(999);
-        eObject.setName("Volvo Penta");
+        eObject.setName("Volvo Penta Car Factory");
         eObject.setVersion(2.2);
         eObject.setLength(2.3);
         eObject.setHeight(2.4);
@@ -103,7 +103,7 @@ public class MainPageController implements Initializable{
                     "<?xml-stylesheet type='text/xsl' href='style.xsl' ?>");
 
             //Store XML to File
-            File file = new File("C:\\Users\\ando1\\IdeaProjects\\P9\\src\\main\\resources\\xml\\eObject.xml");
+            File file = new File("src\\main\\resources\\xml\\eObject.xml");
 
             //Writes XML file to file-system
             jaxbMarshaller.marshal(eObject, file);
