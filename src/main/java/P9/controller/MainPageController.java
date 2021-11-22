@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
@@ -25,12 +27,19 @@ import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable{
 
+
+
     //We annotate the containers of the mainPage.fxml
     @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
+    //Annotating label and button
+    @FXML public Label eObjectLabel;
+    @FXML public Button eOjbectUpdate;
+
 
     // Reference to the engineering object that the user is working on
+
     EObject eObject;
     // Reference to the DAO for our user.
     UserDao userDAO = new UserDao();
@@ -62,10 +71,19 @@ public class MainPageController implements Initializable{
         // Men giver ikke mening at gøre dynamisk lige nu
         eObject = dao.getById(1);
 
+        eObjectLabel.setText(eObject.getName());
+
         // If eObject has no doc, create one for it
         if (eObject.getDoc() == null){
             eObject.createNewDoc();
         }
+    }
+
+    public void updateEObject(ActionEvent e) {
+        EObjectDao eObjectDao = new EObjectDao();
+        eObject = eObjectDao.getById(eObject.geteObjectId());
+        eObjectLabel.setText(eObject.getName());
+        Main.getPlaceholdersSubPageController().updateEObject();
     }
 
     // Attribute to hold the secondary stage for the "Register new Content Block" window
@@ -129,6 +147,11 @@ public class MainPageController implements Initializable{
     public void switchToContentsSubPage (ActionEvent event){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
+
+    public void switchToTextEditorPage(){
+        paneTextEditor.setContent(Main.getTextEditorParent());
+    }
+
 
 }
 
