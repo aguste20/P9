@@ -10,7 +10,7 @@
         <xsl:for-each select="h1">
             <h1><xsl:value-of select="h2" /></h1>
             <xsl:text> This is </xsl:text><xsl:value-of select="name"/><xsl:text>. You can search by serial number, product/specification number or product designation.
-            However, searching by serial or product/specification number will supply the most in-depth
+            However, searching by</xsl:text> <b> serial</b> <xsl:text> or product/specification number will supply the most in-depth
             information, but only works for products manufactured after 1991. Please observe that the
             information available varies depending on the product and year of production. Information
             for older products is limited.
@@ -18,8 +18,6 @@
         </xsl:for-each>
 
         <p>blablabla</p>
-
-
 
     </xsl:template>
 
