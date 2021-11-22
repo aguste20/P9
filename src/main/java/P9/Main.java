@@ -10,7 +10,9 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 public class Main extends Application {
 
@@ -133,8 +135,8 @@ public class Main extends Application {
         webview = new WebView();
 
         engine = webview.getEngine();
-        engine.load("http://www.google.com");
-
+        File f = new File("src/main/resources/xml/eObject.xml");
+        engine.load(f.toURI().toString());
         scene = new Scene(mainPageParent);
         stage.setTitle("Documentation Assist 😎");
         //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
