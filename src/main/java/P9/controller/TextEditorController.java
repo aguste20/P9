@@ -272,5 +272,4 @@ public class TextEditorController implements Initializable {
     }
 
 
-
 }

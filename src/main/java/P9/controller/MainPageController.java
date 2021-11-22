@@ -121,14 +121,20 @@ public class MainPageController implements Initializable{
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
 
-    public void switchToPreviewSubPage (ActionEvent event){
+    public void switchToPreviewSubPage(){
         Main.getPreviewSubPageController().getWebGridPane().add(Main.getWebview(), 0 , 0);
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
     }
 
-    public void switchToContentsSubPage (ActionEvent event){
+    public void switchToTextEditorPage(){
+        paneTextEditor.setContent(Main.getTextEditorParent());
+    }
+
+    public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
+
+
 
 }
 
