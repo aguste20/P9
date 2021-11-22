@@ -35,21 +35,6 @@ public class PreviewSubPageController implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-        //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
-
-
-
-        //  engine = webView.getEngine();
-        // loadPage();
-
-
     }
-
-    public void loadPage(){
-        // engine.load("http://google.com");
-        System.out.println("hej");
-    }
-
-
 
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><?xml-stylesheet type='text/xsl' href='style.xsl' ?>
+<eObject eObjectId="999">
+    <height>2.5</height>
+    <length>2.3</length>
+    <name>Volvo Penta Car Factory</name>
+    <version>2.2</version>
+    <weight>2.7</weight>
+    <width>2.6</width>
+</eObject>

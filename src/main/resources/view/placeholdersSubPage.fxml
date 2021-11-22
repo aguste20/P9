@@ -41,22 +41,59 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="name" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#insertPlaceholder" text="Name" />
-                  <Button fx:id="version" mnemonicParsing="false" onAction="#insertPlaceholder" text="Version" />
-                  <Button fx:id="length" mnemonicParsing="false" onAction="#insertPlaceholder" text="Length" />
-                  <Button fx:id="height" mnemonicParsing="false" onAction="#insertPlaceholder" text="Height" />
-                  <Button fx:id="width" mnemonicParsing="false" onAction="#insertPlaceholder" text="Width" />
-                  <Button fx:id="weight" mnemonicParsing="false" onAction="#insertPlaceholder" text="Weight" />
+                  <Button fx:id="name" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Name">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="version" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Version">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="length" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Length">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="height" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Height">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="width" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Width">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Button>
+                  <Button fx:id="weight" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Weight">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Button>
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
-                  <Label fx:id="objName" prefHeight="17.0" prefWidth="167.0" text="Label" />
-                  <Label fx:id="objVersion" prefHeight="17.0" prefWidth="178.0" text="Label" />
-                  <Label fx:id="objLength" prefHeight="17.0" prefWidth="178.0" text="Label" />
-                  <Label fx:id="objHeight" prefHeight="17.0" prefWidth="174.0" text="Label" />
-                  <Label fx:id="objWidth" prefHeight="17.0" prefWidth="181.0" text="Label" />
-                  <Label fx:id="objWeight" prefHeight="17.0" prefWidth="180.0" text="Label" />
+                  <Label fx:id="objName" prefHeight="25.6" prefWidth="100.0" text="Label">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Label>
+                  <Label fx:id="objVersion" prefHeight="25.6" prefWidth="100.0" text="Label">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Label>
+                  <Label fx:id="objLength" prefHeight="25.6" prefWidth="100.0" text="Label">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Label>
+                  <Label fx:id="objHeight" prefHeight="25.6" prefWidth="100.0" text="Label">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Label>
+                  <Label fx:id="objWidth" prefHeight="25.6" prefWidth="100.0" text="Label">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Label>
+                  <Label fx:id="objWeight" prefHeight="25.6" prefWidth="100.0" text="Label">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin></Label>
                </children>
             </VBox>
          </children>

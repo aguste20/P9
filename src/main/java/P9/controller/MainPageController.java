@@ -14,6 +14,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
@@ -22,6 +24,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import javax.persistence.Column;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,6 +39,10 @@ public class MainPageController implements Initializable{
     @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
+    //Annotating label and button
+    @FXML public Label eObjectLabel;
+    @FXML public Button eOjbectUpdate;
+
 
     // Reference to the engineering object that the user is working on
     EObject eObject;
@@ -66,57 +77,65 @@ public class MainPageController implements Initializable{
         // Men giver ikke mening at gøre dynamisk lige nu
         eObject = dao.getById(1);
 
+        eObjectLabel.setText(eObject.getName());
+
         // If eObject has no doc, create one for it, and set it to the template in the DB
         if (eObject.getDoc() == null){
             eObject.createNewDoc();
             TextBlock txt = txtDao.getById(2);
             eObject.getDoc().setXmlText(txt.getTxt());
         }
-    }
+
+
 
     // Attribute to hold the secondary stage for the "Register new Content Block" window
-    private Stage newWebView;
+        EObject eObject = new EObject();
+        //TODO: Lav nedenstående dynamisk
 
-    /*
-    public void openPreview(ActionEvent event) {
-        // If register new content block window hasn't been opened before
-        if (newWebView == null) {
-            // Create new stage, set scene with fxml root, set title
-            Stage stage = new Stage();
-            stage.setScene(new Scene(Main.getPreviewSubPageParent()));
-            stage.setTitle("Register a new preview");
+        eObject.seteObjectId(999);
+        eObject.setName("Volvo Penta Car Factory");
+        eObject.setVersion(2.2);
+        eObject.setLength(2.3);
+        eObject.setHeight(2.4);
+        eObject.setHeight(2.5);
+        eObject.setWidth(2.6);
+        eObject.setWeight(2.7);
 
-
-            //https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Stage.html#initModality-javafx.stage.Modality-
-            //Set stage to have the modality of WINDOW_MODAL.
-            //The stage blocks input events from being delivered to all windows from its owner (parent) to its root. Its root is the closest ancestor window without an owner.
-            stage.initModality(Modality.WINDOW_MODAL);
-            //initOwner specifies the owner Window for this stage. In this case we set dataInsertionPage to be the owner.
-            //This one 'locks' the user to the window, so they can't click elsewhere.
-            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-
-            //When the user tries to close the window
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent windowEvent) {
-                    //TODO: Specify here what we want to happen when the window is closed.
-                    // An example is, that we want to update the original list of content blocks.
-
-                    //Close stage/window
-                    newWebView.close();
-                }
-            });
-
-            // If stage already exists, update reference to the stage
-            newWebView = stage;
-        }
-
-        // Show stage
-        newWebView.show();
+        javaObjectToXML(eObject);
     }
 
-     */
+    public void updateEObject(ActionEvent e) {
+        EObjectDao eObjectDao = new EObjectDao();
+        eObject = eObjectDao.getById(eObject.geteObjectId());
+        eObjectLabel.setText(eObject.getName());
+        Main.getPlaceholdersSubPageController().updateEObject();
+    }
 
+    public void javaObjectToXML(EObject eObject){
+        try
+        {
+            //Create JAXB Context
+            JAXBContext jaxbContext = JAXBContext.newInstance(EObject.class);
+
+            //Create Marshaller
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+            //Required formatting??
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            jaxbMarshaller.setProperty("com.sun.xml.bind.xmlHeaders",
+                    "<?xml-stylesheet type='text/xsl' href='style.xsl' ?>");
+
+            //Store XML to File
+            File file = new File("src/main/resources/xml/eObject.xml");
+
+            //Writes XML file to file-system
+            jaxbMarshaller.marshal(eObject, file);
+        }
+        catch (JAXBException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Methods for changing the contents of the middle pane of the mainPage.fxml.
@@ -132,7 +151,11 @@ public class MainPageController implements Initializable{
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
     }
 
-    public void switchToContentsSubPage (ActionEvent event){
+    public void switchToTextEditorPage(){
+        paneTextEditor.setContent(Main.getTextEditorParent());
+    }
+
+    public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
 
