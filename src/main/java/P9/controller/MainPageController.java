@@ -88,7 +88,7 @@ public class MainPageController implements Initializable{
 
 
 
-    // Attribute to hold the secondary stage for the "Register new Content Block" window
+    // EObject created to set the attributes that the xml file is getting created from
         EObject eObject = new EObject();
         //TODO: Lav nedenstående dynamisk
 
@@ -112,6 +112,7 @@ public class MainPageController implements Initializable{
     }
 
     public void javaObjectToXML(EObject eObject){
+        //Passes EObject attribute values to create XML file
         try
         {
             //Create JAXB Context
@@ -120,7 +121,7 @@ public class MainPageController implements Initializable{
             //Create Marshaller
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
-            //Required formatting??
+            //Formats file and bind it to xsl
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             jaxbMarshaller.setProperty("com.sun.xml.bind.xmlHeaders",
                     "<?xml-stylesheet type='text/xsl' href='style.xsl' ?>");
