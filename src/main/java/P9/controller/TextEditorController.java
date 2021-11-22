@@ -2,10 +2,8 @@ package P9.controller;
 
 import P9.Main;
 import P9.model.*;
-import P9.persistence.EObjectDao;
 import P9.persistence.EObjectDocDao;
 import P9.persistence.UserDao;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,14 +11,10 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import javax.xml.transform.sax.SAXTransformerFactory;
-import javax.xml.transform.sax.TransformerHandler;
 import java.io.*;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TextEditorController implements Initializable {
@@ -46,7 +40,7 @@ public class TextEditorController implements Initializable {
         fileChooser
                 .getExtensionFilters()
                 .addAll(
-                        new FileChooser.ExtensionFilter("XML", "*.xml"),
+                        new FileChooser.ExtensionFilter("xml", "*.xml"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
 
         // Load xml text from the eObject that the user is working on

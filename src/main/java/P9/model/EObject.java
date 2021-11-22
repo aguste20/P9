@@ -1,6 +1,9 @@
 package P9.model;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +19,7 @@ import java.util.List;
  * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
  * JPA many to many mapping: https://www.baeldung.com/hibernate-many-to-many
  */
-
+@XmlRootElement
 @Entity
 @Table(name = "e_object")
 public class EObject {
@@ -27,7 +30,6 @@ public class EObject {
     @Column(name = "e_object_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
     private Integer eObjectId;
-
     private String name;
     private Double version;
     private Double length;
@@ -75,6 +77,7 @@ public class EObject {
         return eObjectId;
     }
 
+    @XmlAttribute
     public void seteObjectId(Integer eObjectId) {
         this.eObjectId = eObjectId;
     }
@@ -83,6 +86,7 @@ public class EObject {
         return name;
     }
 
+    @XmlElement
     public void setName(String name) {
         this.name = name;
     }
@@ -91,6 +95,7 @@ public class EObject {
         return version;
     }
 
+    @XmlElement
     public void setVersion(Double version) {
         this.version = version;
     }
@@ -99,6 +104,7 @@ public class EObject {
         return length;
     }
 
+    @XmlElement
     public void setLength(Double length) {
         this.length = length;
     }
@@ -107,6 +113,7 @@ public class EObject {
         return height;
     }
 
+    @XmlElement
     public void setHeight(Double height) {
         this.height = height;
     }
@@ -115,6 +122,7 @@ public class EObject {
         return width;
     }
 
+    @XmlElement
     public void setWidth(Double width) {
         this.width = width;
     }
@@ -123,6 +131,7 @@ public class EObject {
         return weight;
     }
 
+    @XmlElement
     public void setWeight(Double weight) {
         this.weight = weight;
     }
@@ -131,6 +140,7 @@ public class EObject {
         return imagePath;
     }
 
+    @XmlElement
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
