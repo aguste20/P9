@@ -78,7 +78,7 @@ public class PlaceholdersSubPageController implements Initializable {
         }
     }
 
-    public void updateEObject(){
+    public void updateEObjectValues(){
         eObject = Main.getMainPageController().geteObject();
         setLabels();
     }

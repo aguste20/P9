@@ -137,6 +137,7 @@ public class Main extends Application {
         engine = webview.getEngine();
         File f = new File("src/main/resources/xml/eObject.xml");
         engine.load(f.toURI().toString());
+        previewSubPageController.getWebGridPane().add(Main.getWebview(), 0 , 0);
         scene = new Scene(mainPageParent);
         stage.setTitle("Documentation Assist 😎");
         //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
@@ -152,6 +153,7 @@ public class Main extends Application {
 
         //Inserts the contentsSubPage into the middle scrollPane of the main page as the default option.
         mainPageController.getPaneContentsPlaceholders().setContent(contentsSubPageParent);
+
 
 
     }

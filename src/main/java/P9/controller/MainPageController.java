@@ -108,7 +108,7 @@ public class MainPageController implements Initializable{
         EObjectDao eObjectDao = new EObjectDao();
         eObject = eObjectDao.getById(eObject.geteObjectId());
         eObjectLabel.setText(eObject.getName());
-        Main.getPlaceholdersSubPageController().updateEObject();
+        Main.getPlaceholdersSubPageController().updateEObjectValues();
     }
 
     public void javaObjectToXML(EObject eObject){
@@ -147,7 +147,6 @@ public class MainPageController implements Initializable{
     }
 
     public void switchToPreviewSubPage (ActionEvent event){
-        Main.getPreviewSubPageController().getWebGridPane().add(Main.getWebview(), 0 , 0);
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
     }
 
