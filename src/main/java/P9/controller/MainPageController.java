@@ -72,18 +72,7 @@ public class MainPageController implements Initializable{
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
     public void switchToContentsSubPage (ActionEvent event){
-        //These 2 lines are a messy solution, but in lack of a better one xd.
-        //Before setting our pane to contain the ContentsSubPage, we SOME change
-        // to the one currently being showed. We add 0.001 width to the showed pane,
-        // so JavaFX registers a change to the content of the Node.
-        Scene placeholderScene = Main.getPlaceholdersSubPageParent().getScene();
-        placeholderScene.getWindow().setWidth(placeholderScene.getWidth() + 0.001);
-
-        //Make the switch
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
-
-        //TODO: Bjørn efterlod det her. Lortet kan ikke skifte frem og tilbage XD
-
     }
 
 }
