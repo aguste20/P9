@@ -18,7 +18,7 @@ import javax.persistence.*;
 public class TextBlock extends ContentBlock{
 
     // ----- Properties -----
-    private String txt;
+    private String text;
 
     // ----- Constructors -----
 
@@ -31,10 +31,10 @@ public class TextBlock extends ContentBlock{
     // ----- Getters and setters -----
 
     public String getTxt() {
-        return txt;
+        return text;
     }
 
     public void setTxt(String txt) {
-        this.txt = txt;
+        this.text = txt;
     }
 }

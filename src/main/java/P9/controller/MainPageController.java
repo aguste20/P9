@@ -2,7 +2,10 @@ package P9.controller;
 
 import P9.Main;
 import P9.model.EObject;
+import P9.model.TextBlock;
+import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDao;
+import P9.persistence.TextBlockDao;
 import P9.persistence.UserDao;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -45,6 +48,7 @@ public class MainPageController implements Initializable{
     EObject eObject;
     // Reference to the DAO for our user.
     UserDao userDAO = new UserDao();
+    TextBlockDao txtDao = new TextBlockDao();
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
@@ -64,7 +68,7 @@ public class MainPageController implements Initializable{
      * @param arg1
      */
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void initialize(URL arg0, ResourceBundle arg1){
         //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
 
         // Load engineering object from database with id = 1
@@ -75,9 +79,11 @@ public class MainPageController implements Initializable{
 
         eObjectLabel.setText(eObject.getName());
 
-        // If eObject has no doc, create one for it
-        if (eObject.getDoc() == null) {
+        // If eObject has no doc, create one for it, and set it to the template in the DB
+        if (eObject.getDoc() == null){
             eObject.createNewDoc();
+            TextBlock txt = txtDao.getById(2);
+            eObject.getDoc().setXmlText(txt.getTxt());
         }
 
 
@@ -102,7 +108,7 @@ public class MainPageController implements Initializable{
         EObjectDao eObjectDao = new EObjectDao();
         eObject = eObjectDao.getById(eObject.geteObjectId());
         eObjectLabel.setText(eObject.getName());
-        Main.getPlaceholdersSubPageController().updateEObject();
+        Main.getPlaceholdersSubPageController().updateEObjectValues();
     }
 
     public void javaObjectToXML(EObject eObject){
@@ -141,7 +147,6 @@ public class MainPageController implements Initializable{
     }
 
     public void switchToPreviewSubPage (ActionEvent event){
-        Main.getPreviewSubPageController().getWebGridPane().add(Main.getWebview(), 0 , 0);
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
     }
 
