@@ -2,7 +2,10 @@ package P9.controller;
 
 import P9.Main;
 import P9.model.EObject;
+import P9.model.TextBlock;
+import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDao;
+import P9.persistence.TextBlockDao;
 import P9.persistence.UserDao;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -34,6 +37,7 @@ public class MainPageController implements Initializable{
     EObject eObject;
     // Reference to the DAO for our user.
     UserDao userDAO = new UserDao();
+    TextBlockDao txtDao = new TextBlockDao();
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
@@ -62,9 +66,11 @@ public class MainPageController implements Initializable{
         // Men giver ikke mening at gøre dynamisk lige nu
         eObject = dao.getById(1);
 
-        // If eObject has no doc, create one for it
+        // If eObject has no doc, create one for it, and set it to the template in the DB
         if (eObject.getDoc() == null){
             eObject.createNewDoc();
+            TextBlock txt = txtDao.getById(2);
+            eObject.getDoc().setXmlText(txt.getTxt());
         }
     }
 
