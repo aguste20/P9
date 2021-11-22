@@ -87,8 +87,8 @@ public class MainPageController implements Initializable{
         }
 
 
-
-    // Attribute to hold the secondary stage for the "Register new Content Block" window
+         /*
+            // Attribute to hold the secondary stage for the "Register new Content Block" window
         EObject eObject = new EObject();
         //TODO: Lav nedenstående dynamisk
 
@@ -100,6 +100,7 @@ public class MainPageController implements Initializable{
         eObject.setHeight(2.5);
         eObject.setWidth(2.6);
         eObject.setWeight(2.7);
+          */
 
         javaObjectToXML(eObject);
     }
