@@ -135,11 +135,8 @@ public class Main extends Application {
         webview = new WebView();
 
         engine = webview.getEngine();
-       // engine.load( getClass().getResource("src\\main\\resources\\xml\\eObject.xml").toString());
-     //   URL url = this.getClass().getResource("/P9/src/main/resources/xml/eObject.xml");
-        File f = new File("src\\main\\resources\\xml\\eObject.xml");
+        File f = new File("src/main/resources/xml/eObject.xml");
         engine.load(f.toURI().toString());
-       // engine.load(url.toString());
         scene = new Scene(mainPageParent);
         stage.setTitle("Documentation Assist 😎");
         //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");

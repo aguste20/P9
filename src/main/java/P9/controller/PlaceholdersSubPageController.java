@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class PlaceholdersSubPageController implements Initializable {
+
     public Label objName;
     public Label objVersion;
     public Label objLength;
@@ -29,8 +30,6 @@ public class PlaceholdersSubPageController implements Initializable {
     //TODO Lav en liste over placeholders
 
     EObject eObject = new EObject();
-
-    ArrayList<String> columns = new ArrayList<String>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,4 +77,10 @@ public class PlaceholdersSubPageController implements Initializable {
                 text.insertText(pos, "</xsl:text><xsl:value-of select=\"weight\"/><xsl:text>");
         }
     }
+
+    public void updateEObject(){
+        eObject = Main.getMainPageController().geteObject();
+        setLabels();
+    }
+
 }

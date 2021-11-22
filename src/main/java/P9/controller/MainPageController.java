@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
@@ -34,6 +36,10 @@ public class MainPageController implements Initializable{
     @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
+    //Annotating label and button
+    @FXML public Label eObjectLabel;
+    @FXML public Button eOjbectUpdate;
+
 
     // Reference to the engineering object that the user is working on
     EObject eObject;
@@ -58,7 +64,7 @@ public class MainPageController implements Initializable{
      * @param arg1
      */
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1){
+    public void initialize(URL arg0, ResourceBundle arg1) {
         //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
 
         // Load engineering object from database with id = 1
@@ -67,11 +73,16 @@ public class MainPageController implements Initializable{
         // Men giver ikke mening at gøre dynamisk lige nu
         eObject = dao.getById(1);
 
+        eObjectLabel.setText(eObject.getName());
+
         // If eObject has no doc, create one for it
-        if (eObject.getDoc() == null){
+        if (eObject.getDoc() == null) {
             eObject.createNewDoc();
         }
 
+
+
+    // Attribute to hold the secondary stage for the "Register new Content Block" window
         EObject eObject = new EObject();
         //TODO: Lav nedenstående dynamisk
 
@@ -83,9 +94,15 @@ public class MainPageController implements Initializable{
         eObject.setHeight(2.5);
         eObject.setWidth(2.6);
         eObject.setWeight(2.7);
-        eObject.setImagePath("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fda%2Ffile-converter&psig=AOvVaw1xd-Y-5Pvm8AYGrA2kEA-g&ust=1637661113319000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMi735nZq_QCFQAAAAAdAAAAABAD");
 
         javaObjectToXML(eObject);
+    }
+
+    public void updateEObject(ActionEvent e) {
+        EObjectDao eObjectDao = new EObjectDao();
+        eObject = eObjectDao.getById(eObject.geteObjectId());
+        eObjectLabel.setText(eObject.getName());
+        Main.getPlaceholdersSubPageController().updateEObject();
     }
 
     public void javaObjectToXML(EObject eObject){
@@ -103,7 +120,7 @@ public class MainPageController implements Initializable{
                     "<?xml-stylesheet type='text/xsl' href='style.xsl' ?>");
 
             //Store XML to File
-            File file = new File("src\\main\\resources\\xml\\eObject.xml");
+            File file = new File("src/main/resources/xml/eObject.xml");
 
             //Writes XML file to file-system
             jaxbMarshaller.marshal(eObject, file);
@@ -123,7 +140,7 @@ public class MainPageController implements Initializable{
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
 
-    public void switchToPreviewSubPage(){
+    public void switchToPreviewSubPage (ActionEvent event){
         Main.getPreviewSubPageController().getWebGridPane().add(Main.getWebview(), 0 , 0);
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
     }
@@ -135,8 +152,6 @@ public class MainPageController implements Initializable{
     public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
-
-
 
 }
 
