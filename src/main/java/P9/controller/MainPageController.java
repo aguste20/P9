@@ -69,8 +69,6 @@ public class MainPageController implements Initializable{
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-        //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
-
         // Load engineering object from database with id = 1
         EObjectDao dao = new EObjectDao();
         //TODO Anne - skal jo ikke være hardcoded i virkelig løsning.
@@ -86,21 +84,7 @@ public class MainPageController implements Initializable{
             eObject.getDoc().setXmlText(txt.getTxt());
         }
 
-
-
-    // Attribute to hold the secondary stage for the "Register new Content Block" window
-        EObject eObject = new EObject();
-        //TODO: Lav nedenstående dynamisk
-
-        eObject.seteObjectId(999);
-        eObject.setName("Volvo Penta Car Factory");
-        eObject.setVersion(2.2);
-        eObject.setLength(2.3);
-        eObject.setHeight(2.4);
-        eObject.setHeight(2.5);
-        eObject.setWidth(2.6);
-        eObject.setWeight(2.7);
-
+        // Marshal eObject to XML file, which is saved in resources/xml
         javaObjectToXML(eObject);
     }
 
