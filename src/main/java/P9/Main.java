@@ -1,7 +1,6 @@
 package P9;
 
 import P9.controller.*;
-import P9.persistence.Setup;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,11 +11,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 public class Main extends Application {
 
-    //roots being declared, which will later hold .fxml files.
+    // Root elements holding loaded .fxml files.
     private static Parent mainPageParent;
     private static Parent textEditorParent;
     private static Parent contentsSubPageParent;
@@ -25,8 +23,7 @@ public class Main extends Application {
     private static Parent registerNewContentBlockPageParent;
     private static Parent previewSubPageParent;
 
-
-    // References to controllers.
+    // Controllers
     private static MainPageController mainPageController;
     private static TextEditorController textEditorController;
     private static ContentsSubPageController contentsSubPageController;
@@ -35,9 +32,26 @@ public class Main extends Application {
     private static RegisterNewContentBlockController registerNewContentBlockController;
     private static PreviewSubPageController previewSubPageController;
 
+    // Currently active stage and scene
+    private static Stage stage;
+    private static Scene scene;
+
+    // Webview and webview engine displaying the documentation preview
+    private static WebView webview;
+    private static WebEngine engine;
+
 
     // ---- Getters ----
-    //Getters for each controller
+    //Getters for root elements
+    public static Parent getMainPageParent() { return mainPageParent; }
+    public static Parent getTextEditorParent() { return textEditorParent; }
+    public static Parent getContentsSubPageParent() { return contentsSubPageParent; }
+    public static Parent getOverviewSubPageParent() { return overviewSubPageParent; }
+    public static Parent getPlaceholdersSubPageParent() { return placeholdersSubPageParent; }
+    public static Parent getRegisterNewContentBlockPageParent() { return registerNewContentBlockPageParent; }
+    public static Parent getPreviewSubPageParent () {return previewSubPageParent;}
+
+    //Getters for controllers
     public static MainPageController getMainPageController() {
         return mainPageController;
     }
@@ -54,41 +68,68 @@ public class Main extends Application {
     public static RegisterNewContentBlockController getRegisterNewContentBlockController() { return registerNewContentBlockController; }
     public static PreviewSubPageController getPreviewSubPageController() {return previewSubPageController;}
 
-    //Getters for each Parent
-    public static Parent getMainPageParent() { return mainPageParent; }
-    public static Parent getTextEditorParent() { return textEditorParent; }
-    public static Parent getContentsSubPageParent() { return contentsSubPageParent; }
-    public static Parent getOverviewSubPageParent() { return overviewSubPageParent; }
-    public static Parent getPlaceholdersSubPageParent() { return placeholdersSubPageParent; }
-    public static Parent getRegisterNewContentBlockPageParent() { return registerNewContentBlockPageParent; }
-    public static Parent getPreviewSubPageParent () {return previewSubPageParent;}
-
-    //TODO: are these needed? - Bjørn
-    //References to the current active stage and scene are held here.
-    private static Stage stage;
-    private static Scene scene;
-
-    //References and getter for webview
-    private static WebView webview;
-
-    private static WebEngine engine;
-
+    // Webview and webengine
+    public static WebView getWebview() {
+        return webview;
+    }
     public static WebEngine getEngine() {
         return engine;
     }
 
-    public static WebView getWebview() {
-        return webview;
-    }
+
     /**
      * Overrides the init() method inherited from Application.
      * Loads all .fxml files into memory and stores static references to them
      * Calls this.start()
-     * @throws IOException if FXLLoader fails to load the resource exception is thrown and application shuts down
+     * @throws IOException if loading fxml files fails
      */
     @Override
     public void init() throws IOException {
-        //We fill the roots with respective .fxml files from harddrive.
+        // Load all fxml files from directory and load related controllers
+        loadFxmlFilesFromDirectory();
+    }
+
+    /**
+     * Implements abstract method inherited from Application
+     * Starts the application. Sets stage, scene and root to hold contents.
+     * @param stage primary stage provided by this.launch()
+     */
+    @Override
+    public void start(Stage stage) {
+
+        // Load webview to display preview
+        loadWebViewInPreviewSubPage();
+
+        // Set content roots in main page
+        setContentInMainPage();
+
+        // Create new scene from main page root, set scene, and show stage
+        scene = new Scene(mainPageParent);
+        stage.setTitle("Documentation Assist 😎");
+        //TODO Anne: Skal der ske noget her?
+        //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
+        //stage.getIcons().add(icon);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /**
+     * Main method, launches the application
+     * @param args command line arguments
+     */
+    public static void main(String[] args){ launch(args); }
+
+
+
+    // ------ Private helper methods -----
+
+    /**
+     * Method that loads fxml files from directory to parent roots in Main
+     * The method also gets references to the initialized controller objects
+     * @throws IOException if loading fxml files fails
+     */
+    private void loadFxmlFilesFromDirectory() throws IOException {
+        //We fill the roots with respective .fxml files from hard drive.
 
         // We create an FXMLLoader which fills the empty mainPageParent reference with its respective .fxml file
         // We also fill the empty mainPageController reference with the P9.controller of the .fxml file
@@ -125,34 +166,30 @@ public class Main extends Application {
         FXMLLoader loader7 = new FXMLLoader();
         previewSubPageParent = loader7.load(getClass().getResource("../view/previewSubPage.fxml").openStream());
         previewSubPageController = loader7.getController();
-
     }
 
-
     /**
-     * Implements abstract method inherited from Application
-     * Starts the application. Sets stage, scene and root to hold contents.
-     * @param stage primary stage provided by this.launch()
+     * Method that creates and loads a WebView element
+     * to the preview sub page root using a WebEngine.
      */
-    @Override
-    public void start(Stage stage) throws Exception {
-
-        //Creates webview and engine.
+    private void loadWebViewInPreviewSubPage(){
+        // Create webview and engine.
         webview = new WebView();
         engine = webview.getEngine();
-        //Sets load path to xml file and adds webview to preview page
+
+        //Sets load path to xml file
         File f = new File("src/main/resources/xml/eObject.xml");
         engine.load(f.toURI().toString());
 
+        // Add webview to preview sub page
         previewSubPageController.getWebGridPane().add(Main.getWebview(), 0 , 0);
+    }
 
-        scene = new Scene(mainPageParent);
-        stage.setTitle("Documentation Assist 😎");
-        //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
-        //stage.getIcons().add(icon);
-        stage.setScene(scene);
-        stage.show();
-
+    /**
+     * Method that sets content in the main page.
+     * Adds textEditor, overView, and contentsPlaceholders roots to main page
+     */
+    private void setContentInMainPage() {
         //Inserts the textEditor into the right-side scrollPane of the main page.
         mainPageController.getPaneTextEditor().setContent(textEditorParent);
 
@@ -161,15 +198,6 @@ public class Main extends Application {
 
         //Inserts the contentsSubPage into the middle scrollPane of the main page as the default option.
         mainPageController.getPaneContentsPlaceholders().setContent(contentsSubPageParent);
-
-
-
     }
-
-    /**
-     * Main method, launches the application
-     * @param args command line arguments
-     */
-    public static void main(String[] args){ launch(args); }
 
 }
