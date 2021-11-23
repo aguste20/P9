@@ -58,7 +58,7 @@ public class PreviewSubPageController implements Initializable {
                 "</xsl:stylesheet>";
 
         // Concatenate file string
-        String fileString = (xslStartString + textAreaString + xslEndString);
+        String fileString = (xslStartString + "<span contenteditable=\"true\"><xsl:text>" + textAreaString + "</xsl:text></span>" + xslEndString);
 
         // Write to file with string
         File file = new File("src/main/resources/xml/style.xsl");
@@ -77,6 +77,8 @@ public class PreviewSubPageController implements Initializable {
             e.printStackTrace();
         }
 
+        // Reload Webview to make sure that changes are displayed in preview
+        Main.getEngine().reload();
 
     }
 
