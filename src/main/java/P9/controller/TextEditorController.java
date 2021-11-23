@@ -213,6 +213,7 @@ public class TextEditorController implements Initializable {
         textArea.insertText(range.getStart(),"</xsl:text><" + tag + ">");
     }
 
+    //TODO kommentarer
     @FXML
     public void createHeader(ActionEvent e) {
         String choice = ((CheckMenuItem) e.getSource()).getId();
