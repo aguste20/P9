@@ -68,13 +68,14 @@ public class Main extends Application {
     private static Stage stage;
     private static Scene scene;
 
-    public static WebView getWebview() {
-        return webview;
-    }
-
+    //References and getter for webview
     private static WebView webview;
 
     private WebEngine engine;
+
+    public static WebView getWebview() {
+        return webview;
+    }
     /**
      * Overrides the init() method inherited from Application.
      * Loads all .fxml files into memory and stores static references to them
@@ -132,12 +133,14 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        //Creates webview and engine.
         webview = new WebView();
-
         engine = webview.getEngine();
+        //Sets load path to xml file and adds webview to preview page
         File f = new File("src/main/resources/xml/eObject.xml");
         engine.load(f.toURI().toString());
         previewSubPageController.getWebGridPane().add(Main.getWebview(), 0 , 0);
+
         scene = new Scene(mainPageParent);
         stage.setTitle("Documentation Assist 😎");
         //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
