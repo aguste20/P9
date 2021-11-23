@@ -37,4 +37,19 @@ public class PreviewSubPageController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1){
     }
 
+    public void createXslFromTextArea(){
+
+        // Get textarea string
+
+        // Create string with xsl document tag
+
+        // Create string with start tag
+
+        // Create end tag
+
+        // Write to file with string
+
+
+    }
+
 }
