@@ -37,6 +37,9 @@ public class PlaceholdersSubPageController implements Initializable {
         setLabels();
     }
 
+    /**
+     * Adds values from the selected eObject to the labels next to buttons
+     */
     public void setLabels(){
         objName.setText(eObject.getName());
         objVersion.setText(eObject.getVersion().toString());
@@ -46,7 +49,12 @@ public class PlaceholdersSubPageController implements Initializable {
         objWeight.setText(eObject.getWeight().toString());
     }
 
-
+    /**
+     * Inserts placeholders that later will be converted to the actual value in the DB,
+     * when the documentation is converted to
+     * @param e ActionEvent is defined in the fxml. Method activates when button in GUI
+     *          is pressed
+     */
     public void insertPlaceholder(ActionEvent e) {
         String choice = ((Button) e.getSource()).getId();
         TextArea text = Main.getTextEditorController().getTextArea();
@@ -78,6 +86,9 @@ public class PlaceholdersSubPageController implements Initializable {
         }
     }
 
+    /**
+     * Updates the eObject labels in the GUI with the latest eObject values from DB
+     */
     public void updateEObjectValues(){
         eObject = Main.getMainPageController().geteObject();
         setLabels();
