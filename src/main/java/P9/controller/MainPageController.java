@@ -49,9 +49,9 @@ public class MainPageController implements Initializable{
 
     // Reference to the engineering object that the user is working on
     EObject eObject;
-    // Reference to the DAO for our user.
+    // Reference to DAO objects.
     UserDao userDAO = new UserDao();
-    TextBlockDao txtDao = new TextBlockDao();
+    EObjectDao eDao = new EObjectDao();
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
@@ -74,20 +74,10 @@ public class MainPageController implements Initializable{
     public void initialize(URL arg0, ResourceBundle arg1){
         //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
 
+        load();
         // Load engineering object from database with id = 1
-        EObjectDao dao = new EObjectDao();
         //TODO Anne - skal jo ikke være hardcoded i virkelig løsning.
         // Men giver ikke mening at gøre dynamisk lige nu
-        eObject = dao.getById(6);
-
-        eObjectLabel.setText(eObject.getName());
-
-        // If eObject has no doc, create one for it, and set it to the template in the DB
-        if (eObject.getDoc() == null){
-            eObject.createNewDoc();
-            TextBlock txt = txtDao.getById(2);
-            eObject.getDoc().setXmlText(txt.getTxt());
-        }
 
     // EObject created to set the attributes that the xml file is getting created from
         EObject eObject = new EObject();
@@ -107,7 +97,6 @@ public class MainPageController implements Initializable{
 
         //Populate the Combobox with the eObjects' names
         List<EObject> eList;
-        EObjectDao eDao = new EObjectDao();
         eList = eDao.listAll();
         ObservableList<EObject> oeList = FXCollections.observableArrayList(eList);
         eObjectChoice.setItems(oeList);
@@ -133,6 +122,18 @@ public class MainPageController implements Initializable{
     */
     }
 
+    public void load(){
+        if (eObject == null){
+            eObject = eDao.getById(1);
+        }
+
+        eObjectLabel.setText(eObject.getName());
+
+        // If eObject has no doc, create one for it, and set it to the template in the DB
+        if (eObject.getDoc() == null){
+            eObject.createNewDoc();
+        }
+    }
 
     /**
      * Fetches the eObject in the DB, when the update button is pressed in the GUI,
@@ -140,16 +141,17 @@ public class MainPageController implements Initializable{
      * @param e Refers to the button in the GUI
      */
     public void updateEObject(ActionEvent e) {
-        EObjectDao eObjectDao = new EObjectDao();
-        eObject = eObjectDao.getById(eObject.geteObjectId());
+
+        eObject = eDao.getById(eObject.geteObjectId());
         eObjectLabel.setText(eObject.getName());
         Main.getPlaceholdersSubPageController().updateEObjectValues();
     }
 
     public void changeEObject(ActionEvent e) {
         eObject = eObjectChoice.getValue();
-        eObjectLabel.setText(eObject.getName());
+        load();
         Main.getPlaceholdersSubPageController().updateEObjectValues();
+        Main.getTextEditorController().insertXmlTextInTextArea();
     }
 
     public void javaObjectToXML(EObject eObject){

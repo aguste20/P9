@@ -234,6 +234,8 @@ public class TextEditorController implements Initializable {
      * and inserts it into the textArea
      */
     public void insertXmlTextInTextArea() {
+
+        textArea.clear();
         // Get loaded eObject from mainPageController
         eObject = Main.getMainPageController().geteObject();
 
