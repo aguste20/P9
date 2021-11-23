@@ -72,43 +72,21 @@ public class MainPageController implements Initializable{
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-        //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
 
+        //Loads eObject selected by user in GUI
         loadEObject();
-        // Load engineering object from database with id = 1
-        //TODO Anne - skal jo ikke være hardcoded i virkelig løsning.
-        // Men giver ikke mening at gøre dynamisk lige nu
+
+        //Populate the Combobox with the eObjects' names
+        populateBox();
 
         // Marshal eObject to XML file, which is saved in resources/xml
         eObject.eObjectToXML();
 
-        //Populate the Combobox with the eObjects' names
-        List<EObject> eList;
-        eList = eDao.listAll();
-        ObservableList<EObject> oeList = FXCollections.observableArrayList(eList);
-        eObjectChoice.setItems(oeList);
-        eObjectChoice.setConverter(new StringConverter<>() {
-            @Override
-            public String toString(EObject eObject) {
-                return eObject.getName();
-            }
-
-            @Override
-            public EObject fromString(String s) {
-                return eObjectChoice.getItems().stream().filter
-                        (ap -> ap.getName().equals(s)).findFirst().orElse(null);
-            }
-        });
-
-
-                /*
-        List<String> eList;
-        EObjectDao eObjectDao = new EObjectDao();
-        eList = eObjectDao.listName();
-        eObjectChoice.getItems().addAll(eList);
-    */
     }
 
+    /**
+     * Method used to change eObject when user changes in the GUI
+     */
     public void loadEObject(){
         if (eObject == null){
             eObject = eDao.getById(1);
@@ -123,30 +101,63 @@ public class MainPageController implements Initializable{
     }
 
     /**
+     * Populates the ComboBox with all eObjects in the database
+     */
+    public void populateBox() {
+        //Create list with eObject and fetch all in DB. Convert to ObservableList
+        List<EObject> eList;
+        eList = eDao.listAll();
+        ObservableList<EObject> oeList = FXCollections.observableArrayList(eList);
+        //Put ObservableList of eObjects into ComboBox
+        eObjectChoice.setItems(oeList);
+        //Creating a stringConverter which allows us to store eObjects in ComboBox, but display the name
+        eObjectChoice.setConverter(new StringConverter<>() {
+            @Override
+            //The thing that will be displayed in the GUI, and return it.
+            public String toString(EObject eObject) {
+                return eObject.getName();
+            }
+
+            //Takes the currently selected eObject name, and finds the correlating eObject,
+            //by searching the Comboxes' list of eObjects.
+            @Override
+            public EObject fromString(String s) {
+                return eObjectChoice.getItems().stream().filter
+                        (eOb -> eOb.getName().equals(s)).findFirst().orElse(null);
+            }
+        });
+    }
+
+
+    /**
      * Fetches the eObject in the DB, when the update button is pressed in the GUI,
      * thereby updating the eObject
-     * @param e Refers to the button in the GUI
      */
-    public void updateEObject(ActionEvent e) {
+    public void updateEObject() {
 
         eObject = eDao.getById(eObject.geteObjectId());
         eObjectLabel.setText(eObject.getName());
         Main.getPlaceholdersSubPageController().updateEObjectValues();
     }
 
-    public void changeEObject(ActionEvent e) {
+    /**
+     * Method called when user changes eObject in the GUI ComboBox.
+     * It changes the eObject values to the currently selected by changing the
+     * label, the placeholder values, the TextEditor, and the preview page.
+     */
+    public void changeEObject() {
         eObject = eObjectChoice.getValue();
         loadEObject();
         Main.getPlaceholdersSubPageController().updateEObjectValues();
         Main.getTextEditorController().insertXmlTextInTextArea();
+        Main.getPreviewSubPageController().createXslFromTextArea();
     }
 
     /**
      * Methods for changing the contents of the middle pane of the mainPage.fxml.
      * When user presses one of the buttons, the interface shows the associated viewfile.
-     * @param event action from button element
      */
-    public void switchToPlaceholdersSubPage (ActionEvent event){
+    public void switchToPlaceholdersSubPage (){
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
 
