@@ -4,6 +4,8 @@ import P9.Main;
 import P9.model.ContentBlock;
 import P9.model.TextBlock;
 import P9.persistence.ContentBlockDao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,7 +31,7 @@ import java.util.ResourceBundle;
 public class ContentsSubPageController implements Initializable {
 
 
-    @FXML private TableView<ContentBlock> tableViewCBlocksContentsSubPage;
+    @FXML private TableView<ContentBlock> TableViewCBlocksContentsSubPage;
     @FXML private TableColumn<TextBlock, String> CBlockNameColumn;
     @FXML private TableColumn<Button, Button> CBlockInsertButtonColumn;
 
@@ -44,6 +46,10 @@ public class ContentsSubPageController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
         //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
+        CBlockNameColumn.setCellValueFactory(new PropertyValueFactory<TextBlock, String>("text"));
+        CBlockInsertButtonColumn.setCe
+
+
         insertCBlocksToList();
     }
 
@@ -55,6 +61,9 @@ public class ContentsSubPageController implements Initializable {
         ContentBlockDao dao = new ContentBlockDao();
         List<ContentBlock> contentBlockList = dao.listAll();
 
+        ObservableList<String> observableNameList = FXCollections.observableArrayList("item1", "item2");
+        ObservableList<Button> observableButtonList = FXCollections.observableArrayList();
+
         //System.out.println(contentBlockList);
 
         //For each ContentBlock in list, we take the name and add it to the name column of our TableView
@@ -64,10 +73,15 @@ public class ContentsSubPageController implements Initializable {
             //Label label = new Label(contentBlock.getName());
             Button button = new Button("(>)");
 
-            CBlockNameColumn.setCellValueFactory(new PropertyValueFactory<>(contentBlock.getName()));
-            CBlockInsertButtonColumn.setCellValueFactory((new PropertyValueFactory<>()));
-        }
+            observableNameList.add(contentBlock.getName());
+            TableViewCBlocksContentsSubPage.getItems().add(contentBlock);
 
+
+
+
+            //CBlockNameColumn.setCellValueFactory(new PropertyValueFactory<>(contentBlock.getName()));
+            //CBlockInsertButtonColumn.setCellValueFactory();
+        }
 
     }
 
