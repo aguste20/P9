@@ -38,6 +38,7 @@ public class PreviewSubPageController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1){
     }
 
+    //TODO kommentarer
     public void createXslFromTextArea() {
 
         // Get textarea string

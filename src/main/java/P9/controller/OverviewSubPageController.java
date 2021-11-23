@@ -21,6 +21,7 @@ public class OverviewSubPageController implements Initializable {
     @FXML
     private Accordion tocAccordion;
 
+    //TODO kommentarer
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Get reference to displayed doc
@@ -30,6 +31,7 @@ public class OverviewSubPageController implements Initializable {
         updateToc();
     }
 
+    //TODO kommentarer
     private class Header {
         String txt;
         Integer startIndex;
@@ -42,6 +44,7 @@ public class OverviewSubPageController implements Initializable {
 
     Header h = new Header("Hej", 1);
 
+    //TODO kommentarer
     public void updateToc() {
         // Get text from doc from eObject
         String txt = doc.getXmlText();
@@ -86,7 +89,7 @@ public class OverviewSubPageController implements Initializable {
              */
 
 
-
+    //TODO kommentarer
     public List<String> findHeaders(String txt, int type) {
 
         ArrayList<String> headerList = new ArrayList<>();
@@ -130,6 +133,7 @@ public class OverviewSubPageController implements Initializable {
         return headerList;
     }
 
+    //TODO kommentarer
     public void addHeaderToAccordion(String header){
         // Create titled pane from found heading string
         TitledPane tp = new TitledPane();
