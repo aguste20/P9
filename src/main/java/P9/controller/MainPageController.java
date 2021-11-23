@@ -88,6 +88,7 @@ public class MainPageController implements Initializable{
 
 
 
+
     // EObject created to set the attributes that the xml file is getting created from
         EObject eObject = new EObject();
         //TODO: Lav nedenstående dynamisk
@@ -101,9 +102,15 @@ public class MainPageController implements Initializable{
         eObject.setWidth(2.6);
         eObject.setWeight(2.7);
 
+        // Marshal eObject to XML file, which is saved in resources/xml
         javaObjectToXML(eObject);
     }
 
+    /**
+     * Fetches the eObject in the DB, when the update button is pressed in the GUI,
+     * thereby updating the eObject
+     * @param e Refers to the button in the GUI
+     */
     public void updateEObject(ActionEvent e) {
         EObjectDao eObjectDao = new EObjectDao();
         eObject = eObjectDao.getById(eObject.geteObjectId());

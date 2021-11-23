@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -145,6 +146,7 @@ public class EObject {
         this.imagePath = imagePath;
     }
 
+    @XmlTransient
     public List<EObject> getComponentList() {
         return componentList;
     }
@@ -153,6 +155,7 @@ public class EObject {
         this.componentList = componentList;
     }
 
+    @XmlTransient
     public EObjectCategory getCategory() {
         return category;
     }
@@ -161,6 +164,7 @@ public class EObject {
         this.category = category;
     }
 
+    @XmlTransient
     public EObjectDoc getDoc() {
         return doc;
     }
@@ -169,6 +173,9 @@ public class EObject {
         this.doc = doc;
     }
 
+    /**
+     * Method that creates a new Doc object and associates it with the eObject instance
+     */
     public void createNewDoc(){
         doc = new EObjectDoc();
         doc.seteObject(this);
