@@ -7,6 +7,8 @@ import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDao;
 import P9.persistence.TextBlockDao;
 import P9.persistence.UserDao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,15 +16,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.StringConverter;
 
 import javax.persistence.Column;
 import javax.xml.bind.JAXBContext;
@@ -31,9 +31,12 @@ import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable{
+
 
     //We annotate the containers of the mainPage.fxml
     @FXML private ScrollPane paneTextEditor;
@@ -42,7 +45,7 @@ public class MainPageController implements Initializable{
     //Annotating label and button
     @FXML public Label eObjectLabel;
     @FXML public Button eOjbectUpdate;
-
+    @FXML public ComboBox<EObject> eObjectChoice;
 
     // Reference to the engineering object that the user is working on
     EObject eObject;
@@ -75,7 +78,7 @@ public class MainPageController implements Initializable{
         EObjectDao dao = new EObjectDao();
         //TODO Anne - skal jo ikke være hardcoded i virkelig løsning.
         // Men giver ikke mening at gøre dynamisk lige nu
-        eObject = dao.getById(1);
+        eObject = dao.getById(6);
 
         eObjectLabel.setText(eObject.getName());
 
@@ -85,9 +88,6 @@ public class MainPageController implements Initializable{
             TextBlock txt = txtDao.getById(2);
             eObject.getDoc().setXmlText(txt.getTxt());
         }
-
-
-
 
     // EObject created to set the attributes that the xml file is getting created from
         EObject eObject = new EObject();
@@ -104,7 +104,35 @@ public class MainPageController implements Initializable{
 
         // Marshal eObject to XML file, which is saved in resources/xml
         javaObjectToXML(eObject);
+
+        //Populate the Combobox with the eObjects' names
+        List<EObject> eList;
+        EObjectDao eDao = new EObjectDao();
+        eList = eDao.listAll();
+        ObservableList<EObject> oeList = FXCollections.observableArrayList(eList);
+        eObjectChoice.setItems(oeList);
+        eObjectChoice.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(EObject eObject) {
+                return eObject.getName();
+            }
+
+            @Override
+            public EObject fromString(String s) {
+                return eObjectChoice.getItems().stream().filter
+                        (ap -> ap.getName().equals(s)).findFirst().orElse(null);
+            }
+        });
+
+
+                /*
+        List<String> eList;
+        EObjectDao eObjectDao = new EObjectDao();
+        eList = eObjectDao.listName();
+        eObjectChoice.getItems().addAll(eList);
+    */
     }
+
 
     /**
      * Fetches the eObject in the DB, when the update button is pressed in the GUI,
@@ -114,6 +142,12 @@ public class MainPageController implements Initializable{
     public void updateEObject(ActionEvent e) {
         EObjectDao eObjectDao = new EObjectDao();
         eObject = eObjectDao.getById(eObject.geteObjectId());
+        eObjectLabel.setText(eObject.getName());
+        Main.getPlaceholdersSubPageController().updateEObjectValues();
+    }
+
+    public void changeEObject(ActionEvent e) {
+        eObject = eObjectChoice.getValue();
         eObjectLabel.setText(eObject.getName());
         Main.getPlaceholdersSubPageController().updateEObjectValues();
     }
@@ -165,6 +199,7 @@ public class MainPageController implements Initializable{
     public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
+
 
 }
 
