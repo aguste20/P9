@@ -183,10 +183,14 @@ public class EObject {
      * Method that creates a new Doc object and associates it with the eObject instance
      */
     public void createNewDoc(){
-        EObject eObject = new EObject();
+        // Create new doc object, and set doc property to reference it
         doc = new EObjectDoc();
-        TextBlockDao txtDao = new TextBlockDao();
+
+        // Make doc reference this eObject instance
         doc.seteObject(this);
+
+        // Set doc to equal template from database
+        TextBlockDao txtDao = new TextBlockDao();
         TextBlock txt = txtDao.getById(2);
         doc.setXmlText(txt.getTxt());
 
