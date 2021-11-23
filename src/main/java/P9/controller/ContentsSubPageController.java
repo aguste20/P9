@@ -1,19 +1,39 @@
 package P9.controller;
 
 import P9.Main;
+import P9.model.ContentBlock;
+import P9.model.TextBlock;
+import P9.persistence.ContentBlockDao;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ContentsSubPageController implements Initializable {
+
+
+    @FXML private TableView<ContentBlock> tableViewCBlocksContentsSubPage;
+    @FXML private TableColumn<TextBlock, String> CBlockNameColumn;
+    @FXML private TableColumn<Button, Button> CBlockInsertButtonColumn;
+
+
 
     /**
      * This method initializes a controller after its root element has already been processed.
@@ -24,7 +44,33 @@ public class ContentsSubPageController implements Initializable {
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
         //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
+        insertCBlocksToList();
     }
+
+    /**
+     * Method for inserting each content block into the TableView
+     */
+    public void insertCBlocksToList() {
+        //Get a list of all contentblocks from the databse
+        ContentBlockDao dao = new ContentBlockDao();
+        List<ContentBlock> contentBlockList = dao.listAll();
+
+        //System.out.println(contentBlockList);
+
+        //For each ContentBlock in list, we take the name and add it to the name column of our TableView
+        for (int i = 0; i < contentBlockList.size(); i++){
+            //System.out.println(contentBlockList.get(i));
+            ContentBlock contentBlock = contentBlockList.get(i);
+            //Label label = new Label(contentBlock.getName());
+            Button button = new Button("(>)");
+
+            CBlockNameColumn.setCellValueFactory(new PropertyValueFactory<>(contentBlock.getName()));
+            CBlockInsertButtonColumn.setCellValueFactory((new PropertyValueFactory<>()));
+        }
+
+
+    }
+
 
 
 
