@@ -74,18 +74,13 @@ public class MainPageController implements Initializable{
     public void initialize(URL arg0, ResourceBundle arg1){
         //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
 
-        load();
+        loadEObject();
         // Load engineering object from database with id = 1
         //TODO Anne - skal jo ikke være hardcoded i virkelig løsning.
         // Men giver ikke mening at gøre dynamisk lige nu
 
-    //
-
-
-
         // Marshal eObject to XML file, which is saved in resources/xml
-        //TODO ændre
-        javaObjectToXML(eObject);
+        eObject.eObjectToXML();
 
         //Populate the Combobox with the eObjects' names
         List<EObject> eList;
@@ -114,7 +109,7 @@ public class MainPageController implements Initializable{
     */
     }
 
-    public void load(){
+    public void loadEObject(){
         if (eObject == null){
             eObject = eDao.getById(1);
         }
@@ -141,37 +136,9 @@ public class MainPageController implements Initializable{
 
     public void changeEObject(ActionEvent e) {
         eObject = eObjectChoice.getValue();
-        load();
+        loadEObject();
         Main.getPlaceholdersSubPageController().updateEObjectValues();
         Main.getTextEditorController().insertXmlTextInTextArea();
-    }
-
-    //TODO slet
-    public void javaObjectToXML(EObject eObject){
-        //Passes EObject attribute values to create XML file
-        try
-        {
-            //Create JAXB Context
-            JAXBContext jaxbContext = JAXBContext.newInstance(EObject.class);
-
-            //Create Marshaller
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-            //Formats file and bind it to xsl
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            jaxbMarshaller.setProperty("com.sun.xml.bind.xmlHeaders",
-                    "<?xml-stylesheet type='text/xsl' href='style.xsl' ?>");
-
-            //Store XML to File
-            File file = new File("src/main/resources/xml/eObject.xml");
-
-            //Writes XML file to file-system
-            jaxbMarshaller.marshal(eObject, file);
-        }
-        catch (JAXBException e)
-        {
-            e.printStackTrace();
-        }
     }
 
     /**
