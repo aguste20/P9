@@ -86,22 +86,6 @@ public class MainPageController implements Initializable{
             eObject.getDoc().setXmlText(txt.getTxt());
         }
 
-
-
-
-    // EObject created to set the attributes that the xml file is getting created from
-        EObject eObject = new EObject();
-        //TODO: Lav nedenstående dynamisk
-
-        eObject.seteObjectId(999);
-        eObject.setName("Volvo Penta Car Factory");
-        eObject.setVersion(2.2);
-        eObject.setLength(2.3);
-        eObject.setHeight(2.4);
-        eObject.setHeight(2.5);
-        eObject.setWidth(2.6);
-        eObject.setWeight(2.7);
-
         // Marshal eObject to XML file, which is saved in resources/xml
         javaObjectToXML(eObject);
     }
@@ -155,6 +139,7 @@ public class MainPageController implements Initializable{
     }
 
     public void switchToPreviewSubPage (ActionEvent event){
+        Main.getPreviewSubPageController().createXslFromTextArea();
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
     }
 
