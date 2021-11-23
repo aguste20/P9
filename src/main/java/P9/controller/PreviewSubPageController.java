@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -37,17 +38,44 @@ public class PreviewSubPageController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1){
     }
 
-    public void createXslFromTextArea(){
+    public void createXslFromTextArea() {
 
         // Get textarea string
+        String textAreaString = Main.getTextEditorController().getTextArea().getText();
 
-        // Create string with xsl document tag
+        // Create string with xsl document start tag
+        String xslStartString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "\n" +
+                "<xsl:stylesheet version=\"1.0\"\n" +
+                "                xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n" +
+                "    <xsl:output method=\"html\"/>\n" +
+                "\n" +
+                "    <xsl:template match=\"/\">";
 
-        // Create string with start tag
+        // Create xml document end tag
+        String xslEndString = "    </xsl:template>\n" +
+                "\n" +
+                "</xsl:stylesheet>";
 
-        // Create end tag
+        // Concatenate file string
+        String fileString = (xslStartString + textAreaString + xslEndString);
 
         // Write to file with string
+        File file = new File("src/main/resources/xml/style.xsl");
+
+        try
+        {
+            PrintWriter savedText = new PrintWriter(file);
+            BufferedWriter out = new BufferedWriter(savedText);
+            out.write(fileString);
+            out.close();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
