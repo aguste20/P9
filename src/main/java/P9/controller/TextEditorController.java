@@ -207,10 +207,10 @@ public class TextEditorController implements Initializable {
         IndexRange range = textArea.getSelection();
 
         // Insert closing tag after index range
-        textArea.insertText(range.getEnd(),"</"+ tag + ">");
+        textArea.insertText(range.getEnd(),"</"+ tag + "><xsl:text>");
 
         // Insert opening tag before index range
-        textArea.insertText(range.getStart(),"<" + tag + ">");
+        textArea.insertText(range.getStart(),"</xsl:text><" + tag + ">");
     }
 
     @FXML

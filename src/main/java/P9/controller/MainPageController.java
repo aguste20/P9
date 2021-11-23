@@ -37,7 +37,6 @@ import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable{
 
-
     //We annotate the containers of the mainPage.fxml
     @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
@@ -51,6 +50,7 @@ public class MainPageController implements Initializable{
     EObject eObject;
     // Reference to DAO objects.
     UserDao userDAO = new UserDao();
+    TextBlockDao txtDao = new TextBlockDao();
     EObjectDao eDao = new EObjectDao();
 
     // ---- Getters ----
@@ -79,20 +79,12 @@ public class MainPageController implements Initializable{
         //TODO Anne - skal jo ikke være hardcoded i virkelig løsning.
         // Men giver ikke mening at gøre dynamisk lige nu
 
-    // EObject created to set the attributes that the xml file is getting created from
-        EObject eObject = new EObject();
-        //TODO: Lav nedenstående dynamisk
+    //
 
-        eObject.seteObjectId(999);
-        eObject.setName("Volvo Penta Car Factory");
-        eObject.setVersion(2.2);
-        eObject.setLength(2.3);
-        eObject.setHeight(2.4);
-        eObject.setHeight(2.5);
-        eObject.setWidth(2.6);
-        eObject.setWeight(2.7);
+
 
         // Marshal eObject to XML file, which is saved in resources/xml
+        //TODO ændre
         javaObjectToXML(eObject);
 
         //Populate the Combobox with the eObjects' names
@@ -154,6 +146,7 @@ public class MainPageController implements Initializable{
         Main.getTextEditorController().insertXmlTextInTextArea();
     }
 
+    //TODO slet
     public void javaObjectToXML(EObject eObject){
         //Passes EObject attribute values to create XML file
         try
@@ -191,6 +184,7 @@ public class MainPageController implements Initializable{
     }
 
     public void switchToPreviewSubPage (ActionEvent event){
+        Main.getPreviewSubPageController().createXslFromTextArea();
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
     }
 
@@ -201,7 +195,6 @@ public class MainPageController implements Initializable{
     public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
-
 
 }
 

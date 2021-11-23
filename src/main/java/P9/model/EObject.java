@@ -3,10 +3,14 @@ package P9.model;
 import P9.persistence.TextBlockDao;
 
 import javax.persistence.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -186,5 +190,36 @@ public class EObject {
         TextBlock txt = txtDao.getById(2);
         doc.setXmlText(txt.getTxt());
 
+    }
+
+    /**
+     * Method to convert eObject to xml file
+     * which is stored in repository ressources/xml
+     */
+    public void eObjectToXML(){
+        //Passes EObject attribute values to create XML file
+        try
+        {
+            //Create JAXB Context
+            JAXBContext jaxbContext = JAXBContext.newInstance(EObject.class);
+
+            //Create Marshaller
+            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+
+            //Formats file and bind it to xsl
+            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            jaxbMarshaller.setProperty("com.sun.xml.bind.xmlHeaders",
+                    "<?xml-stylesheet type='text/xsl' href='style.xsl' ?>");
+
+            //Store XML to File
+            File file = new File("src/main/resources/xml/eObject.xml");
+
+            //Writes XML file to file-system
+            jaxbMarshaller.marshal(this, file);
+        }
+        catch (JAXBException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

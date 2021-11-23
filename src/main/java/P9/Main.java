@@ -71,7 +71,11 @@ public class Main extends Application {
     //References and getter for webview
     private static WebView webview;
 
-    private WebEngine engine;
+    private static WebEngine engine;
+
+    public static WebEngine getEngine() {
+        return engine;
+    }
 
     public static WebView getWebview() {
         return webview;
@@ -139,6 +143,7 @@ public class Main extends Application {
         //Sets load path to xml file and adds webview to preview page
         File f = new File("src/main/resources/xml/eObject.xml");
         engine.load(f.toURI().toString());
+
         previewSubPageController.getWebGridPane().add(Main.getWebview(), 0 , 0);
 
         scene = new Scene(mainPageParent);

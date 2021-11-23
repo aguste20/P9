@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.MainPageController">
+<GridPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.MainPageController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="180.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="297.0" />
@@ -48,7 +48,7 @@
                   <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToPreviewSubPage" text="Export PDF" HBox.hgrow="ALWAYS">
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToPreviewSubPage" text="Preview" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
