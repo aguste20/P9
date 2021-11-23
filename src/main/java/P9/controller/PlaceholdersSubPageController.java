@@ -70,19 +70,19 @@ public class PlaceholdersSubPageController implements Initializable {
         }
         switch (choice){
             case "length":
-                text.insertText(pos, "</xsl:text><xsl:value-of select=\"length\"/><xsl:text>");
+                text.insertText(pos, "</xsl:text><xsl:value-of select=\"eObject/length\"/><xsl:text>");
         }
         switch (choice){
             case "height":
-                text.insertText(pos, "</xsl:text><xsl:value-of select=\"height\"/><xsl:text>");
+                text.insertText(pos, "</xsl:text><xsl:value-of select=\"eObject/height\"/><xsl:text>");
         }
         switch (choice){
             case "width":
-                text.insertText(pos, "</xsl:text><xsl:value-of select=\"width\"/><xsl:text>");
+                text.insertText(pos, "</xsl:text><xsl:value-of select=\"eObject/width\"/><xsl:text>");
         }
         switch (choice){
             case "weight":
-                text.insertText(pos, "</xsl:text><xsl:value-of select=\"weight\"/><xsl:text>");
+                text.insertText(pos, "</xsl:text><xsl:value-of select=\"eObject/weight\"/><xsl:text>");
         }
     }
 

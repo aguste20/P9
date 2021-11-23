@@ -7,6 +7,8 @@ import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDao;
 import P9.persistence.TextBlockDao;
 import P9.persistence.UserDao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,15 +16,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.StringConverter;
 
 import javax.persistence.Column;
 import javax.xml.bind.JAXBContext;
@@ -31,6 +31,8 @@ import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable{
@@ -42,13 +44,14 @@ public class MainPageController implements Initializable{
     //Annotating label and button
     @FXML public Label eObjectLabel;
     @FXML public Button eOjbectUpdate;
-
+    @FXML public ComboBox<EObject> eObjectChoice;
 
     // Reference to the engineering object that the user is working on
     EObject eObject;
-    // Reference to the DAO for our user.
+    // Reference to DAO objects.
     UserDao userDAO = new UserDao();
     TextBlockDao txtDao = new TextBlockDao();
+    EObjectDao eDao = new EObjectDao();
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
@@ -71,23 +74,52 @@ public class MainPageController implements Initializable{
     public void initialize(URL arg0, ResourceBundle arg1){
         //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
 
+        loadEObject();
         // Load engineering object from database with id = 1
-        EObjectDao dao = new EObjectDao();
         //TODO Anne - skal jo ikke være hardcoded i virkelig løsning.
         // Men giver ikke mening at gøre dynamisk lige nu
-        eObject = dao.getById(1);
+
+        // Marshal eObject to XML file, which is saved in resources/xml
+        eObject.eObjectToXML();
+
+        //Populate the Combobox with the eObjects' names
+        List<EObject> eList;
+        eList = eDao.listAll();
+        ObservableList<EObject> oeList = FXCollections.observableArrayList(eList);
+        eObjectChoice.setItems(oeList);
+        eObjectChoice.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(EObject eObject) {
+                return eObject.getName();
+            }
+
+            @Override
+            public EObject fromString(String s) {
+                return eObjectChoice.getItems().stream().filter
+                        (ap -> ap.getName().equals(s)).findFirst().orElse(null);
+            }
+        });
+
+
+                /*
+        List<String> eList;
+        EObjectDao eObjectDao = new EObjectDao();
+        eList = eObjectDao.listName();
+        eObjectChoice.getItems().addAll(eList);
+    */
+    }
+
+    public void loadEObject(){
+        if (eObject == null){
+            eObject = eDao.getById(1);
+        }
 
         eObjectLabel.setText(eObject.getName());
 
         // If eObject has no doc, create one for it, and set it to the template in the DB
         if (eObject.getDoc() == null){
             eObject.createNewDoc();
-            TextBlock txt = txtDao.getById(2);
-            eObject.getDoc().setXmlText(txt.getTxt());
         }
-
-        // Marshal eObject to XML file, which is saved in resources/xml
-        javaObjectToXML(eObject);
     }
 
     /**
@@ -96,37 +128,17 @@ public class MainPageController implements Initializable{
      * @param e Refers to the button in the GUI
      */
     public void updateEObject(ActionEvent e) {
-        EObjectDao eObjectDao = new EObjectDao();
-        eObject = eObjectDao.getById(eObject.geteObjectId());
+
+        eObject = eDao.getById(eObject.geteObjectId());
         eObjectLabel.setText(eObject.getName());
         Main.getPlaceholdersSubPageController().updateEObjectValues();
     }
 
-    public void javaObjectToXML(EObject eObject){
-        //Passes EObject attribute values to create XML file
-        try
-        {
-            //Create JAXB Context
-            JAXBContext jaxbContext = JAXBContext.newInstance(EObject.class);
-
-            //Create Marshaller
-            Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-            //Formats file and bind it to xsl
-            jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            jaxbMarshaller.setProperty("com.sun.xml.bind.xmlHeaders",
-                    "<?xml-stylesheet type='text/xsl' href='style.xsl' ?>");
-
-            //Store XML to File
-            File file = new File("src/main/resources/xml/eObject.xml");
-
-            //Writes XML file to file-system
-            jaxbMarshaller.marshal(eObject, file);
-        }
-        catch (JAXBException e)
-        {
-            e.printStackTrace();
-        }
+    public void changeEObject(ActionEvent e) {
+        eObject = eObjectChoice.getValue();
+        loadEObject();
+        Main.getPlaceholdersSubPageController().updateEObjectValues();
+        Main.getTextEditorController().insertXmlTextInTextArea();
     }
 
     /**

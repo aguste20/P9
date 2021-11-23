@@ -1,5 +1,7 @@
 package P9.model;
 
+import P9.persistence.TextBlockDao;
+
 import javax.persistence.*;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -181,8 +183,13 @@ public class EObject {
      * Method that creates a new Doc object and associates it with the eObject instance
      */
     public void createNewDoc(){
+        EObject eObject = new EObject();
         doc = new EObjectDoc();
+        TextBlockDao txtDao = new TextBlockDao();
         doc.seteObject(this);
+        TextBlock txt = txtDao.getById(2);
+        doc.setXmlText(txt.getTxt());
+
     }
 
     /**

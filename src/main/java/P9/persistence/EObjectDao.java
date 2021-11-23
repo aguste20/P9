@@ -72,4 +72,15 @@ public class EObjectDao {
         //Returning list of objects retrieved from the database
         return objList;
     }
+
+    public List<String> listName(){
+        //Creating session
+        Session session = Setup.getSession();
+        //Querying database for all objects' name
+        List<String> list = session.createQuery("select c.name from EObject c").list();
+        //Closing session
+        session.close();
+        //Returning list
+        return list;
+    }
 }
