@@ -51,12 +51,15 @@ public class ContentsSubPageController implements Initializable {
             //*****************************************************************//
         }
 
-        Callback<TableColumn<Object, Button>, TableCell<Object, Button>> cellFactory = new Callback<TableColumn<Object, Button>, TableCell<Object, Button>>() {
+        /**
+         * Funny CallBack cellFactory that works like magic! :O (I don't know how it works - Bjørn)
+         */
+        Callback<TableColumn<Object, Button>, TableCell<Object, Button>> cellFactory = new Callback<>() {
             @Override
             public TableCell<Object, Button> call(final TableColumn<Object, Button> param) {
-                final TableCell<Object, Button> cell = new TableCell<Object, Button>() {
+                final TableCell<Object, Button> cell = new TableCell<>() {
 
-                    private final Button btn = new Button("Action");
+                    private final Button btn = new Button("Insert (>)");
 
                     {
                         btn.setOnAction((ActionEvent event) -> {
