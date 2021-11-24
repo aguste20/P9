@@ -4,16 +4,11 @@ import P9.Main;
 import P9.model.EObjectDoc;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.control.Accordion;
-import javafx.scene.control.TitledPane;
+import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.layout.Region;
 import org.apache.commons.lang3.StringUtils;
 
 import java.net.URL;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
 import java.util.*;
 
 public class OverviewSubPageController implements Initializable {
@@ -22,7 +17,7 @@ public class OverviewSubPageController implements Initializable {
     private List<Header> headerList = new ArrayList<>();
 
     @FXML
-    private TreeView tocView;
+    private TreeView<String> tocView;
 
     //TODO kommentarer
     @Override
@@ -30,8 +25,11 @@ public class OverviewSubPageController implements Initializable {
         // Get reference to displayed doc
         doc = Main.getMainPageController().geteObject().getDoc();
 
+        createDummyRoot();
+
         // Create table of contents
         updateToc();
+
     }
 
 
@@ -111,7 +109,7 @@ public class OverviewSubPageController implements Initializable {
 
             headerList.add(h);
 
-            System.out.println("H1: " + h.txt + " at index: " + h.startIndex + " and end index: " + h.endIndex);
+            System.out.println("H1: " + h.txt + " at index: " + h.startIndex + " and end index: " + h.endTagIndex);
 
             lookFrom = index + s.length();
         }
@@ -137,12 +135,28 @@ public class OverviewSubPageController implements Initializable {
         while (index >= 0) {  // indexOf returns -1 if no match found
             Header h = new Header(index, endIndex);
             headerList.add(h);
-            System.out.println("Header at range: " + h.startIndex + " - " + h.endIndex + ". Headertext: " + h.getHeaderText(text));
             index = text.indexOf(hTag, index + hTag.length());
             endIndex = text.indexOf(hClosingTag, index);
+
+            if(endIndex > h.startIndex){
+                h.endIndex = endIndex;
+            }
+            else{
+                h.endIndex = text.length();
+            }
+
+            System.out.println("Header at range: " + h.startIndex + " - " + h.endTagIndex + ". Headertext: " + h.getHeaderText(text) + " ends at index: " + h.endIndex);
+            addHeaderToTreeView(h, text);
         }
 
     }
+
+    public void addHeaderToTreeView(Header h, String text){
+        TreeItem<String> header = new TreeItem<>(h.getHeaderText(text));
+
+        tocView.getRoot().getChildren().add(header);
+    }
+
 
 
 
@@ -211,30 +225,46 @@ public class OverviewSubPageController implements Initializable {
     //TODO kommentarer
     private class Header {
         String txt;
-        Integer startIndex;
-        Integer endIndex;
-        Integer type;
+        Integer startIndex; //Index of the first character in "<h1>"
+        Integer endTagIndex; //Index of the first character in "</h1>"
+        Integer endIndex; // Index of the next occurrence of "<h1>". Is set to final index position of text, if no more h1's
+        Integer type; // Type of header h1 or h2
 
-        public Header(Integer startIndex, Integer endIndex) {
+
+        public Header(Integer startIndex, Integer endTagIndex) {
             this.startIndex = startIndex;
-            this.endIndex = endIndex;
+            this.endTagIndex = endTagIndex;
         }
 
-        public Header(String txt, Integer startIndex, Integer endIndex, Integer type) {
+        public Header(String txt, Integer startIndex, Integer endTagIndex, Integer type) {
             this.txt = txt;
             this.startIndex = startIndex;
-            this.endIndex = endIndex;
+            this.endTagIndex = endTagIndex;
             this.type = type;
         }
 
+        public void setEndIndex(Integer endIndex) {
+            this.endIndex = endIndex;
+        }
+
         public String getHeaderText(String text){
-            String htext = text.substring(startIndex, endIndex);
+            String htext = text.substring(startIndex, endTagIndex);
 
             String h = htext.replace("<h1>", "");
             h.replace("</h1>", "");
 
             return h;
         }
+
+        public void findAllH2(String text){
+            String substring = text.substring(startIndex, endIndex);
+        }
+    }
+
+    public void createDummyRoot(){
+        TreeItem<String> contents = new TreeItem<>("Contents");
+        tocView.setRoot(contents);
+        contents.setExpanded(true);
     }
 
 }

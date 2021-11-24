@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -31,7 +30,6 @@
             </Button>
          </children>
       </HBox>
-      <TreeView fx:id="tocTreeView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
-      <Label text="Content" />
+      <TreeView fx:id="tocView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
    </children>
 </GridPane>
