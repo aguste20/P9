@@ -147,6 +147,11 @@ public class OverviewSubPageController implements Initializable {
         List<Header> h2List; // List of the headers subheadings, if any
         TreeItem<String> treeItem; // The headers treeitem in the tree view
 
+        /**
+         * Constructor
+         * @param startIndex
+         * @param endTagIndex
+         */
         public Header(Integer startIndex, Integer endTagIndex) {
             this.startIndex = startIndex;
             this.endTagIndex = endTagIndex;
@@ -161,6 +166,10 @@ public class OverviewSubPageController implements Initializable {
             this.h2List = new ArrayList<>();
         }
 
+        /**
+         * Method that gets the actual text, representing the header
+         * @return String with the header text
+         */
         public String getHeaderText(){
             String htext = text.substring(startIndex, endTagIndex);
 
@@ -170,6 +179,10 @@ public class OverviewSubPageController implements Initializable {
             return h;
         }
 
+        /**
+         * Method that creates a new Tree item from the header
+         * and stores a reference to it in the header
+         */
         public void headerToTreeItem(){
             treeItem = new TreeItem<>(this.getHeaderText());
         }
