@@ -7,7 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.Region;
+import org.apache.commons.lang3.StringUtils;
 
 import java.net.URL;
 import java.text.CharacterIterator;
@@ -17,9 +19,10 @@ import java.util.*;
 public class OverviewSubPageController implements Initializable {
 
     private EObjectDoc doc;
+    private List<Header> headerList = new ArrayList<>();
 
     @FXML
-    private Accordion tocAccordion;
+    private TreeView tocView;
 
     //TODO kommentarer
     @Override
@@ -31,33 +34,28 @@ public class OverviewSubPageController implements Initializable {
         updateToc();
     }
 
-    //TODO kommentarer
-    private class Header {
-        String txt;
-        Integer startIndex;
-
-        public Header(String txt, Integer startIndex) {
-            this.txt = txt;
-            this.startIndex = startIndex;
-        }
-    }
-
-    Header h = new Header("Hej", 1);
 
     //TODO kommentarer
     public void updateToc() {
         // Get text from doc from eObject
         String txt = doc.getXmlText();
 
+
+        // Find indexes of all h1s
+        findIndexesOfAllh1(txt);
+
         // Find all h1 headers
+        //findAllH1(txt);
+
+        /*
         List<String> headerList = findHeaders(txt, 1);
 
         for(String headerString : headerList){
-            addHeaderToAccordion(headerString);
+            //addHeaderToAccordion(headerString);
 
             //TODO Anne: Find h2 for denne h1
             //TODO Anne: Tilføj accordion til h1-tp + tilføj h2-tp til accordion
-            /*
+
             TitledPane tp2 = new TitledPane();
             tp2.setText("h2");
 
@@ -65,11 +63,8 @@ public class OverviewSubPageController implements Initializable {
             h1Acc.getPanes().add(tp2);
 
             tp.setContent(h1Acc);
-             */
+            */
 
-
-
-        }
 
     }
 
@@ -87,6 +82,70 @@ public class OverviewSubPageController implements Initializable {
                 it.next();
             }
              */
+
+    public List<Header> findAllH1(String txt){
+
+        // List to return
+        ArrayList<Header> headerList = new ArrayList<>();
+
+        // Tags to look for
+        String hTag = "<h1>";
+        String hClosingTag = "</h1>";
+
+        // Look for all h1's and save in list
+        String[] h1s = StringUtils.substringsBetween(txt, hTag, hClosingTag);
+
+        // Iterate over all h1 strings and save as header object,
+        // starting from index 0 and incrementing as a new header is found
+        int lookFrom = 0;
+        for (String s : h1s){
+            String match = "<h1>" + s + "</h1>";
+
+            int matchIndex = txt.indexOf(s) - 4;
+
+            match.equals(s);
+
+            int index = txt.indexOf(s, lookFrom);
+
+            Header h = new Header(s, index, (index + s.length()), 1);
+
+            headerList.add(h);
+
+            System.out.println("H1: " + h.txt + " at index: " + h.startIndex + " and end index: " + h.endIndex);
+
+            lookFrom = index + s.length();
+        }
+
+
+
+
+
+
+        return headerList;
+
+
+    }
+
+    public void findIndexesOfAllh1(String text){
+        ArrayList<Integer> list = new ArrayList<>();
+
+        String hTag = "<h1>";
+        String hClosingTag = "</h1>";
+
+        int index = text.indexOf(hTag);
+        int endIndex = text.indexOf(hClosingTag);
+        while (index >= 0) {  // indexOf returns -1 if no match found
+            Header h = new Header(index, endIndex);
+            headerList.add(h);
+            System.out.println("Header at range: " + h.startIndex + " - " + h.endIndex + ". Headertext: " + h.getHeaderText(text));
+            index = text.indexOf(hTag, index + hTag.length());
+            endIndex = text.indexOf(hClosingTag, index);
+        }
+
+    }
+
+
+
 
 
     //TODO kommentarer
@@ -133,6 +192,7 @@ public class OverviewSubPageController implements Initializable {
         return headerList;
     }
 
+    /*
     //TODO kommentarer
     public void addHeaderToAccordion(String header){
         // Create titled pane from found heading string
@@ -142,6 +202,39 @@ public class OverviewSubPageController implements Initializable {
         // Append new titled pane to accordion in scene
         tocAccordion.getPanes().add(tp);
 
+    }
+
+     */
+
+
+
+    //TODO kommentarer
+    private class Header {
+        String txt;
+        Integer startIndex;
+        Integer endIndex;
+        Integer type;
+
+        public Header(Integer startIndex, Integer endIndex) {
+            this.startIndex = startIndex;
+            this.endIndex = endIndex;
+        }
+
+        public Header(String txt, Integer startIndex, Integer endIndex, Integer type) {
+            this.txt = txt;
+            this.startIndex = startIndex;
+            this.endIndex = endIndex;
+            this.type = type;
+        }
+
+        public String getHeaderText(String text){
+            String htext = text.substring(startIndex, endIndex);
+
+            String h = htext.replace("<h1>", "");
+            h.replace("</h1>", "");
+
+            return h;
+        }
     }
 
 }
