@@ -33,10 +33,10 @@
          </children>
       </HBox>
       <Label text="List of existing content blocks" />
-      <TableView fx:id="ContentBlockTableViewContentsSubPage" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+      <TableView fx:id="contentBlockTableView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
         <columns>
-          <TableColumn fx:id="CBlockNameColumnContentsSubPage" prefWidth="75.0" text="Name" />
-          <TableColumn fx:id="InsertCBlockButtonContentsSubPage" prefWidth="75.0" text="Insert" />
+          <TableColumn fx:id="cBlockNameColumn" prefWidth="75.0" text="Name" />
+          <TableColumn fx:id="insertCBlockButton" prefWidth="75.0" text="Insert" />
         </columns>
       </TableView>
    </children>
