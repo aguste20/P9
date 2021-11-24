@@ -58,7 +58,8 @@ public class TextEditorController implements Initializable {
         return textArea;
     }
 
-
+    //TODO slettes?
+    /*
     public void exit() {
         if (textArea.getText().isEmpty()) {
             return;
@@ -78,7 +79,7 @@ public class TextEditorController implements Initializable {
                 ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("No, I want to save");
                 ((Button) alert.getDialogPane().lookupButton(ButtonType.NO)).setText("Cancel");
 
-         */
+
         alert.setHeaderText("Are you sure you want to close without saving?");
         alert.showAndWait();
 
@@ -92,7 +93,7 @@ public class TextEditorController implements Initializable {
             textArea.clear();
         }
     }
-
+*/
     /**
      * Method that saves content from text area in the database
      */
@@ -133,6 +134,8 @@ public class TextEditorController implements Initializable {
          */
     }
 
+    //TODO slettes?
+    /*
     @FXML
     public void openFile() {
         fileChooser.setTitle("Open File");
@@ -143,7 +146,7 @@ public class TextEditorController implements Initializable {
             readText(file);
         }
     }
-
+    */
     // sets the textArea to the text of the opened file
     private void readText(File file) {
         String text;
@@ -159,13 +162,13 @@ public class TextEditorController implements Initializable {
 
     //TODO add confirmation window if text editor has text and wasn't saved
 
-
-
-
+    //TODO slettes?
+    /*
     @FXML
     public void newFile() {
         textArea.clear();
     }
+    */
 
     @FXML
     public void about() {
