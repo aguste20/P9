@@ -137,7 +137,7 @@ public class OverviewSubPageController implements Initializable {
             String hClosingTag = "</h2>";
 
             int index = text.indexOf(hTag, startIndex);
-            int endIndex = text.indexOf(hClosingTag);
+            int endIndex = text.indexOf(hClosingTag, startIndex);
             while (index >= 0 && index < this.endIndex) {  // indexOf returns -1 if no match found
                 Header h2 = new Header(index, endIndex);
 
