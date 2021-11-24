@@ -10,12 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.List;
@@ -25,11 +27,10 @@ public class ContentsSubPageController implements Initializable {
 
     //Configuring tableView table:
     @FXML
-    private TableView<ContentBlock> CBtableView;
+    private TableView<Object> CBtableView;
     //Creating each column, telling which parent and input datatype it has.
     @FXML private TableColumn<ContentBlock, String> CBnameTableColumn;
-    @FXML private TableColumn<Button, Button> CBinsertButtonTableColumn;
-
+    @FXML private TableColumn<Object, Button> CBinsertButtonTableColumn;
 
     /**
      * Method for creating and showing content blocks and related buttons in the view
@@ -47,13 +48,41 @@ public class ContentsSubPageController implements Initializable {
             Button button = new Button("(>)");
 
             CBtableView.getItems().add(contentBlock);
-
-
-
-
-            //CBlockNameColumn.setCellValueFactory(new PropertyValueFactory<>(contentBlock.getName()));
-            //CBlockInsertButtonColumn.setCellValueFactory();
+            //*****************************************************************//
         }
+
+        Callback<TableColumn<Object, Button>, TableCell<Object, Button>> cellFactory = new Callback<TableColumn<Object, Button>, TableCell<Object, Button>>() {
+            @Override
+            public TableCell<Object, Button> call(final TableColumn<Object, Button> param) {
+                final TableCell<Object, Button> cell = new TableCell<Object, Button>() {
+
+                    private final Button btn = new Button("Action");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            //Data data = getTableView().getItems().get(getIndex());
+                            System.out.println("Gaming?");
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Button item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        CBinsertButtonTableColumn.setCellFactory(cellFactory);
+
+        //CBtableView.getColumns().add(CBinsertButtonTableColumn);
+        CBtableView.getItems().add(CBinsertButtonTableColumn);
 
     }
 
@@ -66,9 +95,6 @@ public class ContentsSubPageController implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-        //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
-
-
         CBnameTableColumn.setCellValueFactory(new PropertyValueFactory<ContentBlock, String>("name"));
 
         makeContentBlockList();
