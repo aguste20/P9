@@ -1,7 +1,6 @@
 package P9.controller;
 
 import P9.Main;
-import P9.model.EObjectDoc;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -21,7 +20,6 @@ public class OverviewSubPageController implements Initializable {
 
     @FXML
     private TreeView<String> tocView;
-
 
     /**
      * Method that initializes a contoller object after its root element has been loaded.
@@ -48,6 +46,11 @@ public class OverviewSubPageController implements Initializable {
 
         // Get from text area
         text = Main.getTextEditorController().getTextArea().getText();
+
+        //Find all h1 - add to list
+        //findAll();
+
+        //For h1 in list
 
         // Tags to look for
         String hTag = "<h1>";
@@ -80,7 +83,7 @@ public class OverviewSubPageController implements Initializable {
 
             addHeaderToTreeView(h);
 
-            h.findAllH2(text);
+            h.addAllH2ToTocView();
         }
     }
 
@@ -135,7 +138,7 @@ public class OverviewSubPageController implements Initializable {
             return h;
         }
 
-        public void findAllH2(String text){
+        public void addAllH2ToTocView(){
             String substring = text.substring(startIndex, this.endIndex);
 
             String hTag = "<h2>";
@@ -151,8 +154,9 @@ public class OverviewSubPageController implements Initializable {
 
                 System.out.println("Header at range: " + h2.startIndex + " - " + h2.endTagIndex + ". Headertext: " + h2.getHeaderText() + " ends at index: " + h2.endIndex);
 
-                //Ad to treeview
-                this.addH2ToTreeView(h2);
+                //Add h2 to treeView
+                TreeItem<String> item = new TreeItem<>(h2.getHeaderText());
+                treeItem.getChildren().add(item);
 
             }
         }
