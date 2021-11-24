@@ -1,19 +1,114 @@
 package P9.controller;
 
 import P9.Main;
+import P9.model.ContentBlock;
+import P9.persistence.ContentBlockDao;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ContentsSubPageController implements Initializable {
+
+
+    // Attribute to hold the secondary stage for the "Register new Content Block" window
+    private Stage registerNewCBlockStage;
+
+    @FXML private TableView<Object> ContentBlockTableViewContentsSubPage;
+    @FXML private TableColumn<ContentBlock, String> CBlockNameColumnContentsSubPage;
+    @FXML private TableColumn<Button, Void> InsertCBlockButtonContentsSubPage;
+
+
+    //Get a list of all contentblocks from the databse //TODO: Muligvis ryk i initialize eller makeContentBlockList - Bjørn
+    ContentBlockDao cbdao = new ContentBlockDao();
+    ArrayList<ContentBlock> contentBlockList = (ArrayList<ContentBlock>) cbdao.listAll(); //List of all our currently existing content blocks
+
+
+
+    //Method that will generate the list of content blocks and show them in the view.
+    public void makeContentBlockList(){
+
+        //List of ALL (Both the content blocks and the buttons)
+        ArrayList tableViewContentsList = (ArrayList) ContentBlockTableViewContentsSubPage.getItems();
+
+        //Empty list meant to hold the content blocks we create when we load them from the database
+        //List contentBlockList;
+
+        //Empty list meant to hold the buttons we create for each loaded content block from the database
+        ArrayList contentButtonList = new ArrayList();
+
+        for (int i = 0; i < contentBlockList.size(); i++){
+            //System.out.println(contentBlockList.get(i));
+            ContentBlock contentBlock = contentBlockList.get(i);
+            //Label label = new Label(contentBlock.getName());
+            Button button = new Button("(>)" + i);
+
+            //observableNameList.add(contentBlock.getName());
+            contentBlockList.add(contentBlock);
+            contentButtonList.add(button);
+
+
+            //ContentBlockTableViewContentsSubPage.getItems().add(button);
+
+        }
+
+        Callback<TableColumn<Button, Void>, TableCell<Button, Void>> cellFactory = new Callback<TableColumn<Button, Void>, TableCell<Button, Void>>() {
+            @Override
+            public TableCell<Button, Void> call(final TableColumn<Button, Void> param) {
+                final TableCell<Button, Void> cell = new TableCell<Button, Void>() {
+
+                    private final Button btn = new Button("Action");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            //Button data = getTableView().getItems().get(getIndex());
+                            System.out.println("Gaming?");
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        InsertCBlockButtonContentsSubPage.setCellFactory(cellFactory);
+
+        //ContentBlockTableViewContentsSubPage.getColumns().add(InsertCBlockButtonContentsSubPage);
+
+        ContentBlockTableViewContentsSubPage.getColumns().add(contentBlockList);
+        ContentBlockTableViewContentsSubPage.getColumns().add(contentButtonList);
+
+
+    }
+
+
 
     /**
      * This method initializes a controller after its root element has already been processed.
@@ -23,13 +118,29 @@ public class ContentsSubPageController implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-        //Might have to move some of the content that is outside this method, in to this method, in order to keep the interface updated. - Bjørn
+
+        CBlockNameColumnContentsSubPage.setCellValueFactory(new PropertyValueFactory("name"));
+
+        ContentBlockTableViewContentsSubPage.setPlaceholder(new Text("No content blocks currently exists. Use the 'Create new content blcok'-button to create new block."));
+
+
+        makeContentBlockList();
+
     }
 
 
 
-    // Attribute to hold the secondary stage for the "Register new Content Block" window
-    private Stage registerNewCBlockStage;
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Event handler for the button "Registrer ny vare"
