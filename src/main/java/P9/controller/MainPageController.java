@@ -164,9 +164,15 @@ public class MainPageController implements Initializable{
     public void switchToPreviewSubPage (ActionEvent event){
         Main.getPreviewSubPageController().createXslFromTextArea();
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
+        Main.getPreviewSubPageController().createTXTFromWebView();
     }
 
     public void switchToTextEditorPage(){
+        //loads webview, if it contains any content
+        if (Main.getEngine()!=null){
+            Main.getPreviewSubPageController().createTXTFromWebView();
+        }
+
         paneTextEditor.setContent(Main.getTextEditorParent());
     }
 
