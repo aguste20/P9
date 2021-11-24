@@ -4,6 +4,7 @@ import P9.Main;
 import P9.model.EObjectDoc;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 
@@ -14,6 +15,9 @@ public class OverviewSubPageController implements Initializable {
 
     private List<Header> headerList = new ArrayList<>();
     private String text; // Text from the textarea
+
+    @FXML
+    private Button refreshTocButton;
 
     @FXML
     private TreeView<String> tocView;
@@ -39,29 +43,26 @@ public class OverviewSubPageController implements Initializable {
      * Method that updates the table of contents
      */
     public void updateToc() {
-        text = Main.getMainPageController().geteObject().getDoc().getXmlText();
+        // Clear previous table of content
+        tocView.getRoot().getChildren().clear();
 
-        // Find indexes of all h1s
-        findIndexesOfAllh1();
-    }
+        // Get from text area
+        text = Main.getTextEditorController().getTextArea().getText();
 
-    /**
-     * Method that finds all h1, adds them to table of content, finds h2 and adds those to toc
-     */
-    public void findIndexesOfAllh1(){
+        // Tags to look for
         String hTag = "<h1>";
         String hClosingTag = "</h1>";
 
-        // Find indexes of first occurrence
+        // Find indexes of first occurrence in text
         int index = text.indexOf(hTag);
         int endIndex = text.indexOf(hClosingTag);
 
-        // Store index and keep looking for occurrences
+        // Store index and keep looking for occurrences, while any text left
         while (index >= 0) {  // indexOf returns -1 if no match found
 
-            // Store index in header object
+            // Store index in new header object
             Header h = new Header(index, endIndex);
-            headerList.add(h);
+            headerList.add(h); //TODO anne: gør ikke noget lige nu
 
             // Update indexes to match indexes for next occurrence
             index = text.indexOf(hTag, index + hTag.length());
@@ -80,9 +81,7 @@ public class OverviewSubPageController implements Initializable {
             addHeaderToTreeView(h);
 
             h.findAllH2(text);
-
         }
-
     }
 
     /**
@@ -112,19 +111,11 @@ public class OverviewSubPageController implements Initializable {
         Integer startIndex; //Index of the first character in "<h1>"
         Integer endTagIndex; //Index of the first character in "</h1>"
         Integer endIndex; // Index of the next occurrence of "<h1>". Is set to final index position of text, if no more h1's
-        Integer type; // Type of header h1 or h2
-        TreeItem<String> treeItem;
-
+        TreeItem<String> treeItem; // The headers treeitem in the tree view
 
         public Header(Integer startIndex, Integer endTagIndex) {
             this.startIndex = startIndex;
             this.endTagIndex = endTagIndex;
-        }
-
-        public Header(Integer startIndex, Integer endTagIndex, Integer type) {
-            this.startIndex = startIndex;
-            this.endTagIndex = endTagIndex;
-            this.type = type;
         }
 
         public void setEndIndex(Integer endIndex) {

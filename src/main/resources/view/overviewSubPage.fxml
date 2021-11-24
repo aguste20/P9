@@ -30,6 +30,15 @@
             </Button>
          </children>
       </HBox>
+      <HBox alignment="CENTER" maxHeight="40.0" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="refreshTocButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="35.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updateToc" text="Refresh TOC">
+               <HBox.margin>
+                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
       <TreeView fx:id="tocView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
    </children>
 </GridPane>
