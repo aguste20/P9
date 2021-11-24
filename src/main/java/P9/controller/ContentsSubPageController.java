@@ -81,9 +81,6 @@ public class ContentsSubPageController implements Initializable {
 
         CBinsertButtonTableColumn.setCellFactory(cellFactory);
 
-        //CBtableView.getColumns().add(CBinsertButtonTableColumn);
-        CBtableView.getItems().add(CBinsertButtonTableColumn);
-
     }
 
 
