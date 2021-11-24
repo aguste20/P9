@@ -60,7 +60,6 @@ public class ContentsSubPageController implements Initializable {
                 final TableCell<Object, Button> cell = new TableCell<>() {
 
                     private final Button btn = new Button("Insert (>)");
-
                     {
                         btn.setOnAction((ActionEvent event) -> {
                             //Data data = getTableView().getItems().get(getIndex());
@@ -82,6 +81,7 @@ public class ContentsSubPageController implements Initializable {
             }
         };
 
+        //We set cellFactory of the CBinsertButtonTableColumn to be the CallBack<> object cellFactory. I have no clue how and why a CallBack works xd - Bjørn
         CBinsertButtonTableColumn.setCellFactory(cellFactory);
 
     }
