@@ -44,43 +44,67 @@ public class OverviewSubPageController implements Initializable {
         // Clear previous table of content
         tocView.getRoot().getChildren().clear();
 
-        // Get from text area
+        // Get text from text area
         text = Main.getTextEditorController().getTextArea().getText();
 
         //Find all h1 - add to list
-        headerList = findAllH1();
+        headerList = findAllH(1);
 
-        //For h1 in list
+        //For every h1 in list
         for (Header h : headerList){
-            //Find all h2 - add to list
-            findAllH2(h); //TODO make return list som h.list sættes til
+            //Find all h2 for the parent header - add to list
+            h.h2List.addAll(findAllH(2, h));
 
-            // Create tree item and add to tree view
+            // Create tree item for h1 and add to tree view
             h.headerToTreeItem();
             tocView.getRoot().getChildren().add(h.treeItem);
+            h.treeItem.setExpanded(true);
+            h.treeItem.getChildren().clear();
 
+            // For every h2 in h1's list
             for (Header h2 : h.h2List){
+                // Create tree item for h2 and add to h1 tree item
                 h2.headerToTreeItem();
                 h.treeItem.getChildren().add(h2.treeItem);
             }
-
         }
     }
 
-    public List<Header> findAllH1(){
+
+    /**
+     * Overloaded method that returns a list of headers for the type
+     * Should only be used for H1
+     * @param type Type of header to be found (1 or 2)
+     * @return list of header objects
+     */
+    public List<Header> findAllH(Integer type){
+        // Dummy parent header
+        Header dummyHeader = new Header(0,0, text.length());
+
+        // Call overloaded method
+        return findAllH(type, dummyHeader);
+    }
+
+    /**
+     * Overloaded method that returns a list of Header objects for the given type
+     * @param type Type of header to be found (1 or 2)
+     * @param parentH Parent header
+     * @return
+     */
+    public List<Header> findAllH(Integer type, Header parentH){
         // List to return
         List<Header> h1List = new ArrayList<>();
 
         // Tags to look for
-        String hTag = "<h1>";
-        String hClosingTag = "</h1>";
+        String hTag = "<h" + type + ">";
+        String hClosingTag = "</h" + type + ">";
 
         // Find indexes of first occurrence in text
-        int index = text.indexOf(hTag);
-        int endIndex = text.indexOf(hClosingTag);
+        int index = text.indexOf(hTag, parentH.startIndex);
+        int endIndex = text.indexOf(hClosingTag, parentH.startIndex);
 
         // Store index and keep looking for occurrences, while any text left
-        while (index >= 0) {  // indexOf returns -1 if no match found
+        while (index >= 0 && index < parentH.endIndex) {  // indexOf returns -1 if no match found
 
             // Store index in new header object
             Header h = new Header(index, endIndex);
@@ -90,26 +114,16 @@ public class OverviewSubPageController implements Initializable {
             index = text.indexOf(hTag, index + hTag.length());
             endIndex = text.indexOf(hClosingTag, index);
 
-            // Store end index for the range that current h1 covers
+            // Store end index for the range that current header covers
             if (endIndex > h.startIndex) {
                 h.endIndex = index;
             } else {
-                h.endIndex = text.length();
+                h.endIndex = parentH.endIndex;
             }
 
-            System.out.println("Header at range: " + h.startIndex + " - " + h.endTagIndex + ". Headertext: " + h.getHeaderText() + " ends at index: " + h.endIndex);
         }
 
         return h1List;
-    }
-
-    /**
-     * Method that adds a header to the toc tree view element
-     * @param h header to be added
-     */
-    public void addHeaderToTreeView(Header h){
-        h.headerToTreeItem();
-        tocView.getRoot().getChildren().add(h.treeItem);
     }
 
     /**
@@ -139,12 +153,12 @@ public class OverviewSubPageController implements Initializable {
             this.h2List = new ArrayList<>();
         }
 
-        public void setEndIndex(Integer endIndex) {
-            this.endIndex = endIndex;
-        }
 
-        public void setTreeItem(TreeItem<String> treeItem) {
-            this.treeItem = treeItem;
+        public Header(Integer startIndex, Integer endTagIndex, Integer endIndex) {
+            this.startIndex = startIndex;
+            this.endIndex = endIndex;
+            this.endTagIndex = 0;
+            this.h2List = new ArrayList<>();
         }
 
         public String getHeaderText(){
@@ -156,41 +170,9 @@ public class OverviewSubPageController implements Initializable {
             return h;
         }
 
-        public void addH2ToTreeView(Header h2){
-            TreeItem<String> item = new TreeItem<>(h2.getHeaderText());
-            treeItem.getChildren().add(item);
-        }
-
         public void headerToTreeItem(){
             treeItem = new TreeItem<>(this.getHeaderText());
         }
     }
-
-    public void findAllH2(Header h){
-        String substring = text.substring(h.startIndex, h.endIndex);
-
-        String hTag = "<h2>";
-        String hClosingTag = "</h2>";
-
-        int index = text.indexOf(hTag, h.startIndex);
-        int endIndex = text.indexOf(hClosingTag, h.startIndex);
-        while (index >= 0 && index < h.endIndex) {  // indexOf returns -1 if no match found
-            Header h2 = new Header(index, endIndex);
-
-            index = text.indexOf(hTag, index + hTag.length());
-            endIndex = text.indexOf(hClosingTag, index);
-
-            System.out.println("Header at range: " + h2.startIndex + " - " + h2.endTagIndex + ". Headertext: " + h2.getHeaderText() + " ends at index: " + h2.endIndex);
-
-            h.h2List.add(h2);
-
-            //Add h2 to treeView
-            //TreeItem<String> item = new TreeItem<>(h2.getHeaderText());
-            //h.treeItem.getChildren().add(item);
-
-        }
-    }
-
-
 
 }
