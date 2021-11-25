@@ -73,7 +73,17 @@ public class PreviewSubPageController implements Initializable {
         String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
 
         //Modiefies String html
-        String modifiedHTML = html.replaceAll("<h1>", "</xsl:text><h1>").replaceAll("</h1>", "</h1><xsl:text>").replaceAll("<h2>", "</xsl:text><h2>").replaceAll("</h2>", "</h2><xsl:text>");
+        String modifiedHTML = html
+                .replaceAll("<h1>", "</xsl:text><h1>")
+                .replaceAll("</h1>", "</h1><xsl:text>")
+                .replaceAll("<h2>", "</xsl:text><h2>")
+                .replaceAll("</h2>", "</h2><xsl:text>")
+                .replaceAll("<i>", "</xsl:text><i>")
+                .replaceAll("</i>", "</i><xsl:text>")
+                .replaceAll("<b>", "</xsl:text><b>")
+                .replaceAll("</b>", "</b><xsl:text>")
+                .replaceAll("<u>", "</xsl:text><u>")
+                .replaceAll("</u>", "</u><xsl:text>");
 
         // Write to file with string
         File file = new File("src/main/resources/xml/webTxt.txt");
