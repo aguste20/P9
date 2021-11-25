@@ -39,6 +39,6 @@
             </Button>
          </children>
       </HBox>
-      <TreeView fx:id="tocView" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+      <TreeView fx:id="tocView" onMouseClicked="#moveToSelectedHeaderInTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
    </children>
 </GridPane>
