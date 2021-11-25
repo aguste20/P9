@@ -1,24 +1,13 @@
 package P9.controller;
 
 import P9.Main;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 public class PreviewSubPageController implements Initializable {
 
@@ -27,16 +16,19 @@ public class PreviewSubPageController implements Initializable {
 
     //private WebEngine engine;
 
-    public GridPane getWebGridPane() { return webGridPane; }
+    public GridPane getWebGridPane() {
+        return webGridPane;
+    }
 
     /**
      * This method initializes a controller after its root element has already been processed.
      * I think this means that this method is needed to keep content in the view pages updated visually.
+     *
      * @param arg0
      * @param arg1
      */
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1){
+    public void initialize(URL arg0, ResourceBundle arg1) {
     }
 
     //TODO kommentarer
@@ -46,7 +38,64 @@ public class PreviewSubPageController implements Initializable {
         String textAreaString = Main.getTextEditorController().getTextArea().getText();
 
         // Create string with xsl document start tag
-        String xslStartString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        String xslStartString = getXslText();
+
+        // Create xml document end tag
+        String xslEndString = " </xsl:text></span>    </xsl:template>\n" +
+                "\n" +
+                "</xsl:stylesheet>";
+
+        // Concatenate file string
+        String fileString = (xslStartString + textAreaString + xslEndString);
+
+        // Write to file with string
+        File file = new File("src/main/resources/xml/style.xsl");
+
+        try {
+            PrintWriter savedText = new PrintWriter(file);
+            BufferedWriter out = new BufferedWriter(savedText);
+            out.write(fileString);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Reload Webview to make sure that changes are displayed in preview
+        Main.getEngine().reload();
+
+    }
+
+    public void createTXTFromWebView() {
+
+        //creates string from webview content
+        String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
+
+        //Modiefies String html
+        String modifiedHTML = html.replaceAll("<h1>", "</xsl:text><h1>").replaceAll("</h1>", "</h1><xsl:text>").replaceAll("<h2>", "</xsl:text><h2>").replaceAll("</h2>", "</h2><xsl:text>");
+
+        // Write to file with string
+        File file = new File("src/main/resources/xml/webTxt.txt");
+
+        try {
+            PrintWriter savedText = new PrintWriter(file);
+            BufferedWriter out = new BufferedWriter(savedText);
+            out.write(modifiedHTML);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Main.getTextEditorController().getTextArea().clear();
+        Main.getTextEditorController().readText(file);
+
+    }
+
+    public String getXslText(){
+        String xslText = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "\n" +
                 "<xsl:stylesheet version=\"1.0\"\n" +
                 "                xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n" +
@@ -65,67 +114,55 @@ public class PreviewSubPageController implements Initializable {
                 "            xr.send(vars)\n" +
                 "            }\n" +
                 "\n" +
-                "        </script>\n" +
-                "        <span id=\"mySpan\" contenteditable=\"true\" onblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?><xsl:text> ";
-
-        // Create xml document end tag
-        String xslEndString = " </xsl:text></span>    </xsl:template>\n" +
+                "        </script>\n" + "<script language=\"javascript\">\n" +
+                "    borto = {\n" +
+                "    tmpEl: document.createElement('div'),\n" +
+                "    /* create element like in jquery with string &lt;tag attribute1 attribute2 /> or &lt;tag attribute1>&lt;/tag> */\n" +
+                "    htmlToDom: function(htmlEl){\n" +
+                "    borto.tmpEl.innerHTML = htmlEl;\n" +
+                "    return borto.tmpEl.children[0]\n" +
+                "    },\n" +
+                "    wrapSelection: function(htmlEl){\n" +
+                "    var sel = window.getSelection();\n" +
+                "    // In firefox we can select multiple area, so they are multiple range\n" +
+                "    for(var i = sel.rangeCount;i--;){\n" +
+                "    var wrapper = borto.htmlToDom(htmlEl)\n" +
+                "    var range = sel.getRangeAt(i);\n" +
+                "    wrapper.appendChild(range.extractContents());\n" +
+                "    range.insertNode(wrapper);\n" +
+                "    }\n" +
+                "    },\n" +
+                "    command: (name,argument)=>{\n" +
+                "    switch(name){\n" +
+                "    case \"createLink\":\n" +
+                "    argument = prompt(\"Quelle est l'adresse du lien ?\");\n" +
+                "    break;case 'heading' :\n" +
+                "    borto.wrapSelection('&lt;'+argument+'/>')\n" +
+                "    return;\n" +
+                "    }\n" +
+                "    if(typeof argument === 'undefined') {\n" +
+                "    argument = '';\n" +
+                "    }\n" +
+                "    document.execCommand(name, false, argument);\n" +
+                "    }\n" +
+                "    }\n" +
+                "</script>\n" +
                 "\n" +
-                "</xsl:stylesheet>";
+                "<button onclick=\"borto.command('bold')\">Bold</button>\n" +
+                "<button onclick=\"borto.command('italic')\"><i>I</i></button>\n" +
+                "<button onclick=\"borto.command('underline')\"><u>U</u></button>\n" +
+                "<button onclick=\"borto.command('createLink')\"><u>createLink</u></button>\n" +
+                "<select onchange=\"borto.command('heading', this.value); this.selectedIndex = 0;\">\n" +
+                "<option value=\"\">Title</option>\n" +
+                "<option value=\"h1\">Title 1</option>\n" +
+                "<option value=\"h2\">Title 2</option>\n" +
+                "<option value=\"h3\">Title 3</option>\n" +
+                "<option value=\"h4\">Title 4</option>\n" +
+                "<option value=\"h5\">Title 5</option>\n" +
+                "<option value=\"h6\">Title 6</option>\n" +
+                "</select>\n" +
+                "\n" +       "<span id=\"mySpan\" contenteditable=\"true\" onblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?><xsl:text> ";
 
-        // Concatenate file string
-        String fileString = (xslStartString + textAreaString + xslEndString);
-
-        // Write to file with string
-        File file = new File("src/main/resources/xml/style.xsl");
-
-        try
-        {
-            PrintWriter savedText = new PrintWriter(file);
-            BufferedWriter out = new BufferedWriter(savedText);
-            out.write(fileString);
-            out.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Reload Webview to make sure that changes are displayed in preview
-        Main.getEngine().reload();
-
+        return  xslText;
     }
-
-    public void createTXTFromWebView(){
-
-        //creates string from webview content
-        String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
-
-        //Modiefies String html
-        String modifiedHTML = html.replaceAll("<h1>", "</xsl:text><h1>").replaceAll("</h1>", "</h1><xsl:text>").replaceAll("<h2>", "</xsl:text><h2>").replaceAll("</h2>", "</h2><xsl:text>");
-
-        // Write to file with string
-        File file = new File("src/main/resources/xml/webTxt.txt");
-
-        try
-        {
-            PrintWriter savedText = new PrintWriter(file);
-            BufferedWriter out = new BufferedWriter(savedText);
-            out.write(modifiedHTML);
-            out.close();
-        }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Main.getTextEditorController().getTextArea().clear();
-        Main.getTextEditorController().readText(file);
-
-    }
-
 }
