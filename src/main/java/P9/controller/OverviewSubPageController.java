@@ -138,6 +138,8 @@ public class OverviewSubPageController implements Initializable {
     }
 
     public void setCellFactoryOnTocView(){
+
+        //TODO Anne: Gør sådan at den æder Headers, og displayer Header teksten
          /*
 
         tocView.setCellFactory();
@@ -175,10 +177,10 @@ public class OverviewSubPageController implements Initializable {
         int index = text.indexOf(header);
 
         textArea.requestFocus();
+
+        // TODO Anne - Gør sådan at den finder Headerens start-index, ikke bare stringens index
         textArea.positionCaret(index);
-
     }
-
 
 
     /**
