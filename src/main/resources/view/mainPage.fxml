@@ -79,6 +79,11 @@
                   <Insets left="8.0" />
                </HBox.margin>
             </ComboBox>
+            <Button fx:id="exportPDFButton" mnemonicParsing="false" onAction="#exportPDF" text="Export to PDF">
+               <HBox.margin>
+                  <Insets left="8.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
    </children>

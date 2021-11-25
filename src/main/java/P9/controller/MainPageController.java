@@ -37,6 +37,7 @@ import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable{
 
+
     //We annotate the containers of the mainPage.fxml
     @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
@@ -45,6 +46,7 @@ public class MainPageController implements Initializable{
     @FXML public Label eObjectLabel;
     @FXML public Button eOjbectUpdate;
     @FXML public ComboBox<EObject> eObjectChoice;
+    @FXML public Button exportPDFButton;
 
     // Reference to the engineering object that the user is working on
     EObject eObject;
@@ -180,6 +182,8 @@ public class MainPageController implements Initializable{
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
 
+    public void exportPDF(ActionEvent actionEvent) {
+    }
 }
 
 
