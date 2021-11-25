@@ -166,7 +166,13 @@ public class MainPageController implements Initializable{
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
     }
 
+
     public void switchToTextEditorPage(){
+        //loads webview, if it contains any content
+        if (Main.getEngine()!=null){
+            Main.getPreviewSubPageController().createTXTFromWebView();
+        }
+
         paneTextEditor.setContent(Main.getTextEditorParent());
     }
 

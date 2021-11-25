@@ -148,7 +148,7 @@ public class TextEditorController implements Initializable {
     }
     */
     // sets the textArea to the text of the opened file
-    private void readText(File file) {
+    public void readText(File file) {
         String text;
 
         try (BufferedReader buffReader = new BufferedReader(new FileReader(file))) {
