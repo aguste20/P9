@@ -1,5 +1,8 @@
 package P9.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,4 +84,9 @@ public abstract class ContentBlock {
     public void setCategoryList(List<EObjectCategory> categoryList) {
         this.categoryList = categoryList;
     }
+
+    public StringProperty nameProperty(){
+        return new SimpleStringProperty(name);
+    }
+
 }
