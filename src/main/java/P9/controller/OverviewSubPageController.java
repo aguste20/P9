@@ -200,16 +200,14 @@ public class OverviewSubPageController implements Initializable {
          * @param endTagIndex
          */
         public Header(Integer startIndex, Integer endTagIndex) {
-            this.startIndex = startIndex;
-            this.endTagIndex = endTagIndex;
-            this.h2List = new ArrayList<>();
+            this(startIndex, endTagIndex, 0);
         }
 
 
         public Header(Integer startIndex, Integer endTagIndex, Integer endIndex) {
             this.startIndex = startIndex;
             this.endIndex = endIndex;
-            this.endTagIndex = 0;
+            this.endTagIndex = endTagIndex;
             this.h2List = new ArrayList<>();
         }
 
