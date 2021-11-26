@@ -50,7 +50,8 @@ public class ContentsSubPageController implements Initializable {
     public void makeContentBlockList(){
 
         for (int i=0;i<cbList.size();i++){
-            Button button = new Button("(>)" + i);
+            Button button = new Button("⬅");
+            button.setPrefWidth(65);
             int finalI1 = i;
             button.setOnAction(actionEvent ->
                     text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt()));

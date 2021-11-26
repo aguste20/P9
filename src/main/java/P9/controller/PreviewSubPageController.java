@@ -31,6 +31,23 @@ public class PreviewSubPageController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
     }
 
+    public void overwriteFile(String fileString, String path){
+
+        // Write to file with string
+        File file = new File(path);
+
+        try {
+            PrintWriter savedText = new PrintWriter(file);
+            BufferedWriter out = new BufferedWriter(savedText);
+            out.write(fileString);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     //TODO kommentarer
     public void createXslFromTextArea() {
 
@@ -45,26 +62,33 @@ public class PreviewSubPageController implements Initializable {
                 "\n" +
                 "</xsl:stylesheet>";
 
-        // Concatenate file string
+    // Concatenate file string
         String fileString = (xslStartString + textAreaString + xslEndString);
+        String path = "src/main/resources/xml/style.xsl";
 
-        // Write to file with string
-        File file = new File("src/main/resources/xml/style.xsl");
-
-        try {
-            PrintWriter savedText = new PrintWriter(file);
-            BufferedWriter out = new BufferedWriter(savedText);
-            out.write(fileString);
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        overwriteFile(fileString, path);
 
         // Reload Webview to make sure that changes are displayed in preview
         Main.getEngine().reload();
 
+    }
+
+    public String placeHolderReplacement(String html, String startTag, String closingTag){
+        int index = 0;
+        int endIndex = 0;
+        String change = "&&&&////%%%¤¤";
+
+        // Store index and keep looking for occurrences, while any text left
+        while (index >= 0) {  // indexOf returns -1 if no match found
+
+            // Update indexes to match indexes for next occurrence
+            index = html.indexOf(startTag, index + startTag.length());
+            endIndex = html.indexOf(closingTag, index);
+            if (index>0) {
+                change = html.substring(index, endIndex);
+            }
+        }
+        return change;
     }
 
     public void createTXTFromWebView() {
@@ -72,22 +96,28 @@ public class PreviewSubPageController implements Initializable {
         //creates string from webview content
         String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
 
+        String name = placeHolderReplacement(html, "<p", "</p>");
+
         //Modiefies String html
-        String modifiedHTML = html.replaceAll("<h1>", "</xsl:text><h1>").replaceAll("</h1>", "</h1><xsl:text>").replaceAll("<h2>", "</xsl:text><h2>").replaceAll("</h2>", "</h2><xsl:text>");
+        String modifiedHTML = html
+                .replaceAll("<h1>", "</xsl:text><h1>")
+                .replaceAll("</h1>", "</h1><xsl:text>")
+                .replaceAll("<h2>", "</xsl:text><h2>")
+                .replaceAll("</h2>", "</h2><xsl:text>")
+                .replaceAll("<i>", "</xsl:text><i>")
+                .replaceAll("</i>", "</i><xsl:text>")
+                .replaceAll("<b>", "</xsl:text><b>")
+                .replaceAll("</b>", "</b><xsl:text>")
+                .replaceAll("<u>", "</xsl:text><u>")
+                .replaceAll("</u>", "</u><xsl:text>")
+                .replaceAll(name, "</xsl:text><p id=\"name\"><xsl:value-of select=\"eObject/name\"/>")
+                .replaceAll("</p>", "</p><xsl:text>");
 
         // Write to file with string
-        File file = new File("src/main/resources/xml/webTxt.txt");
+        String path = "src/main/resources/xml/webTxt.txt";
+        overwriteFile(modifiedHTML, path);
 
-        try {
-            PrintWriter savedText = new PrintWriter(file);
-            BufferedWriter out = new BufferedWriter(savedText);
-            out.write(modifiedHTML);
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        File file = new File(path);
 
         Main.getTextEditorController().getTextArea().clear();
         Main.getTextEditorController().readText(file);
