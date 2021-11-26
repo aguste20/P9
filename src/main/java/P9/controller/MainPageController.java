@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
@@ -47,7 +48,7 @@ public class MainPageController implements Initializable{
 
 
     //We annotate the containers of the mainPage.fxml
-    @FXML private Pane paneTextEditor;
+    @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
     //Annotating label and button
@@ -66,7 +67,7 @@ public class MainPageController implements Initializable{
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
-    public Pane getPaneTextEditor() { return paneTextEditor; }
+    public ScrollPane getPaneTextEditor() { return paneTextEditor; }
     public ScrollPane getPaneOverviewSubPage() { return paneOverviewSubPage; }
     public ScrollPane getPaneContentsPlaceholders() { return paneContentsPlaceholders; }
 
@@ -194,7 +195,7 @@ public class MainPageController implements Initializable{
     }
 
     /**
-     * Methods for changing the contents of the middle pane of the mainPage.fxml.
+     * Methods for changing the contents of the middle AnchorPane of the mainPage.fxml.
      * When user presses one of the buttons, the interface shows the associated viewfile.
      */
     public void switchToPlaceholdersSubPage (){
@@ -204,8 +205,7 @@ public class MainPageController implements Initializable{
     public void switchToPreviewSubPage (ActionEvent event){
         Main.getPreviewSubPageController().createXslFromTextArea();
 
-        paneTextEditor.getChildren().clear();
-        paneTextEditor.getChildren().add(Main.getPreviewSubPageParent());
+        paneTextEditor.setContent(Main.getPreviewSubPageParent());
     }
 
 
@@ -215,8 +215,7 @@ public class MainPageController implements Initializable{
             Main.getPreviewSubPageController().createTXTFromWebView();
         }
 
-        paneTextEditor.getChildren().clear();
-        paneTextEditor.getChildren().add(Main.getTextEditorParent());
+        paneTextEditor.setContent(Main.getTextEditorParent());
     }
 
     public void switchToContentsSubPage(){
