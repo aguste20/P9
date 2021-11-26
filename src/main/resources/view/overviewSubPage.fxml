@@ -14,7 +14,7 @@
   </columnConstraints>
   <rowConstraints>
       <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="35.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="2.0" prefHeight="554.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="1.7976931348623157E308" />
   </rowConstraints>
    <children>
       <HBox alignment="CENTER" maxHeight="40.0" maxWidth="-Infinity" prefHeight="40.0" prefWidth="200.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
@@ -29,6 +29,6 @@
             </Button>
          </children>
       </HBox>
-      <TreeView fx:id="tocView" onMouseClicked="#moveToSelectedHeaderInTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
+      <TreeView fx:id="tocView" onMouseClicked="#moveToSelectedHeaderInTextArea" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
    </children>
 </GridPane>
