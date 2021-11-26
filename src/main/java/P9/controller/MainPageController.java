@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -46,7 +47,7 @@ public class MainPageController implements Initializable{
 
 
     //We annotate the containers of the mainPage.fxml
-    @FXML private ScrollPane paneTextEditor;
+    @FXML private Pane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
     //Annotating label and button
@@ -65,7 +66,7 @@ public class MainPageController implements Initializable{
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
-    public ScrollPane getPaneTextEditor() { return paneTextEditor; }
+    public Pane getPaneTextEditor() { return paneTextEditor; }
     public ScrollPane getPaneOverviewSubPage() { return paneOverviewSubPage; }
     public ScrollPane getPaneContentsPlaceholders() { return paneContentsPlaceholders; }
 
@@ -202,7 +203,9 @@ public class MainPageController implements Initializable{
 
     public void switchToPreviewSubPage (ActionEvent event){
         Main.getPreviewSubPageController().createXslFromTextArea();
-        paneTextEditor.setContent(Main.getPreviewSubPageParent());
+
+        paneTextEditor.getChildren().clear();
+        paneTextEditor.getChildren().add(Main.getPreviewSubPageParent());
     }
 
 
@@ -212,7 +215,8 @@ public class MainPageController implements Initializable{
             Main.getPreviewSubPageController().createTXTFromWebView();
         }
 
-        paneTextEditor.setContent(Main.getTextEditorParent());
+        paneTextEditor.getChildren().clear();
+        paneTextEditor.getChildren().add(Main.getTextEditorParent());
     }
 
     public void switchToContentsSubPage(){

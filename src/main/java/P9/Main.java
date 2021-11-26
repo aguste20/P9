@@ -139,7 +139,7 @@ public class Main extends Application {
 
         //Same as above
         FXMLLoader loader2 = new FXMLLoader();
-        textEditorParent = loader2.load(getClass().getResource("../view/textEditor.fxml").openStream());
+        textEditorParent = loader2.load(getClass().getResource("../view/texteditor.fxml").openStream());
         textEditorController = loader2.getController();
 
         //Same as above
@@ -190,13 +190,13 @@ public class Main extends Application {
      * Adds textEditor, overView, and contentsPlaceholders roots to main page
      */
     private void setContentInMainPage() {
-        //Inserts the textEditor into the right-side scrollPane of the main page.
-        mainPageController.getPaneTextEditor().setContent(textEditorParent);
+        //Inserts the textEditor into the middle Pane of the main page.
+        mainPageController.getPaneTextEditor().getChildren().add(textEditorParent);
 
         //Inserts the overviewSubPage(Table of contents) into the left-side scrollPane of the main page.
         mainPageController.getPaneOverviewSubPage().setContent(overviewSubPageParent);
 
-        //Inserts the contentsSubPage into the middle scrollPane of the main page as the default option.
+        //Inserts the contentsSubPage into the right-side scrollPane of the main page as the default option.
         mainPageController.getPaneContentsPlaceholders().setContent(contentsSubPageParent);
     }
 
