@@ -1,11 +1,11 @@
 package P9.controller;
 
 import P9.Main;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.*;
@@ -34,6 +34,8 @@ public class OverviewSubPageController implements Initializable {
 
         // Create table of contents
         updateToc();
+
+        setCellFactoryOnTocView();
     }
 
 
@@ -133,6 +135,51 @@ public class OverviewSubPageController implements Initializable {
         TreeItem<String> contents = new TreeItem<>("Contents");
         tocView.setRoot(contents);
         contents.setExpanded(true);
+    }
+
+    public void setCellFactoryOnTocView(){
+
+        //TODO Anne: Gør sådan at den æder Headers, og displayer Header teksten
+         /*
+
+        tocView.setCellFactory();
+
+
+        tocView.setCellFactory(Callback<TreeView<String>, TreeCell<String>> callback);
+
+        new CallBack<TreeView<Header>, TreeCell<Header>>()
+
+         tocView.setCellFactory((TreeView<String> cb) -> {
+            return cb.getValue().getContentBlock().nameProperty();
+        });
+
+        tocView.setCellFactory(cb -> cb.getSelectionModel);
+
+        tocView.getSelectionModel().getSelectedItem().getValue().get
+
+        tocView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
+            @Override
+            public TreeCell<String> call(TreeView<String> stringTreeView) {
+                return null;
+            }
+        });
+
+
+        System.out.println(tocView.getCellFactory().toString());
+     */
+    }
+
+    @FXML
+    public void moveToSelectedHeaderInTextArea(){
+        TextArea textArea = Main.getTextEditorController().getTextArea();
+
+        String header = tocView.getSelectionModel().getSelectedItem().getValue();
+        int index = text.indexOf(header);
+
+        textArea.requestFocus();
+
+        // TODO Anne - Gør sådan at den finder Headerens start-index, ikke bare stringens index
+        textArea.positionCaret(index);
     }
 
 

@@ -5,6 +5,10 @@
 .idea/target/
 .idea/dataSources/5b634c59-4469-4868-aec8-20f5ccaa01b8.xml
 .idea/runConfigurations.xml
+src/ressources/xml/eObject.xml
+src/ressources/xml/myText.txt
+src/ressources/xml/style.xsl
+src/ressources/xml/webTxt.txt
 DocAssist.iml
 # Datasource local storage ignored files
 /../../../../../../:\Users\anneg\IdeaProjects\P9\.idea/dataSources/
