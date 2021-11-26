@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.MainPageController">
+<GridPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.MainPageController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="180.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="297.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.0" minWidth="10.0" prefWidth="820.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="10.0" prefWidth="820.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="988.0" minWidth="10.0" prefWidth="280.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="35.0" vgrow="SOMETIMES" />
@@ -23,20 +23,6 @@
   </rowConstraints>
    <children>
       <HBox maxHeight="40.0" prefHeight="35.0" prefWidth="200.0" GridPane.columnIndex="1">
-         <children>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToContentsSubPage" text="Contents" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
-               </HBox.margin>
-            </Button>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToPlaceholdersSubPage" text="Placeholders" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
-               </HBox.margin>
-            </Button>
-         </children>
-      </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
          <children>
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToTextEditorPage" text="Full Text" HBox.hgrow="ALWAYS">
                <HBox.margin>
@@ -55,12 +41,26 @@
             </Button>
          </children>
       </HBox>
-      <ScrollPane fx:id="paneTextEditor" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" prefWidth="1000.0" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+         <children>
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToPlaceholdersSubPage" text="Placeholders" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
+               </HBox.margin>
+            </Button>
+            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToContentsSubPage" text="Contents" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <ScrollPane fx:id="paneTextEditor" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </ScrollPane>
-      <ScrollPane fx:id="paneContentsPlaceholders" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="NEVER" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+      <ScrollPane fx:id="paneContentsPlaceholders" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="280.0" vbarPolicy="NEVER" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
@@ -71,7 +71,7 @@
             <Label fx:id="eObjectLabel" alignment="CENTER" prefHeight="35.0" prefWidth="182.0" text="EObject" />
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+      <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
             <Button fx:id="eOjbectUpdate" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#updateEObject" prefHeight="26.0" prefWidth="144.0" text="Update EObject values" />
             <ComboBox fx:id="eObjectChoice" onAction="#changeEObject" prefHeight="26.0" prefWidth="211.0" promptText="Select engineering object...">
@@ -79,6 +79,11 @@
                   <Insets left="8.0" />
                </HBox.margin>
             </ComboBox>
+            <Button fx:id="exportPDFButton" mnemonicParsing="false" onAction="#exportPDF" text="Export to PDF">
+               <HBox.margin>
+                  <Insets left="8.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
    </children>
