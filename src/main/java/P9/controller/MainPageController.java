@@ -107,7 +107,7 @@ public class MainPageController implements Initializable{
         // Set name on label and combo box
         String name = eObject.getName();
         eObjectLabel.setText(name);
-        eOjbectUpdate.setText(name);
+        eObjectChoice.setPromptText(name);
 
         // If eObject has no doc, create one for it, and set it to the template in the DB
         if (eObject.getDoc() == null){
