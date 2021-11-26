@@ -62,27 +62,27 @@ public class PlaceholdersSubPageController implements Initializable {
 
         switch (choice){
             case "name":
-                text.insertText(pos, "</xsl:text><p id=\"name\"><xsl:value-of select=\"eObject/name\"/></p><xsl:text>");
+                text.insertText(pos, "</xsl:text><span id=\"name\"><xsl:value-of select=\"eObject/name\"/></span><xsl:text>");
         }
         switch (choice){
             case "version":
-                text.insertText(pos, "</xsl:text><xsl:value-of select=\"eObject/version\"/><xsl:text>");
+                text.insertText(pos, "</xsl:text><span id=\"version\"><xsl:value-of select=\"eObject/version\"/></span><xsl:text>");
         }
         switch (choice){
             case "length":
-                text.insertText(pos, "</xsl:text><xsl:value-of select=\"eObject/length\"/><xsl:text>");
+                text.insertText(pos, "</xsl:text><span id=\"length\"><xsl:value-of select=\"eObject/length\"/></span><xsl:text>");
         }
         switch (choice){
             case "height":
-                text.insertText(pos, "</xsl:text><xsl:value-of select=\"eObject/height\"/><xsl:text>");
+                text.insertText(pos, "</xsl:text><span id=\"height\"><xsl:value-of select=\"eObject/height\"/></span><xsl:text>");
         }
         switch (choice){
             case "width":
-                text.insertText(pos, "</xsl:text><xsl:value-of select=\"eObject/width\"/><xsl:text>");
+                text.insertText(pos, "</xsl:text><span id=\"width\"><xsl:value-of select=\"eObject/width\"/></span><xsl:text>");
         }
         switch (choice){
             case "weight":
-                text.insertText(pos, "</xsl:text><xsl:value-of select=\"eObject/weight\"/><xsl:text>");
+                text.insertText(pos, "</xsl:text><span id=\"weight\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
         }
     }
 
