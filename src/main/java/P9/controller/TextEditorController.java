@@ -170,6 +170,7 @@ public class TextEditorController implements Initializable {
     }
     */
 
+    /*
     @FXML
     public void about() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -179,28 +180,7 @@ public class TextEditorController implements Initializable {
         alert.setContentText("Lmao");
         alert.showAndWait();
     }
-
-    // TODO Add a proper font-size menu && color selection
-
-    @FXML
-    public void fontSize(ActionEvent e) {
-        String choice = ((CheckMenuItem) e.getSource()).getId();
-
-        switch (choice) {
-            case "small":
-                textArea.setStyle("-fx-font-size: 14px");
-                break;
-            case "default":
-                textArea.setStyle("-fx-font-size: 22px");
-                break;
-            case "large":
-                textArea.setStyle("-fx-font-size: 30px");
-                break;
-            default:
-                textArea.setStyle("-fx-font-size: 22px");
-        }
-    }
-
+*/
     /**
      * Method to enclose selected text in tags (<> </>)
      * @param tag String for the tag (eg. "h1")
