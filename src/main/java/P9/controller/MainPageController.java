@@ -7,6 +7,7 @@ import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDao;
 import P9.persistence.TextBlockDao;
 import P9.persistence.UserDao;
+import com.lowagie.text.DocumentException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,13 +25,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.StringConverter;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.xhtmlrenderer.layout.SharedContext;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.persistence.Column;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +62,7 @@ public class MainPageController implements Initializable{
     UserDao userDAO = new UserDao();
     TextBlockDao txtDao = new TextBlockDao();
     EObjectDao eDao = new EObjectDao();
+    String PDF_output = "src/main/resources/html2pdf.pdf";
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
@@ -157,6 +165,35 @@ public class MainPageController implements Initializable{
     }
 
     /**
+     * Converts the HTML in the fancy editor to a PDF document
+     */
+    public void exportPDF() throws IOException {
+        //Storing HTML from fancy editor in a String
+        String inputHTML = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
+
+        //Parsing HTML to a document Object
+        Document document = Jsoup.parse(inputHTML, "UTF-8");
+        //Setting syntax
+        document.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
+        //Defining output
+        File outputPDF = new File(PDF_output);
+
+        //Rendering the document with HTML to PDF
+        try (OutputStream outputStream = new FileOutputStream(outputPDF)) {
+            ITextRenderer renderer = new ITextRenderer();
+            SharedContext sharedContext = renderer.getSharedContext();
+            sharedContext.setPrint(true);
+            sharedContext.setInteractive(false);
+            renderer.setDocumentFromString(document.html());
+            renderer.layout();
+            renderer.createPDF(outputStream);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
      * Methods for changing the contents of the middle pane of the mainPage.fxml.
      * When user presses one of the buttons, the interface shows the associated viewfile.
      */
@@ -186,8 +223,6 @@ public class MainPageController implements Initializable{
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
 
-    public void exportPDF(ActionEvent actionEvent) {
-    }
 }
 
 
