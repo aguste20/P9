@@ -115,6 +115,7 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll("</b>", "</b><xsl:text>")
                 .replaceAll("<u>", "</xsl:text><u>")
                 .replaceAll("</u>", "</u><xsl:text>")
+                .replaceAll("<br>", " ")
                 .replaceAll(name, "</xsl:text><span id=\"name\"><xsl:value-of select=\"eObject/name\"/>")
                 .replaceAll(version, "</xsl:text><span id=\"version\"><xsl:value-of select=\"eObject/version\"/>")
                 .replaceAll(length, "</xsl:text><span id=\"length\"><xsl:value-of select=\"eObject/length\"/>")
