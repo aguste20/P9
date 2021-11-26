@@ -73,10 +73,30 @@ public class PreviewSubPageController implements Initializable {
 
     }
 
+    public String placeHolderReplacement(String html, String startTag, String closingTag){
+        int index = 0;
+        int endIndex = 0;
+        String change = "&&&&////%%%¤¤";
+
+        // Store index and keep looking for occurrences, while any text left
+        while (index >= 0) {  // indexOf returns -1 if no match found
+
+            // Update indexes to match indexes for next occurrence
+            index = html.indexOf(startTag, index + startTag.length());
+            endIndex = html.indexOf(closingTag, index);
+            if (index>0) {
+                change = html.substring(index, endIndex);
+            }
+        }
+        return change;
+    }
+
     public void createTXTFromWebView() {
 
         //creates string from webview content
         String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
+
+        String name = placeHolderReplacement(html, "<p", "</p>");
 
         //Modiefies String html
         String modifiedHTML = html
@@ -89,7 +109,9 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll("<b>", "</xsl:text><b>")
                 .replaceAll("</b>", "</b><xsl:text>")
                 .replaceAll("<u>", "</xsl:text><u>")
-                .replaceAll("</u>", "</u><xsl:text>");
+                .replaceAll("</u>", "</u><xsl:text>")
+                .replaceAll(name, "</xsl:text><p id=\"name\"><xsl:value-of select=\"eObject/name\"/>")
+                .replaceAll("</p>", "</p><xsl:text>");
 
         // Write to file with string
         String path = "src/main/resources/xml/webTxt.txt";
