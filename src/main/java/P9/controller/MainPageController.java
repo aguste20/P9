@@ -206,6 +206,7 @@ public class MainPageController implements Initializable{
         Main.getPreviewSubPageController().createXslFromTextArea();
 
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
+        Main.getPlaceholdersSubPageController().setTextEditor(true);
     }
 
 
@@ -213,6 +214,7 @@ public class MainPageController implements Initializable{
         //loads webview, if it contains any content
         if (Main.getEngine()!=null){
             Main.getPreviewSubPageController().createTXTFromWebView();
+            Main.getPlaceholdersSubPageController().setTextEditor(false);
         }
 
         paneTextEditor.setContent(Main.getTextEditorParent());
