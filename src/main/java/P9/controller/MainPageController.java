@@ -104,7 +104,10 @@ public class MainPageController implements Initializable{
             eObject = eDao.getById(1);
         }
 
-        eObjectLabel.setText(eObject.getName());
+        // Set name on label and combo box
+        String name = eObject.getName();
+        eObjectLabel.setText(name);
+        eOjbectUpdate.setText(name);
 
         // If eObject has no doc, create one for it, and set it to the template in the DB
         if (eObject.getDoc() == null){
@@ -163,6 +166,7 @@ public class MainPageController implements Initializable{
         Main.getPlaceholdersSubPageController().updateEObjectValues();
         Main.getTextEditorController().insertXmlTextInTextArea();
         Main.getPreviewSubPageController().createXslFromTextArea();
+        Main.getOverviewSubPageController().updateToc();
     }
 
     /**
