@@ -98,16 +98,7 @@ public class PreviewSubPageController implements Initializable {
         //creates string from webview content
         String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
 
-            System.out.println("hej nu kører jeg:" + i);
-            i++;
-
         String name = placeHolderReplacement(html, "<span id=\"name\"", "</span>");
-
-        System.out.println(name);
-
-        String path2 = "src/main/resources/xml/webTxt2.txt";
-        overwriteFile(html, path2);
-
         String version = placeHolderReplacement(html, "<span id=\"version\"", "</span>");
         String length = placeHolderReplacement(html, "<span id=\"length\"", "</span>");
         String height = placeHolderReplacement(html, "<span id=\"height\"", "</span>");
