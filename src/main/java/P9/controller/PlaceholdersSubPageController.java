@@ -72,38 +72,38 @@ public class PlaceholdersSubPageController implements Initializable {
             switch (choice) {
                 case "name":
                     if (textEditor==false) {
-                        text.insertText(pos, "</xsl:text><span id=\"name\" style=\"color:yellow\"><xsl:value-of select=\"eObject/name\"/></span><xsl:text>");
-                    }insertPlaceholderInHtml(eObject.getName(), "name");
+                        text.insertText(pos, "</xsl:text><span id=\"name\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/name\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getName(), "name");}
             }
             switch (choice) {
                 case "version":
                     if (textEditor==false) {
-                        text.insertText(pos, "</xsl:text><span id=\"version\" style=\"color:yellow\"><xsl:value-of select=\"eObject/version\"/></span><xsl:text>");
-                    }insertPlaceholderInHtml(eObject.getVersion().toString(), "version");
+                        text.insertText(pos, "</xsl:text><span id=\"version\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/version\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getVersion().toString(), "version");}
             }
             switch (choice) {
                 case "length":
                     if (textEditor==false) {
-                    text.insertText(pos, "</xsl:text><span id=\"length\" style=\"color:yellow\"><xsl:value-of select=\"eObject/length\"/></span><xsl:text>");
-                    }insertPlaceholderInHtml(eObject.getLength().toString(), "length");
+                    text.insertText(pos, "</xsl:text><span id=\"length\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/length\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getLength().toString(), "length");}
             }
             switch (choice) {
                 case "height":
                     if (textEditor==false) {
-                    text.insertText(pos, "</xsl:text><span id=\"height\" style=\"color:yellow\"><xsl:value-of select=\"eObject/height\"/></span><xsl:text>");
-                    }insertPlaceholderInHtml(eObject.getHeight().toString(), "height");
+                    text.insertText(pos, "</xsl:text><span id=\"height\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/height\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getHeight().toString(), "height");}
             }
             switch (choice) {
                 case "width":
                     if (textEditor==false) {
-                    text.insertText(pos, "</xsl:text><span id=\"width\" style=\"color:yellow\"><xsl:value-of select=\"eObject/width\"/></span><xsl:text>");
-                    }insertPlaceholderInHtml(eObject.getWidth().toString(), "width");
+                    text.insertText(pos, "</xsl:text><span id=\"width\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/width\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getWidth().toString(), "width");}
             }
             switch (choice) {
                 case "weight":
                     if (textEditor==false) {
-                    text.insertText(pos, "</xsl:text><span id=\"weight\" style=\"color:yellow\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
-                    }insertPlaceholderInHtml(eObject.getWeight().toString(), "weight");
+                    text.insertText(pos, "</xsl:text><span id=\"weight\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getWeight().toString(), "weight");}
             }
 
             }
@@ -115,7 +115,7 @@ public class PlaceholdersSubPageController implements Initializable {
                 "var span = document.createElement(\"span\");\n" +
                 "span.setAttribute(\"id\",\"" + pn + "\");\n" +
                 "span.style.color = \"yellow\";\n" +
-                "span.textContent = \" " + ph + " \";\n" +
+                "span.textContent = \"" + ph + "\";\n" +
                 "span.appendChild(selectionContents);\n" +
                 "range.insertNode(span);");
     }

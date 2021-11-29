@@ -91,12 +91,23 @@ public class PreviewSubPageController implements Initializable {
         return change;
     }
 
+    int i = 0;
+
     public void createTXTFromWebView() {
 
         //creates string from webview content
         String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
 
+            System.out.println("hej nu kører jeg:" + i);
+            i++;
+
         String name = placeHolderReplacement(html, "<span id=\"name\"", "</span>");
+
+        System.out.println(name);
+
+        String path2 = "src/main/resources/xml/webTxt2.txt";
+        overwriteFile(html, path2);
+
         String version = placeHolderReplacement(html, "<span id=\"version\"", "</span>");
         String length = placeHolderReplacement(html, "<span id=\"length\"", "</span>");
         String height = placeHolderReplacement(html, "<span id=\"height\"", "</span>");
@@ -116,12 +127,12 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll("<u>", "</xsl:text><u>")
                 .replaceAll("</u>", "</u><xsl:text>")
                 .replaceAll("<br>", " ")
-                .replaceAll(name, "</xsl:text><span id=\"name\" style=\"color:yellow\"><xsl:value-of select=\"eObject/name\"/>")
-                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"color:yellow\"><xsl:value-of select=\"eObject/version\"/>")
-                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"color:yellow\"><xsl:value-of select=\"eObject/length\"/>")
-                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"color:yellow\"><xsl:value-of select=\"eObject/height\"/>")
-                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"color:yellow\"><xsl:value-of select=\"eObject/width\"/>")
-                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"color:yellow\"><xsl:value-of select=\"eObject/weight\"/>")
+                .replaceAll(name, " </xsl:text><span id=\"name\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/name\"/>")
+                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/version\"/>")
+                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/length\"/>")
+                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/height\"/>")
+                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/width\"/>")
+                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/weight\"/>")
                 .replaceAll("</span>", "</span><xsl:text>");
 
         // Write to file with string
