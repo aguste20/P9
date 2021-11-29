@@ -22,6 +22,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,14 +31,13 @@ import java.util.ResourceBundle;
 
 public class ContentsSubPageController implements Initializable {
 
-
     // Attribute to hold the secondary stage for the "Register new Content Block" window
     //private Stage registerNewCBlockStage;
 
     @FXML private TableView<DisplayContentBlock> contentBlockTableView;
     @FXML private TableColumn<DisplayContentBlock, String> cBlockNameColumn;
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
-
+    @FXML public ComboBox<ContentBlock> cbEdit;
 
     ContentBlockDao cbdao = new ContentBlockDao();
     ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
@@ -45,6 +45,25 @@ public class ContentsSubPageController implements Initializable {
     TextArea text = Main.getTextEditorController().getTextArea();
 
 
+    /**
+     * This method initializes a controller after its root element has already been processed.
+     * I think this means that this method is needed to keep content in the view pages updated visually.
+     * @param arg0
+     * @param arg1
+     */
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1){
+
+        //CBlockNameColumnContentsSubPage.setCellValueFactory(new PropertyValueFactory("name"));
+
+        //ContentBlockTableViewContentsSubPage.setPlaceholder(new Text("No content blocks currently exists. Use the 'Create new content blcok'-button to create new block."));
+
+
+        makeContentBlockList();
+
+        populateBox();
+
+    }
 
     //Method that will generate the list of content blocks and show them in the view.
     public void makeContentBlockList(){
@@ -132,52 +151,41 @@ public class ContentsSubPageController implements Initializable {
         return Main.getTextEditorController().getTextArea().getCaretPosition();
     }
 
+    public void populateBox(){
+        List<ContentBlock> cbList;
+        cbList = cbdao.listAll();
+        ObservableList<ContentBlock> ocbList = FXCollections.observableArrayList(cbList);
+        cbEdit.setItems(ocbList);
+        cbEdit.setConverter(new StringConverter<ContentBlock>() {
+            @Override
+            public String toString(ContentBlock contentBlock) {
+                return contentBlock.getName();
+            }
 
-
-    /**
-     * This method initializes a controller after its root element has already been processed.
-     * I think this means that this method is needed to keep content in the view pages updated visually.
-     * @param arg0
-     * @param arg1
-     */
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1){
-
-        //CBlockNameColumnContentsSubPage.setCellValueFactory(new PropertyValueFactory("name"));
-
-        //ContentBlockTableViewContentsSubPage.setPlaceholder(new Text("No content blocks currently exists. Use the 'Create new content blcok'-button to create new block."));
-
-
-        makeContentBlockList();
-
+            @Override
+            public ContentBlock fromString(String s) {
+                return cbEdit.getItems().stream().filter(
+                        cb -> cb.getName().equals(s)).findFirst().orElse(null);
+            }
+        });
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void editContentBlock() {
+        openRegisterNewContentBlock();
+        TextBlock txtBlock = (TextBlock) cbEdit.getValue();
+        text.setText(txtBlock.getTxt());
+    }
 
     /**
      * Event handler for the button "Registrer ny vare"
      * Opens a modal window to enter details about the product and save in database
      * Contents based on: https://www.codota.com/code/java/methods/javafx.stage.Stage/initModality
      * Last visited: April 22th 2021.
-     *
-     * @param event action event from button element
      */
 
-    public void openRegisterNewContentBlock(ActionEvent event) {
+    public void openRegisterNewContentBlock() {
         Main.getTextEditorController().setCreatingDoc(false);
-        Main.getTextEditorController().textArea.clear();
+        text.clear();
         Main.getMainPageController().eObjectLabel.setText("You are creating a Content Block");
         Main.getTextEditorController().returnButton.setVisible(true);
         Main.getPlaceholdersSubPageController().callLabelsNull();
