@@ -2,7 +2,9 @@ package P9.controller;
 
 import P9.Main;
 import P9.model.*;
+import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDocDao;
+import P9.persistence.TextBlockDao;
 import P9.persistence.UserDao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +17,7 @@ import java.io.*;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class TextEditorController implements Initializable {
@@ -27,13 +30,24 @@ public class TextEditorController implements Initializable {
 
     @FXML
     public Label lastUserLabel;
+    @FXML
+    public Menu returnButton;
 
     private Stage stage;
     private final FileChooser fileChooser = new FileChooser();
 
     private EObject eObject;
     private EObjectDoc doc;
+    private boolean creatingDoc = true;
     private boolean textEditorActive;
+
+    public void setCreatingDoc(boolean bool){
+        this.creatingDoc = bool;
+    }
+
+    public boolean getCreatingDoc(){
+        return creatingDoc;
+    }
 
     // ----- Getters and setters -----
     public boolean isTextEditorActive() {
@@ -112,20 +126,36 @@ public class TextEditorController implements Initializable {
      */
     @FXML
     private void save() {
+        if (creatingDoc == true) {
+            // Get text from text area
+            String txt = textArea.getText();
 
-        // Get text from text area
-        String txt = textArea.getText();
+            // Set xml text in doc
+            doc.setXmlText(txt);
 
-        // Set xml text in doc
-        doc.setXmlText(txt);
+            // Set last edit to today's date
+            doc.setLastEdit(Date.valueOf(LocalDate.now()));
 
-        // Set last edit to today's date
-        doc.setLastEdit(Date.valueOf(LocalDate.now()));
+            // Update the database with the changed doc
+            EObjectDocDao dao = new EObjectDocDao();
+            dao.addOrUpdateEObjectDoc(doc);
+        }
+        else {
+            TextInputDialog td = new TextInputDialog();
 
-        // Update the database with the changed doc
-        EObjectDocDao dao = new EObjectDocDao();
-        dao.addOrUpdateEObjectDoc(doc);
+            td.setTitle("Content Block name");
+            td.setHeaderText("What should the Content Block be called?");
+            Optional<String> result = td.showAndWait();
 
+            String txt = textArea.getText();
+
+            TextBlock textBlock = new TextBlock(txt);
+
+            result.ifPresent(textBlock::setName);
+
+            TextBlockDao txtDao = new TextBlockDao();
+            txtDao.addTextBlock(textBlock);
+        }
 
         //TODO Anne - har bare udkommenteret for nu. Tænker det skal slettes?
         /*
@@ -145,6 +175,13 @@ public class TextEditorController implements Initializable {
             e.printStackTrace();
         }
          */
+    }
+
+    @FXML
+    public void returnToDoc() {
+        creatingDoc = true;
+        Main.getMainPageController().changeEObject();
+        Main.getPlaceholdersSubPageController().updateEObjectValues();
     }
 
     //TODO slettes?
@@ -183,7 +220,7 @@ public class TextEditorController implements Initializable {
     }
     */
 
-    /*
+/*
     @FXML
     public void about() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -263,6 +300,4 @@ public class TextEditorController implements Initializable {
             lastUserLabel.setText(" performed by: " + user.getName());
         }
     }
-
-
 }
