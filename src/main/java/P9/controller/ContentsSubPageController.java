@@ -32,7 +32,7 @@ public class ContentsSubPageController implements Initializable {
 
 
     // Attribute to hold the secondary stage for the "Register new Content Block" window
-    private Stage registerNewCBlockStage;
+    //private Stage registerNewCBlockStage;
 
     @FXML private TableView<DisplayContentBlock> contentBlockTableView;
     @FXML private TableColumn<DisplayContentBlock, String> cBlockNameColumn;
@@ -176,6 +176,15 @@ public class ContentsSubPageController implements Initializable {
      */
 
     public void openRegisterNewContentBlock(ActionEvent event) {
+        Main.getTextEditorController().setCreatingDoc(false);
+        Main.getTextEditorController().textArea.clear();
+        Main.getMainPageController().eObjectLabel.setText("You are creating a Content Block");
+        Main.getTextEditorController().returnButton.setVisible(true);
+        Main.getPlaceholdersSubPageController().callLabelsNull();
+
+
+
+        /*
         // If register new content block window hasn't been opened before
         if (registerNewCBlockStage == null) {
             // Create new stage, set scene with fxml root, set title
@@ -210,9 +219,12 @@ public class ContentsSubPageController implements Initializable {
 
         // Show stage
         registerNewCBlockStage.show();
+
+         */
     }
 
 }
+
 
 
 
