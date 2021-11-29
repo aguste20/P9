@@ -51,10 +51,6 @@ public class PlaceholdersSubPageController implements Initializable {
 
     public boolean textEditor = false;
 
-    public void setTextEditor(boolean x){
-            this.textEditor = x;
-    }
-
 
     /**
      * Inserts placeholders that later will be converted to the actual value in the DB,
@@ -68,40 +64,46 @@ public class PlaceholdersSubPageController implements Initializable {
             TextArea text = Main.getTextEditorController().getTextArea();
             int pos = Main.getTextEditorController().getTextArea().getCaretPosition();
 
+            boolean textEditorActive = Main.getTextEditorController().isTextEditorActive();
+            System.out.println(textEditorActive);
+
 
             switch (choice) {
                 case "name":
-                    if (textEditor==false) {
+                    if (textEditorActive) {
                         text.insertText(pos, "</xsl:text><span id=\"name\" style=\"color:yellow\"><xsl:value-of select=\"eObject/name\"/></span><xsl:text>");
-                    }insertPlaceholderInHtml(eObject.getName(), "name");
+                    }
+                    else {
+                        insertPlaceholderInHtml(eObject.getName(), "name");
+                    }
             }
             switch (choice) {
                 case "version":
-                    if (textEditor==false) {
+                    if (textEditorActive) {
                         text.insertText(pos, "</xsl:text><span id=\"version\" style=\"color:yellow\"><xsl:value-of select=\"eObject/version\"/></span><xsl:text>");
                     }insertPlaceholderInHtml(eObject.getVersion().toString(), "version");
             }
             switch (choice) {
                 case "length":
-                    if (textEditor==false) {
+                    if (textEditorActive) {
                     text.insertText(pos, "</xsl:text><span id=\"length\" style=\"color:yellow\"><xsl:value-of select=\"eObject/length\"/></span><xsl:text>");
                     }insertPlaceholderInHtml(eObject.getLength().toString(), "length");
             }
             switch (choice) {
                 case "height":
-                    if (textEditor==false) {
+                    if (textEditorActive) {
                     text.insertText(pos, "</xsl:text><span id=\"height\" style=\"color:yellow\"><xsl:value-of select=\"eObject/height\"/></span><xsl:text>");
                     }insertPlaceholderInHtml(eObject.getHeight().toString(), "height");
             }
             switch (choice) {
                 case "width":
-                    if (textEditor==false) {
+                    if (textEditorActive) {
                     text.insertText(pos, "</xsl:text><span id=\"width\" style=\"color:yellow\"><xsl:value-of select=\"eObject/width\"/></span><xsl:text>");
                     }insertPlaceholderInHtml(eObject.getWidth().toString(), "width");
             }
             switch (choice) {
                 case "weight":
-                    if (textEditor==false) {
+                    if (textEditorActive) {
                     text.insertText(pos, "</xsl:text><span id=\"weight\" style=\"color:yellow\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
                     }insertPlaceholderInHtml(eObject.getWeight().toString(), "weight");
             }

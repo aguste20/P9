@@ -33,9 +33,20 @@ public class TextEditorController implements Initializable {
 
     private EObject eObject;
     private EObjectDoc doc;
+    private boolean textEditorActive;
+
+    // ----- Getters and setters -----
+    public boolean isTextEditorActive() {
+        return textEditorActive;
+    }
+    public void setTextEditorActive(boolean textEditorActive) {
+        this.textEditorActive = textEditorActive;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        //TODO Anne - ryd op her, det bruges vel ikke?
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser
                 .getExtensionFilters()
@@ -47,6 +58,8 @@ public class TextEditorController implements Initializable {
         insertXmlTextInTextArea();
         //Load the date and the responsible user of the last edit into labels.
         insertLastEditUserInLabels();
+
+        textEditorActive = true;
 
     }
 
