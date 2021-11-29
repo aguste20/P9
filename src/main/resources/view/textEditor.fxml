@@ -27,6 +27,11 @@
                             <CheckMenuItem fx:id="h2" mnemonicParsing="false" onAction="#createHeader" text="Heading 2 ( 30px )" />
                         </items>
                     </Menu>
+            <Menu fx:id="returnButton" mnemonicParsing="false" onAction="#returnToDoc" text="Return to eObject documentation" visible="false">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Return" />
+              </items>
+            </Menu>
                 </menus>
                 <BorderPane.margin>
                     <Insets left="4.0" right="4.0" top="4.0" />

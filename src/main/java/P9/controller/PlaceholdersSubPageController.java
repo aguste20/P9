@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextArea;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PlaceholdersSubPageController implements Initializable {
@@ -47,6 +49,22 @@ public class PlaceholdersSubPageController implements Initializable {
         objHeight.setText(eObject.getHeight().toString());
         objWidth.setText(eObject.getWidth().toString());
         objWeight.setText(eObject.getWeight().toString());
+    }
+
+    public void callLabelsNull(){
+        setLabelsVisible(objName, objVersion, objLength, objHeight, objWidth, objWeight);
+    }
+
+    public void setLabelsVisible(Node... nodes){
+        for (Node node : nodes){
+            if (!Main.getTextEditorController().getCreatingDoc()){
+                node.setVisible(false);
+            }
+            else {
+                node.setVisible(true);
+            }
+        }
+        System.out.println("Hej med dig");
     }
 
     public boolean textEditor = false;
@@ -125,6 +143,7 @@ public class PlaceholdersSubPageController implements Initializable {
      */
     public void updateEObjectValues(){
         eObject = Main.getMainPageController().geteObject();
+        callLabelsNull();
         setLabels();
     }
 

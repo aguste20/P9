@@ -28,6 +28,10 @@ public class TextBlock extends ContentBlock{
     public TextBlock() {
     }
 
+    public TextBlock(String text){
+        this.text = text;
+    }
+
     // ----- Getters and setters -----
 
     public String getTxt() {
