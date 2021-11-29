@@ -39,6 +39,7 @@ public class OverviewSubPageController implements Initializable {
         // Create table of contents
         updateToc();
 
+        // Set cell factory on tree view, so that it displays header strings in its cells
         setCellFactoryOnTocView();
     }
 
