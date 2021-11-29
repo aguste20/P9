@@ -118,12 +118,12 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll("<u>", "</xsl:text><u>")
                 .replaceAll("</u>", "</u><xsl:text>")
                 .replaceAll("<br>", " ")
-                .replaceAll(name, " </xsl:text><span id=\"name\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/name\"/>")
-                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/version\"/>")
-                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/length\"/>")
-                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/height\"/>")
-                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/width\"/>")
-                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/weight\"/>")
+                .replaceAll(name, " </xsl:text><span id=\"name\" style=\"background-color: " + Main.getPlaceholdersSubPageController().phColor + ";\"><xsl:value-of select=\"eObject/name\"/>")
+                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"background-color: "+ Main.getPlaceholdersSubPageController().phColor +";\"><xsl:value-of select=\"eObject/version\"/>")
+                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"background-color: "+ Main.getPlaceholdersSubPageController().phColor +";\"><xsl:value-of select=\"eObject/length\"/>")
+                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"background-color: "+ Main.getPlaceholdersSubPageController().phColor +";\"><xsl:value-of select=\"eObject/height\"/>")
+                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"background-color: "+ Main.getPlaceholdersSubPageController().phColor +";\"><xsl:value-of select=\"eObject/width\"/>")
+                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"background-color: "+ Main.getPlaceholdersSubPageController().phColor +";\"><xsl:value-of select=\"eObject/weight\"/>")
                 .replaceAll("</span>", "</span><xsl:text>");
 
         // Write to file with string
