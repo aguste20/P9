@@ -10,6 +10,7 @@ import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
+import org.w3c.dom.Element;
 
 import java.net.URL;
 import java.util.*;
@@ -52,7 +53,13 @@ public class OverviewSubPageController implements Initializable {
         tocView.getRoot().getChildren().clear();
 
         // Get text from text area
-        text = Main.getTextEditorController().getTextArea().getText();
+        if(Main.getTextEditorController().isTextEditorActive()){
+            text = Main.getTextEditorController().getTextArea().getText();
+        }
+        else{
+            text = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
+        }
+
 
         //Find all h1 - add to list
         headerList = findAllH(1);
@@ -177,18 +184,64 @@ public class OverviewSubPageController implements Initializable {
      */
     @FXML
     public void moveToSelectedHeaderInTextArea(){
-        // Get textarea from text editor
-        TextArea textArea = Main.getTextEditorController().getTextArea();
 
-        // Request window focus
-        textArea.requestFocus();
+        if(Main.getTextEditorController().isTextEditorActive()){
+            // Get textarea from text editor
+            TextArea textArea = Main.getTextEditorController().getTextArea();
 
-        // Get selected header in toc
-        Header h = tocView.getSelectionModel().getSelectedItem().getValue();
+            // Request window focus
+            textArea.requestFocus();
 
-        // Move cursor position to start index for selected heade
-        textArea.positionCaret(h.startIndex);
+            // Get selected header in toc
+            Header h = tocView.getSelectionModel().getSelectedItem().getValue();
+
+            // Move cursor position to start index for selected heade
+            textArea.positionCaret(h.startIndex);
+        }
+        else {
+            //Main.getPreviewSubPageController().webGridPane.requestFocus();
+
+            //Main.getMainPageController().getPaneTextEditor().getContent().requestFocus();
+            Element body = Main.getEngine().getDocument().getElementById("mySpan");
+            Main.getEngine().executeScript("document.body.focus()");
+
+
+            //Main.getEngine().executeScript("body onLoad='document.body.focus();' contenteditable='true'");
+            Main.getWebview().requestFocus();
+            System.out.println("focus requested");
+
+            /*
+            Main.getEngine().executeScript("function setCaret() {\n" +
+                    "    var el = document.getElementById(\"mySpan\")\n" +
+                    "    var range = document.createRange()\n" +
+                    "    var sel = window.getSelection()\n" +
+                    "    \n" +
+                    "    range.setStart(el.childNodes[2], 5)\n" +
+                    "    range.collapse(true)\n" +
+                    "    \n" +
+                    "    sel.removeAllRanges()\n" +
+                    "    sel.addRange(range)\n" +
+                    "}");
+
+             */
+        }
+
     }
+
+    public void moveToSelectedHeaderInPreview(){
+        // Get Preview html text
+        String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
+
+        // Get index of selected header in html text
+
+
+        // Request focus
+        // Move cursor position to index of header
+
+
+
+    }
+
 
 
     /**
