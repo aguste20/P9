@@ -180,6 +180,7 @@ public class TextEditorController implements Initializable {
     @FXML
     public void returnToDoc() {
         creatingDoc = true;
+        returnButton.setVisible(false);
         Main.getMainPageController().changeEObject();
         Main.getPlaceholdersSubPageController().updateEObjectValues();
     }
