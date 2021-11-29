@@ -116,12 +116,12 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll("<u>", "</xsl:text><u>")
                 .replaceAll("</u>", "</u><xsl:text>")
                 .replaceAll("<br>", " ")
-                .replaceAll(name, "</xsl:text><span id=\"name\"><xsl:value-of select=\"eObject/name\"/>")
-                .replaceAll(version, "</xsl:text><span id=\"version\"><xsl:value-of select=\"eObject/version\"/>")
-                .replaceAll(length, "</xsl:text><span id=\"length\"><xsl:value-of select=\"eObject/length\"/>")
-                .replaceAll(height, "</xsl:text><span id=\"height\"><xsl:value-of select=\"eObject/height\"/>")
-                .replaceAll(width, "</xsl:text><span id=\"width\"><xsl:value-of select=\"eObject/width\"/>")
-                .replaceAll(weight, "</xsl:text><span id=\"weight\"><xsl:value-of select=\"eObject/weight\"/>")
+                .replaceAll(name, "</xsl:text><span id=\"name\" style=\"color:yellow\"><xsl:value-of select=\"eObject/name\"/>")
+                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"color:yellow\"><xsl:value-of select=\"eObject/version\"/>")
+                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"color:yellow\"><xsl:value-of select=\"eObject/length\"/>")
+                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"color:yellow\"><xsl:value-of select=\"eObject/height\"/>")
+                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"color:yellow\"><xsl:value-of select=\"eObject/width\"/>")
+                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"color:yellow\"><xsl:value-of select=\"eObject/weight\"/>")
                 .replaceAll("</span>", "</span><xsl:text>");
 
         // Write to file with string
@@ -191,8 +191,6 @@ public class PreviewSubPageController implements Initializable {
                 "\n" +
                 "<button onclick=\"borto.command('bold')\">Bold</button>\n" +
                 "<button onclick=\"borto.command('italic')\"><i>I</i></button>\n" +
-                "<button onclick=\"borto.command('underline')\"><u>U</u></button>\n" +
-                "<button onclick=\"borto.command('createLink')\"><u>createLink</u></button>\n" +
                 "<select onchange=\"borto.command('heading', this.value); this.selectedIndex = 0;\">\n" +
                 "<option value=\"\">Title</option>\n" +
                 "<option value=\"h1\">Title 1</option>\n" +
@@ -202,7 +200,7 @@ public class PreviewSubPageController implements Initializable {
                 "<option value=\"h5\">Title 5</option>\n" +
                 "<option value=\"h6\">Title 6</option>\n" +
                 "</select>\n" +
-                "\n" +       "<span id=\"mySpan\" contenteditable=\"true\" onblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?><xsl:text> ";
+                "\n" +       "<span id=\"mySpan\" contenteditable=\"true\" coloronblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?><xsl:text> ";
 
         return  xslText;
     }
