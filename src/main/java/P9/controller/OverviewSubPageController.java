@@ -52,6 +52,7 @@ public class OverviewSubPageController implements Initializable {
         // Clear previous table of content
         tocView.getRoot().getChildren().clear();
 
+        // TODO: Anne clean up
         // Get text from text area
         if(Main.getTextEditorController().isTextEditorActive()){
             text = Main.getTextEditorController().getTextArea().getText();
@@ -203,6 +204,7 @@ public class OverviewSubPageController implements Initializable {
             //Request window focus
             //Get index of selected header in toc
             //Move cursor to index in html
+            // -- refresh TOC when switch to preview sub page
 
 
 
@@ -241,15 +243,6 @@ public class OverviewSubPageController implements Initializable {
     public void moveToSelectedHeaderInPreview(){
         // Get Preview html text
         String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
-
-        // Get index of selected header in html text
-
-
-        // Request focus
-        // Move cursor position to index of header
-
-
-
     }
 
 
@@ -259,12 +252,12 @@ public class OverviewSubPageController implements Initializable {
      * Used to store header index position and treeItem in treeView
      */
     private class Header {
-        Integer startIndex; //Index of the first character in "<h1>"
-        Integer endTagIndex; //Index of the first character in "</h1>"
-        Integer endIndex; // Index of the next occurrence of "<h1>". Is set to final index position of text, if no more h1's
-        String headerText;
-        List<Header> h2List; // List of the headers subheadings, if any
-        TreeItem<Header> treeItem; // The headers treeitem in the tree view
+        private Integer startIndex; //Index of the first character in "<h1>"
+        private Integer endTagIndex; //Index of the first character in "</h1>"
+        private Integer endIndex; // Index of the next occurrence of "<h1>". Is set to final index position of text, if no more h1's
+        private String headerText;
+        private List<Header> h2List; // List of the headers subheadings, if any
+        private TreeItem<Header> treeItem; // The headers treeitem in the tree view
 
         /**
          * Constructor
