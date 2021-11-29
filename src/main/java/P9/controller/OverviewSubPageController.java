@@ -199,7 +199,16 @@ public class OverviewSubPageController implements Initializable {
             textArea.positionCaret(h.startIndex);
         }
         else {
+            //Todo - Anne
+            //Request window focus
+            //Get index of selected header in toc
+            //Move cursor to index in html
+
+
+
+
             //Main.getPreviewSubPageController().webGridPane.requestFocus();
+
 
             //Main.getMainPageController().getPaneTextEditor().getContent().requestFocus();
             Element body = Main.getEngine().getDocument().getElementById("mySpan");
@@ -228,6 +237,7 @@ public class OverviewSubPageController implements Initializable {
 
     }
 
+    // Todo - anne fjernes
     public void moveToSelectedHeaderInPreview(){
         // Get Preview html text
         String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
