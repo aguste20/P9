@@ -39,6 +39,7 @@ public class TextEditorController implements Initializable {
     private EObject eObject;
     private EObjectDoc doc;
     private boolean creatingDoc = true;
+    private boolean textEditorActive;
 
     public void setCreatingDoc(boolean bool){
         this.creatingDoc = bool;
@@ -48,8 +49,18 @@ public class TextEditorController implements Initializable {
         return creatingDoc;
     }
 
+    // ----- Getters and setters -----
+    public boolean isTextEditorActive() {
+        return textEditorActive;
+    }
+    public void setTextEditorActive(boolean textEditorActive) {
+        this.textEditorActive = textEditorActive;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        //TODO Anne - ryd op her, det bruges vel ikke?
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         fileChooser
                 .getExtensionFilters()
@@ -61,6 +72,8 @@ public class TextEditorController implements Initializable {
         insertXmlTextInTextArea();
         //Load the date and the responsible user of the last edit into labels.
         insertLastEditUserInLabels();
+
+        textEditorActive = true;
 
     }
 
@@ -140,8 +153,6 @@ public class TextEditorController implements Initializable {
 
             result.ifPresent(textBlock::setName);
 
-            System.out.println(textBlock.getTxt());
-            System.out.println(textBlock.getName());
             TextBlockDao txtDao = new TextBlockDao();
             txtDao.addTextBlock(textBlock);
         }
@@ -169,6 +180,7 @@ public class TextEditorController implements Initializable {
     @FXML
     public void returnToDoc() {
         creatingDoc = true;
+        returnButton.setVisible(false);
         Main.getMainPageController().changeEObject();
         Main.getPlaceholdersSubPageController().updateEObjectValues();
     }
@@ -289,5 +301,4 @@ public class TextEditorController implements Initializable {
             lastUserLabel.setText(" performed by: " + user.getName());
         }
     }
-
 }
