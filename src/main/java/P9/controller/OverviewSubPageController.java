@@ -5,7 +5,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTreeCell;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.util.*;
@@ -19,7 +23,7 @@ public class OverviewSubPageController implements Initializable {
     private Button refreshTocButton;
 
     @FXML
-    private TreeView<String> tocView;
+    private TreeView<Header> tocView; // The tree view that holds all header elements
 
     /**
      * Method that initializes a contoller object after its root element has been loaded.
@@ -35,6 +39,7 @@ public class OverviewSubPageController implements Initializable {
         // Create table of contents
         updateToc();
 
+        // Set cell factory on tree view, so that it displays header strings in its cells
         setCellFactoryOnTocView();
     }
 
@@ -132,54 +137,57 @@ public class OverviewSubPageController implements Initializable {
      * Method that creates a root for the toc tree view
      */
     public void createTocTreeViewRoot(){
-        TreeItem<String> contents = new TreeItem<>("Contents");
+        Header h = new Header(0,0);
+        h.setHeaderText("Contents");
+
+        TreeItem<Header> contents = new TreeItem<>(h);
+
         tocView.setRoot(contents);
         contents.setExpanded(true);
     }
 
-    public void setCellFactoryOnTocView(){
-
-        //TODO Anne: Gør sådan at den æder Headers, og displayer Header teksten
-         /*
-
-        tocView.setCellFactory();
-
-
-        tocView.setCellFactory(Callback<TreeView<String>, TreeCell<String>> callback);
-
-        new CallBack<TreeView<Header>, TreeCell<Header>>()
-
-         tocView.setCellFactory((TreeView<String> cb) -> {
-            return cb.getValue().getContentBlock().nameProperty();
-        });
-
-        tocView.setCellFactory(cb -> cb.getSelectionModel);
-
-        tocView.getSelectionModel().getSelectedItem().getValue().get
-
-        tocView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
-            @Override
-            public TreeCell<String> call(TreeView<String> stringTreeView) {
-                return null;
-            }
-        });
-
-
-        System.out.println(tocView.getCellFactory().toString());
+    /**
+     * Method that sets a cell factory the toc tree view.
+     * Enables tree view to hold header objects, and display the header text
+     * as the visible tree item
      */
+    public void setCellFactoryOnTocView(){
+        tocView.setCellFactory(param -> new TextFieldTreeCell<>(new StringConverter<>() {
+
+                    // Displays header text as tree item string
+                    @Override
+                    public String toString(Header header) {
+                        return header.getHeaderText();
+                    }
+
+                    // Not needed, so no change in implemented method
+                    @Override
+                    public Header fromString(String s) {
+                        return null;
+                    }
+                })
+        );
     }
 
+    // TODO Anne - gør sådan at den finder header position i preview
+    /**
+     * Event handler for toc tree view.
+     * Is called when user clicks item in tree view.
+     * Sets text editor scene in focus and moves cursor to selected header
+     */
     @FXML
     public void moveToSelectedHeaderInTextArea(){
+        // Get textarea from text editor
         TextArea textArea = Main.getTextEditorController().getTextArea();
 
-        String header = tocView.getSelectionModel().getSelectedItem().getValue();
-        int index = text.indexOf(header);
-
+        // Request window focus
         textArea.requestFocus();
 
-        // TODO Anne - Gør sådan at den finder Headerens start-index, ikke bare stringens index
-        textArea.positionCaret(index);
+        // Get selected header in toc
+        Header h = tocView.getSelectionModel().getSelectedItem().getValue();
+
+        // Move cursor position to start index for selected heade
+        textArea.positionCaret(h.startIndex);
     }
 
 
@@ -191,8 +199,9 @@ public class OverviewSubPageController implements Initializable {
         Integer startIndex; //Index of the first character in "<h1>"
         Integer endTagIndex; //Index of the first character in "</h1>"
         Integer endIndex; // Index of the next occurrence of "<h1>". Is set to final index position of text, if no more h1's
+        String headerText;
         List<Header> h2List; // List of the headers subheadings, if any
-        TreeItem<String> treeItem; // The headers treeitem in the tree view
+        TreeItem<Header> treeItem; // The headers treeitem in the tree view
 
         /**
          * Constructor
@@ -200,17 +209,18 @@ public class OverviewSubPageController implements Initializable {
          * @param endTagIndex
          */
         public Header(Integer startIndex, Integer endTagIndex) {
-            this.startIndex = startIndex;
-            this.endTagIndex = endTagIndex;
-            this.h2List = new ArrayList<>();
+            this(startIndex, endTagIndex, 0);
         }
-
 
         public Header(Integer startIndex, Integer endTagIndex, Integer endIndex) {
             this.startIndex = startIndex;
             this.endIndex = endIndex;
-            this.endTagIndex = 0;
+            this.endTagIndex = endTagIndex;
             this.h2List = new ArrayList<>();
+        }
+
+        public void setHeaderText(String headerText) {
+            this.headerText = headerText;
         }
 
         /**
@@ -218,12 +228,17 @@ public class OverviewSubPageController implements Initializable {
          * @return String with the header text
          */
         public String getHeaderText(){
-            String htext = text.substring(startIndex, endTagIndex);
+            if(headerText == null){
+                String htext = text.substring(startIndex, endTagIndex);
 
-            String h = htext.replace("<h1>", "");
-            h = h.replace("<h2>", "");
+                String h = htext.replace("<h1>", "");
+                h = h.replace("<h2>", "");
 
-            return h;
+                return h;
+            }
+            else {
+                return headerText;
+            }
         }
 
         /**
@@ -231,7 +246,7 @@ public class OverviewSubPageController implements Initializable {
          * and stores a reference to it in the header
          */
         public void headerToTreeItem(){
-            treeItem = new TreeItem<>(this.getHeaderText());
+            treeItem = new TreeItem<>(this);
         }
     }
 
