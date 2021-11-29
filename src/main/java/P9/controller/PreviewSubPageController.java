@@ -96,9 +96,14 @@ public class PreviewSubPageController implements Initializable {
         //creates string from webview content
         String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
 
-        String name = placeHolderReplacement(html, "<p", "</p>");
+        String name = placeHolderReplacement(html, "<span id=\"name\"", "</span>");
+        String version = placeHolderReplacement(html, "<span id=\"version\"", "</span>");
+        String length = placeHolderReplacement(html, "<span id=\"length\"", "</span>");
+        String height = placeHolderReplacement(html, "<span id=\"height\"", "</span>");
+        String width = placeHolderReplacement(html, "<span id=\"width\"", "</span>");
+        String weight = placeHolderReplacement(html, "<span id=\"weight\"", "</span>");
 
-        //Modiefies String html
+        //Modifies String html with correct header and placeholder values according to xsl
         String modifiedHTML = html
                 .replaceAll("<h1>", "</xsl:text><h1>")
                 .replaceAll("</h1>", "</h1><xsl:text>")
@@ -110,8 +115,14 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll("</b>", "</b><xsl:text>")
                 .replaceAll("<u>", "</xsl:text><u>")
                 .replaceAll("</u>", "</u><xsl:text>")
-                .replaceAll(name, "</xsl:text><p id=\"name\"><xsl:value-of select=\"eObject/name\"/>")
-                .replaceAll("</p>", "</p><xsl:text>");
+                .replaceAll("<br>", " ")
+                .replaceAll(name, "</xsl:text><span id=\"name\"><xsl:value-of select=\"eObject/name\"/>")
+                .replaceAll(version, "</xsl:text><span id=\"version\"><xsl:value-of select=\"eObject/version\"/>")
+                .replaceAll(length, "</xsl:text><span id=\"length\"><xsl:value-of select=\"eObject/length\"/>")
+                .replaceAll(height, "</xsl:text><span id=\"height\"><xsl:value-of select=\"eObject/height\"/>")
+                .replaceAll(width, "</xsl:text><span id=\"width\"><xsl:value-of select=\"eObject/width\"/>")
+                .replaceAll(weight, "</xsl:text><span id=\"weight\"><xsl:value-of select=\"eObject/weight\"/>")
+                .replaceAll("</span>", "</span><xsl:text>");
 
         // Write to file with string
         String path = "src/main/resources/xml/webTxt.txt";
