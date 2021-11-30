@@ -19,36 +19,36 @@
   <rowConstraints>
     <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="35.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="30.0" prefHeight="567.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="40.0" minHeight="30.0" prefHeight="35.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox maxHeight="40.0" prefHeight="35.0" prefWidth="200.0" GridPane.columnIndex="1">
+      <HBox alignment="CENTER" maxHeight="40.0" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #00132D;" GridPane.columnIndex="1">
          <children>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToTextEditorPage" text="Full Text" HBox.hgrow="ALWAYS">
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToTextEditorPage" style="-fx-background-color: #2D67DE;" text="Full Text" textFill="WHITE" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Annotated text" HBox.hgrow="ALWAYS">
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #2D67DE;" text="Annotated text" textFill="WHITE" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToPreviewSubPage" text="Preview" HBox.hgrow="ALWAYS">
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToPreviewSubPage" style="-fx-background-color: #2D67DE;" text="Preview" textFill="WHITE" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #00132D;" GridPane.columnIndex="2">
          <children>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToPlaceholdersSubPage" text="Placeholders" HBox.hgrow="ALWAYS">
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToPlaceholdersSubPage" style="-fx-background-color: #2D67DE;" text="Placeholders" textFill="WHITE" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
-            <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToContentsSubPage" text="Contents" HBox.hgrow="ALWAYS">
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#switchToContentsSubPage" style="-fx-background-color: #2D67DE;" text="Contents" textFill="WHITE" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
@@ -64,23 +64,28 @@
       <ScrollPane fx:id="paneOverviewSubPage" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="NEVER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Label fx:id="eObjectLabel" alignment="CENTER" prefHeight="35.0" prefWidth="182.0" text="EObject" />
+            <Label fx:id="eObjectLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="35.0" style="-fx-background-color: #00132D;" text="EObject" textFill="WHITE" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
-      <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #515151;" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="eOjbectUpdate" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#updateEObject" prefHeight="26.0" prefWidth="144.0" text="Update EObject values" />
-            <ComboBox fx:id="eObjectChoice" onAction="#changeEObject" prefHeight="26.0" prefWidth="211.0" promptText="Select engineering object...">
+            <Button fx:id="eOjbectUpdate" alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#updateEObject" style="-fx-background-color: #DFEBF7;" text="Update EObject values" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets left="8.0" />
+                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
+               </HBox.margin></Button>
+            <ComboBox fx:id="eObjectChoice" maxWidth="1.7976931348623157E308" onAction="#changeEObject" promptText="Select engineering object..." style="-fx-background-color: #DFEBF7;" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </ComboBox>
-            <Button fx:id="exportPDFButton" mnemonicParsing="false" onAction="#exportPDF" text="Export to PDF">
+            <Button fx:id="exportPDFButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exportPDF" style="-fx-background-color: #DFEBF7;" text="Export to PDF" HBox.hgrow="ALWAYS">
                <HBox.margin>
-                  <Insets left="8.0" />
+                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                </HBox.margin>
             </Button>
          </children>
       </HBox>
+      <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #515151;" GridPane.rowIndex="2" />
+      <HBox maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #515151;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
    </children>
 </GridPane>
