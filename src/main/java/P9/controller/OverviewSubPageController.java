@@ -243,7 +243,6 @@ public class OverviewSubPageController implements Initializable {
 
         //Move cursor to index in html using beautiful javascript
         webview.getEngine().executeScript("function placeCaretAtEnd(el) {\n" +
-                //"    el.focus();\n" +
                 "    if (typeof window.getSelection != \"undefined\"\n" +
                 "            && typeof document.createRange != \"undefined\") {\n" +
                 "        var range = document.createRange();\n" +
