@@ -238,7 +238,6 @@ public class OverviewSubPageController implements Initializable {
          */
 
 
-
         webview.getEngine().executeScript("function placeCaretAtEnd(el) {\n" +
                 "    el.focus();\n" +
                 "    if (typeof window.getSelection != \"undefined\"\n" +
@@ -282,66 +281,10 @@ public class OverviewSubPageController implements Initializable {
          */
 
 
-        /*
-        Main.getEngine().executeScript(" function setCaret() {\n" +
-                "            var el = document.getElementById(\"mySpan\")\n" +
-                "            var range = document.createRange()\n" +
-                "            var sel = window.getSelection()\n" +
-                "\n" +
-                "            range.setStart(el.childNodes[2], 5)\n" +
-                "            range.collapse(true)\n" +
-                "\n" +
-                "            sel.removeAllRanges()\n" +
-                "            sel.addRange(range)\n" +
-                "        }");
-
-         */
-
-
-/*
-        const el = document.getElementById('mySpan')
-    const selection = window.getSelection();
-    const range = document.createRange();
-        selection.removeAllRanges();
-        range.selectNodeContents(el);
-        range.collapse(false);
-        selection.addRange(range);
-        el.focus();
-
-
-
-        function setCaret() {
-            var el = document.getElementById("mySpan")
-            var range = document.createRange()
-            var sel = window.getSelection()
-
-            range.setStart(el.childNodes[2], 5)
-            range.collapse(true)
-
-            sel.removeAllRanges()
-            sel.addRange(range)
-
- */
 
 
         //TODO Anne: ikke her
         // -- refresh TOC when switch to preview sub page
-
-
-
-        //Main.getPreviewSubPageController().webGridPane.requestFocus();
-
-
-        //Main.getMainPageController().getPaneTextEditor().getContent().requestFocus();
-        //Element body = Main.getEngine().getDocument().getElementById("mySpan");
-        //Main.getEngine().executeScript("document.body.focus()");
-
-
-        //Main.getEngine().executeScript("body onLoad='document.body.focus();' contenteditable='true'");
-        //Main.getWebview().requestFocus();
-        //System.out.println("focus requested");
-
-
 
             /*
             Main.getEngine().executeScript("function setCaret() {\n" +
