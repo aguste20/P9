@@ -28,6 +28,7 @@ public class PlaceholdersSubPageController implements Initializable {
     public Label objWidth;
     public Label objWeight;
 
+    public String phColor = "yellow";
 
     //TODO Lav en liste over placeholders
 
@@ -87,49 +88,49 @@ public class PlaceholdersSubPageController implements Initializable {
             switch (choice) {
                 case "name":
                     if (textEditorActive) {
-                        text.insertText(pos, "</xsl:text><span id=\"name\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/name\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getName(), "name");}
+                        text.insertText(pos, "</xsl:text><span id=\"name\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/name\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getName(), "name",  phColor);}
             }
             switch (choice) {
                 case "version":
                     if (textEditorActive) {
-                        text.insertText(pos, "</xsl:text><span id=\"version\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/version\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getVersion().toString(), "version");}
+                        text.insertText(pos, "</xsl:text><span id=\"version\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/version\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getVersion().toString(), "version", phColor);}
             }
             switch (choice) {
                 case "length":
                     if (textEditorActive) {
-                    text.insertText(pos, "</xsl:text><span id=\"length\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/length\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getLength().toString(), "length");}
+                    text.insertText(pos, "</xsl:text><span id=\"length\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/length\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getLength().toString(), "length", phColor);}
             }
             switch (choice) {
                 case "height":
                     if (textEditorActive) {
-                    text.insertText(pos, "</xsl:text><span id=\"height\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/height\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getHeight().toString(), "height");}
+                    text.insertText(pos, "</xsl:text><span id=\"height\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/height\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getHeight().toString(), "height", phColor);}
             }
             switch (choice) {
                 case "width":
                     if (textEditorActive) {
-                    text.insertText(pos, "</xsl:text><span id=\"width\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/width\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getWidth().toString(), "width");}
+                    text.insertText(pos, "</xsl:text><span id=\"width\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/width\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getWidth().toString(), "width", phColor);}
             }
             switch (choice) {
                 case "weight":
                     if (textEditorActive) {
-                    text.insertText(pos, "</xsl:text><span id=\"weight\" style=\"color: yellow;\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getWeight().toString(), "weight");}
+                    text.insertText(pos, "</xsl:text><span id=\"weight\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
+                    }else{insertPlaceholderInHtml(eObject.getWeight().toString(), "weight", phColor);}
             }
 
             }
 
-    public void insertPlaceholderInHtml(String ph, String pn){
+    public void insertPlaceholderInHtml(String ph, String pn, String color){
 
         Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
                 "var selectionContents = range.extractContents();\n" +
                 "var span = document.createElement(\"span\");\n" +
                 "span.setAttribute(\"id\",\"" + pn + "\");\n" +
-                "span.style.color = \"yellow\";\n" +
+                "span.style.backgroundColor = \"" + color + "\";\n" +
                 "span.textContent = \"" + ph + "\";\n" +
                 "span.appendChild(selectionContents);\n" +
                 "range.insertNode(span);");
