@@ -39,7 +39,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Button fx:id="name" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Name">
                      <VBox.margin>
@@ -68,7 +68,7 @@
                      </VBox.margin></Button>
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
                   <Label fx:id="objName" prefHeight="25.6" prefWidth="100.0" text="Label">
                      <VBox.margin>
