@@ -3,30 +3,28 @@ package P9.controller;
 import P9.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.web.WebView;
 import javafx.util.StringConverter;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 import java.net.URL;
 import java.util.*;
 
 public class OverviewSubPageController implements Initializable {
 
-    private List<Header> headerList = new ArrayList<>();
+    private List<Header> allH1s = new ArrayList<>(); // All h1 headers in the text
+    private List<Header> allH2s = new ArrayList<>(); // All h2 headers in the text
     private String text; // Text from the textarea
 
     @FXML
-    private Button refreshTocButton;
+    private Button refreshTocButton; // Button to refresh the table of contents
 
     @FXML
     private TreeView<Header> tocView; // The tree view that holds all header elements
 
     /**
-     * Method that initializes a contoller object after its root element has been loaded.
+     * Method that initializes a controller object after its root element has been loaded.
      * Inherited from Initializable.
      * @param url
      * @param resourceBundle
@@ -58,26 +56,25 @@ public class OverviewSubPageController implements Initializable {
      * Method that updates the table of contents
      */
     public void updateToc() {
+        allH1s.clear();
+        allH2s.clear();
+
         // Clear previous table of content
         tocView.getRoot().getChildren().clear();
 
-        // TODO: Anne clean up
         // Get text from text area
-        if(Main.getTextEditorController().isTextEditorActive()){
-            text = Main.getTextEditorController().getTextArea().getText();
-        }
-        else{
-            text = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
-        }
-
+        text = Main.getTextEditorController().getTextArea().getText();
 
         //Find all h1 - add to list
-        headerList = findAllH(1);
+        allH1s = findAllH(1);
 
         //For every h1 in list
-        for (Header h : headerList){
-            //Find all h2 for the parent header - add to list
+        for (Header h : allH1s){
+            //Find all h2 for the parent header - add to list for the current h
             h.h2List.addAll(findAllH(2, h));
+
+            // Add header's local h2 list to list with all h2's
+            allH2s.addAll(h.h2List);
 
             // Create tree item for h1 and add to tree view
             h.headerToTreeItem();
@@ -101,7 +98,7 @@ public class OverviewSubPageController implements Initializable {
      * @param type Type of header to be found (1 or 2)
      * @return list of header objects
      */
-    public List<Header> findAllH(Integer type){
+    private List<Header> findAllH(Integer type){
         // Dummy parent header
         Header dummyHeader = new Header(0,0, text.length());
 
@@ -115,7 +112,7 @@ public class OverviewSubPageController implements Initializable {
      * @param parentH Parent header
      * @return
      */
-    public List<Header> findAllH(Integer type, Header parentH){
+    private List<Header> findAllH(Integer type, Header parentH){
         // List to return
         List<Header> h1List = new ArrayList<>();
 
@@ -132,6 +129,7 @@ public class OverviewSubPageController implements Initializable {
 
             // Store index in new header object
             Header h = new Header(index, endIndex);
+            h.setType(type);
             h1List.add(h);
 
             // Update indexes to match indexes for next occurrence
@@ -153,7 +151,7 @@ public class OverviewSubPageController implements Initializable {
     /**
      * Method that creates a root for the toc tree view
      */
-    public void createTocTreeViewRoot(){
+    private void createTocTreeViewRoot(){
         Header h = new Header(0,0);
         h.setHeaderText("Contents");
 
@@ -168,7 +166,7 @@ public class OverviewSubPageController implements Initializable {
      * Enables tree view to hold header objects, and display the header text
      * as the visible tree item
      */
-    public void setCellFactoryOnTocView(){
+    private void setCellFactoryOnTocView(){
         tocView.setCellFactory(param -> new TextFieldTreeCell<>(new StringConverter<>() {
 
                     // Displays header text as tree item string
@@ -193,21 +191,31 @@ public class OverviewSubPageController implements Initializable {
      * Moves cursor to selected header in active window
      */
     @FXML
-    public void setCursorToSelectedHeader(){
+    private void setCursorToSelectedHeader(){
         //Get selected header
         Header h = tocView.getSelectionModel().getSelectedItem().getValue();
 
+        // Move cursor to either text area window or preview window
         if(Main.getTextEditorController().isTextEditorActive()){ // If text editor window active
             //Move cursor to selected header in text area
             setCursorInTextAreaAtIndex(h.startIndex);
         }
         else{ // If preview window active
+
+            int type = h.type;
             // Move cursor to selected header in preview
-            setCursorInPreviewAtIndex(h.startIndex);
+            if(type == 1){
+                setCursorInPreviewAtIndex(type, allH1s.indexOf(h));
+            }else if (type == 2) {
+                setCursorInPreviewAtIndex(type, allH2s.indexOf(h));
+            }
         }
     }
 
-    // TODO Anne: kommentarer
+    /**
+     * Helper method that sets cursor in text area based on passed index
+     * @param index Index to move cursor to
+     */
     private void setCursorInTextAreaAtIndex(int index){
         // Get textarea from text editor
         TextArea textArea = Main.getTextEditorController().getTextArea();
@@ -219,9 +227,12 @@ public class OverviewSubPageController implements Initializable {
         textArea.positionCaret(index);
     }
 
-    // TODO Anne: Kommentarer
-    public void setCursorInPreviewAtIndex(int index){
-
+    /**
+     * Helper method that sets cursor in preview window based on passed type of header and index of header
+     * @param type Type of header to look for
+     * @param index Index of the header in the total list of headers (either allH1s or allH2s)
+     */
+    private void setCursorInPreviewAtIndex(int type, int index){
         // Get webview/webengine
         WebView webview = Main.getWebview();
 
@@ -230,16 +241,8 @@ public class OverviewSubPageController implements Initializable {
         webview.getEngine().executeScript(focusScript);
         webview.requestFocus();
 
-        //Move cursor to index in html
-
-        /*
-               webview.getEngine().executeScript(setCaretScript);
-
-         */
-
-
+        //Move cursor to index in html using beautiful javascript
         webview.getEngine().executeScript("function placeCaretAtEnd(el) {\n" +
-                "    el.focus();\n" +
                 "    if (typeof window.getSelection != \"undefined\"\n" +
                 "            && typeof document.createRange != \"undefined\") {\n" +
                 "        var range = document.createRange();\n" +
@@ -256,55 +259,8 @@ public class OverviewSubPageController implements Initializable {
                 "    }\n" +
                 "}\n" +
                 "\n" +
-                "placeCaretAtEnd( document.getElementById(\"mySpan\") );");
-
-
-
-        /*
-        webview.getEngine().executeScript(
-                "var el = document.body;\n" +
-                        "if (typeof window.getSelection != \"undefined\"\n" +
-                        "            && typeof document.createRange != \"undefined\") {\n" +
-                        "        var range = document.createRange();\n" +
-                        "        range.selectNodeContents(el);\n" +
-                        "        range.collapse(false);\n" +
-                        "        var sel = window.getSelection();\n" +
-                        "        sel.removeAllRanges();\n" +
-                        "        sel.addRange(range);\n" +
-                        "    } else if (typeof document.body.createTextRange != \"undefined\") {\n" +
-                        "        var textRange = document.body.createTextRange();\n" +
-                        "        textRange.moveToElementText(el);\n" +
-                        "        textRange.collapse(false);\n" +
-                        "        textRange.select();\n" +
-                        "    }");
-
-         */
-
-
-
-
-        //TODO Anne: ikke her
-        // -- refresh TOC when switch to preview sub page
-
-            /*
-            Main.getEngine().executeScript("function setCaret() {\n" +
-                "    var el = document.getElementById(\"mySpan\")\n" +
-                "    var range = document.createRange()\n" +
-                "    var sel = window.getSelection()\n" +
-                "    \n" +
-                "    range.setStart(el.childNodes[2], 5)\n" +
-                "    range.collapse(true)\n" +
-                "    \n" +
-                "    sel.removeAllRanges()\n" +
-                "    sel.addRange(range)\n" +
-                "}");
-
-
-             */
-
-
+                "placeCaretAtEnd( document.querySelectorAll('h"+ type +"').item("+ index +") );");
     }
-
 
 
     /**
@@ -312,22 +268,29 @@ public class OverviewSubPageController implements Initializable {
      * Used to store header index position and treeItem in treeView
      */
     private class Header {
-        private Integer startIndex; //Index of the first character in "<h1>"
-        private Integer endTagIndex; //Index of the first character in "</h1>"
-        private Integer endIndex; // Index of the next occurrence of "<h1>". Is set to final index position of text, if no more h1's
-        private String headerText;
+        private Integer startIndex; //Index of the first character in tag (eg. "<h1>")
+        private Integer endTagIndex; //Index of the first character in closing tag (eg. "</h1>")
+        private Integer endIndex; // Index of the next occurrence of header of same type. Is set to final index position of text, if no more h1's
+        private int type; // Type of header (1 or 2)
         private List<Header> h2List; // List of the headers subheadings, if any
         private TreeItem<Header> treeItem; // The headers treeitem in the tree view
+        private String treeItemText; // Text to be displayed in toc treeview if header doesn't have text (for dummy root item only)
 
         /**
-         * Constructor
-         * @param startIndex
-         * @param endTagIndex
+         * Constructs a header object from the passed start index and end tag index
+         * @param startIndex Index of the first character in the headers tag
+         * @param endTagIndex Index of the first character in the headers closing tag
          */
         public Header(Integer startIndex, Integer endTagIndex) {
             this(startIndex, endTagIndex, 0);
         }
 
+        /**
+         * Overloaded constructor, constructs a Header object from the given start index, end tag index and end index
+         * @param startIndex Index of the first character in the headers tag
+         * @param endTagIndex Index of the first character in the headers closing tag
+         * @param endIndex Index of the first character of the next header of same type
+         */
         public Header(Integer startIndex, Integer endTagIndex, Integer endIndex) {
             this.startIndex = startIndex;
             this.endIndex = endIndex;
@@ -335,16 +298,20 @@ public class OverviewSubPageController implements Initializable {
             this.h2List = new ArrayList<>();
         }
 
+        // ----- Setters -----
         public void setHeaderText(String headerText) {
-            this.headerText = headerText;
+            this.treeItemText = headerText;
+        }
+        public void setType(int type) {
+            this.type = type;
         }
 
         /**
          * Method that gets the actual text, representing the header
          * @return String with the header text
          */
-        public String getHeaderText(){
-            if(headerText == null){
+        private String getHeaderText(){
+            if(treeItemText == null){
                 String htext = text.substring(startIndex, endTagIndex);
 
                 String h = htext.replace("<h1>", "");
@@ -353,7 +320,7 @@ public class OverviewSubPageController implements Initializable {
                 return h;
             }
             else {
-                return headerText;
+                return treeItemText;
             }
         }
 
@@ -361,7 +328,7 @@ public class OverviewSubPageController implements Initializable {
          * Method that creates a new Tree item from the header
          * and stores a reference to it in the header
          */
-        public void headerToTreeItem(){
+        private void headerToTreeItem(){
             treeItem = new TreeItem<>(this);
         }
     }
