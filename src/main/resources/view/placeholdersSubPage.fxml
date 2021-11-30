@@ -3,31 +3,45 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.PlaceholdersSubPageController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="280.0" style="-fx-background-color: #C4C4C4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.PlaceholdersSubPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints maxHeight="60.0" minHeight="30.0" prefHeight="46.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="35.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="562.0" minHeight="10.0" prefHeight="554.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.hgrow="NEVER" GridPane.vgrow="ALWAYS">
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="20.0" GridPane.hgrow="ALWAYS" GridPane.vgrow="NEVER">
          <GridPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+            <Insets />
          </GridPane.margin>
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Register new placeholder">
-               <HBox.margin>
-                  <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
-               </HBox.margin>
-            </Button>
+            <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label text="List of existing placeholders" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" style="-fx-background-color: #DFEBF7;" text="Create new">
+                     <HBox.margin>
+                        <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </HBox>
       <GridPane GridPane.rowIndex="1">
@@ -39,36 +53,41 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="name" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Name">
+                  <Button fx:id="name" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" style="-fx-background-color: #DFEBF7;" text="Name">
                      <VBox.margin>
                         <Insets left="2.0" top="2.0" />
                      </VBox.margin>
                   </Button>
-                  <Button fx:id="version" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Version">
+                  <Button fx:id="version" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" style="-fx-background-color: #DFEBF7;" text="Version">
                      <VBox.margin>
                         <Insets left="2.0" top="2.0" />
                      </VBox.margin></Button>
-                  <Button fx:id="length" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Length">
+                  <Button fx:id="length" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" style="-fx-background-color: #DFEBF7;" text="Length">
                      <VBox.margin>
                         <Insets left="2.0" top="2.0" />
                      </VBox.margin></Button>
-                  <Button fx:id="height" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Height">
+                  <Button fx:id="height" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" style="-fx-background-color: #DFEBF7;" text="Height">
                      <VBox.margin>
                         <Insets left="2.0" top="2.0" />
                      </VBox.margin></Button>
-                  <Button fx:id="width" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Width">
+                  <Button fx:id="width" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" style="-fx-background-color: #DFEBF7;" text="Width">
                      <VBox.margin>
                         <Insets left="2.0" top="2.0" />
                      </VBox.margin></Button>
-                  <Button fx:id="weight" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Weight">
+                  <Button fx:id="weight" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" style="-fx-background-color: #DFEBF7;" text="Weight">
                      <VBox.margin>
                         <Insets left="2.0" top="2.0" />
                      </VBox.margin></Button>
+                  <Button fx:id="image" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" text="Image">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                <children>
                   <Label fx:id="objName" prefHeight="25.6" prefWidth="100.0" text="Label">
                      <VBox.margin>
@@ -94,6 +113,7 @@
                      <VBox.margin>
                         <Insets left="2.0" top="2.0" />
                      </VBox.margin></Label>
+                  <TextField fx:id="imageTextField" prefWidth="54.0" text="insert image source" />
                </children>
             </VBox>
          </children>

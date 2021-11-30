@@ -6,6 +6,7 @@ import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDocDao;
 import P9.persistence.TextBlockDao;
 import P9.persistence.UserDao;
+import com.sun.jdi.InvocationException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,6 +18,7 @@ import java.io.*;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -40,6 +42,7 @@ public class TextEditorController implements Initializable {
     private EObjectDoc doc;
     private boolean creatingDoc = true;
     private boolean textEditorActive;
+    private TextBlockDao txtDao = new TextBlockDao();
 
     public void setCreatingDoc(boolean bool){
         this.creatingDoc = bool;
@@ -126,7 +129,7 @@ public class TextEditorController implements Initializable {
      */
     @FXML
     private void save() {
-        if (creatingDoc == true) {
+        if (creatingDoc) {
             // Get text from text area
             String txt = textArea.getText();
 
@@ -141,20 +144,28 @@ public class TextEditorController implements Initializable {
             dao.addOrUpdateEObjectDoc(doc);
         }
         else {
-            TextInputDialog td = new TextInputDialog();
+            try {
+                TextBlock txtCheck = (TextBlock) Main.getContentsSubPageController().cbEdit.getValue();
+                String txt = textArea.getText();
+                TextBlock txtBlock = new TextBlock();
 
-            td.setTitle("Content Block name");
-            td.setHeaderText("What should the Content Block be called?");
-            Optional<String> result = td.showAndWait();
+                if (Objects.isNull(txtCheck)) {
+                    TextInputDialog td = new TextInputDialog();
 
-            String txt = textArea.getText();
+                    td.setTitle("Content Block name");
+                    td.setHeaderText("What should the Content Block be called?");
+                    Optional<String> result = td.showAndWait();
 
-            TextBlock textBlock = new TextBlock(txt);
-
-            result.ifPresent(textBlock::setName);
-
-            TextBlockDao txtDao = new TextBlockDao();
-            txtDao.addTextBlock(textBlock);
+                    result.ifPresent(txtBlock::setName);
+                } else {
+                    txtBlock = (TextBlock) Main.getContentsSubPageController().cbEdit.getValue();
+                }
+                txtBlock.setTxt(txt);
+                txtDao.addOrUpdateTxt(txtBlock);
+                Main.getContentsSubPageController().cbEdit.setPromptText("Edit...");
+            }catch (NullPointerException e){
+                e.printStackTrace();
+            }
         }
 
         //TODO Anne - har bare udkommenteret for nu. Tænker det skal slettes?

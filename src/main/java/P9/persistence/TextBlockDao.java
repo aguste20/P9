@@ -72,4 +72,11 @@ public class TextBlockDao {
         //Returning list of objects retrieved from the database
         return objList;
     }
+
+    public void addOrUpdateTxt(TextBlock txt){
+        Session session = Setup.getSession();
+        session.saveOrUpdate(txt);
+        Setup.closeSession(session);
+    }
+
 }
