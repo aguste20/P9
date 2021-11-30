@@ -48,7 +48,12 @@ public class PreviewSubPageController implements Initializable {
         }
     }
 
-    //TODO kommentarer
+    /**
+     * function used to create txt from textarea content
+     * default start text is called through the function getXslText()
+     * the existing xsl file is overwritten. The output form is sat to html by default
+     * we load the converted xsl/xml content to the webview engine
+     */
     public void createXslFromTextArea() {
 
         // Get textarea string
@@ -73,10 +78,21 @@ public class PreviewSubPageController implements Initializable {
 
     }
 
+    /**
+     * function called when converting html to txt/xsl/xml when we want to replace text inside tags
+     * we find the start tag and the id from which we determine the replacement value
+     * @param html string that contains the whole html content
+     * @param startTag string that contains the start tag
+     * @param closingTag string that contains the end tag
+     * @return
+     */
     public String placeHolderReplacement(String html, String startTag, String closingTag){
         int index = 0;
         int endIndex = 0;
-        String change = "&&&&////%%%¤¤";
+
+        // string to contain substring when iterating through html
+        // default value is something that will have 0 occurrences
+        String change = "///%%%&&&";
 
         // Store index and keep looking for occurrences, while any text left
         while (index >= 0) {  // indexOf returns -1 if no match found
@@ -93,6 +109,12 @@ public class PreviewSubPageController implements Initializable {
 
     int i = 0;
 
+    /**
+     * Converts html text to a txt that is ready to be saved as xsl
+     * adds xsl:text start and end tags to the default html tags
+     * changes placeholder value back to the selected value from the xml file
+     * clears txt and inserts the new text
+     */
     public void createTXTFromWebView() {
 
         //creates string from webview content
@@ -139,6 +161,12 @@ public class PreviewSubPageController implements Initializable {
 
     }
 
+    /**
+     * contains default start text for the xsl file
+     * output method is declared as html
+     * two javascript functions is called. One, that temporary saves changes in engine. One that adds headers and formatting to buttons
+     * @return
+     */
     public String getXslText(){
         String xslText = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "\n" +
@@ -146,30 +174,36 @@ public class PreviewSubPageController implements Initializable {
                 "                xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">\n" +
                 "    <xsl:output method=\"html\"/>\n" +
                 "\n" +
+                //the match attribute is an XPath expression "/" that matches the whole XML document
                 "    <xsl:template match=\"/\">\n" +
                 "        <script language=\"javascript\">\n" +
+                //The saveChanges function temporary saves changes in the html file, while the application is open
                 "            function saveChanges(){\n" +
                 "            var xr = new XMLHttpRequest();\n" +
+                //calls the php script saveNewText.php
                 "            var url = \"saveNewText.php\";\n" +
                 "            var text = document.getElementById(\"mySpan\").innerHTML;\n" +
                 "            var vars = \"newText\"+text;\n" +
                 "\n" +
                 "            xr.open(\"POST\", url, true);\n" +
+                //sets the request to the header and body of the html cotent
                 "            xr.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");\n" +
+                //sends the body content of the http as a query string
                 "            xr.send(vars)\n" +
                 "            }\n" +
                 "\n" +
                 "        </script>\n" + "<script language=\"javascript\">\n" +
                 "    borto = {\n" +
+                //creates div element
                 "    tmpEl: document.createElement('div'),\n" +
-                "    /* create element like in jquery with string &lt;tag attribute1 attribute2 /> or &lt;tag attribute1>&lt;/tag> */\n" +
+                //converts html buttons to dom elements to return child node
                 "    htmlToDom: function(htmlEl){\n" +
                 "    borto.tmpEl.innerHTML = htmlEl;\n" +
                 "    return borto.tmpEl.children[0]\n" +
                 "    },\n" +
+                //wrap selection and extract contents
                 "    wrapSelection: function(htmlEl){\n" +
                 "    var sel = window.getSelection();\n" +
-                "    // In firefox we can select multiple area, so they are multiple range\n" +
                 "    for(var i = sel.rangeCount;i--;){\n" +
                 "    var wrapper = borto.htmlToDom(htmlEl)\n" +
                 "    var range = sel.getRangeAt(i);\n" +
@@ -177,10 +211,10 @@ public class PreviewSubPageController implements Initializable {
                 "    range.insertNode(wrapper);\n" +
                 "    }\n" +
                 "    },\n" +
+                //takes arguments that determines outcome
                 "    command: (name,argument)=>{\n" +
                 "    switch(name){\n" +
                 "    case \"createLink\":\n" +
-                "    argument = prompt(\"Quelle est l'adresse du lien ?\");\n" +
                 "    break;case 'heading' :\n" +
                 "    borto.wrapSelection('&lt;'+argument+'/>')\n" +
                 "    return;\n" +
@@ -193,16 +227,13 @@ public class PreviewSubPageController implements Initializable {
                 "    }\n" +
                 "</script>\n" +
                 "\n" +
+                //Buttons are created used for formatting and applied javascript function that allows formatting
                 "<button onclick=\"borto.command('bold')\">Bold</button>\n" +
                 "<button onclick=\"borto.command('italic')\"><i>I</i></button>\n" +
                 "<select onchange=\"borto.command('heading', this.value); this.selectedIndex = 0;\">\n" +
                 "<option value=\"\">Title</option>\n" +
                 "<option value=\"h1\">Title 1</option>\n" +
                 "<option value=\"h2\">Title 2</option>\n" +
-                "<option value=\"h3\">Title 3</option>\n" +
-                "<option value=\"h4\">Title 4</option>\n" +
-                "<option value=\"h5\">Title 5</option>\n" +
-                "<option value=\"h6\">Title 6</option>\n" +
                 "</select>\n" +
                 "\n" +       "<span id=\"mySpan\" onLoad='document.getElementById(\"mySpan\").focus()' contenteditable=\"true\" coloronblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?><xsl:text> ";
 

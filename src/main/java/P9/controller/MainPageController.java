@@ -18,6 +18,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -35,6 +38,7 @@ import javax.persistence.Column;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -194,6 +198,8 @@ public class MainPageController implements Initializable{
             renderer.setDocumentFromString(document.html());
             renderer.layout();
             renderer.createPDF(outputStream);
+            File file = new File(PDF_output);
+            Desktop.getDesktop().open(file);
         } catch (DocumentException e) {
             e.printStackTrace();
         }
