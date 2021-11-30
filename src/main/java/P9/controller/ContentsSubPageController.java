@@ -180,8 +180,13 @@ public class ContentsSubPageController implements Initializable {
 
     public void editContentBlock() {
         openRegisterNewContentBlock();
-        TextBlock txtBlock = (TextBlock) cbEdit.getValue();
-        text.setText(txtBlock.getTxt());
+        if(cbEdit.getValue() instanceof TextBlock txtBlock) {
+            text.setText(txtBlock.getTxt());
+        }
+        else {
+            ImageBlock img = (ImageBlock) cbEdit.getValue();
+            text.setText(img.getImagePath());
+        }
     }
 
     /**
