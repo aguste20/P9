@@ -200,4 +200,5 @@ public class Main extends Application {
         mainPageController.getPaneContentsPlaceholders().setContent(contentsSubPageParent);
     }
 
+    //TODO Anne: lav metode der skyder referencer til relevante controllere ud i alle andre controllere
 }
