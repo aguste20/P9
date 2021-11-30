@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Table(name = "text")
 // Maps inheritance between content block and text block,
 // using the join column "text" in the content block table
-@PrimaryKeyJoinColumn(name = "text_id")
+@PrimaryKeyJoinColumn(name = "content_block_id")
 public class TextBlock extends ContentBlock{
 
     // ----- Properties -----
