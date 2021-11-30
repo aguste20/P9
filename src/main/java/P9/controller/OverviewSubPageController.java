@@ -34,13 +34,23 @@ public class OverviewSubPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Get reference to displayed doc
+        // Prepare table of contents tree view
+        prepareToc();
+
+        // Update table of contents
+        updateToc();
+    }
+
+    /**
+     * Helper method that prepares the toc tree view
+     * by creating a root node (mandatory)
+     * and sets a cell factory for the tree view cells
+     */
+    private void prepareToc() {
+        // Create root for toc tree view
         createTocTreeViewRoot();
 
-        // Create table of contents
-        updateToc();
-
-        // Set cell factory on tree view, so that it displays header strings in its cells
+        // Set cell factory on tree view, so it displays header strings in its cells
         setCellFactoryOnTocView();
     }
 
@@ -181,11 +191,12 @@ public class OverviewSubPageController implements Initializable {
     /**
      * Event handler for toc tree view.
      * Is called when user clicks item in tree view.
-     * Sets text editor scene in focus and moves cursor to selected header
+     * Moves cursor to selected header in active window
      */
     @FXML
     public void moveToSelectedHeaderInTextArea(){
 
+        // If text editor window (full text) window is active
         if(Main.getTextEditorController().isTextEditorActive()){
             // Get textarea from text editor
             TextArea textArea = Main.getTextEditorController().getTextArea();
@@ -199,7 +210,7 @@ public class OverviewSubPageController implements Initializable {
             // Move cursor position to start index for selected heade
             textArea.positionCaret(h.startIndex);
         }
-        else {
+        else { // If preview is active
             //Todo - Anne
             //Request window focus
             //Get index of selected header in toc
