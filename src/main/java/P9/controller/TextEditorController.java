@@ -18,6 +18,7 @@ import java.io.*;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -144,10 +145,11 @@ public class TextEditorController implements Initializable {
         }
         else {
             try {
-                TextBlock txtBlock = (TextBlock) Main.getContentsSubPageController().cbEdit.getValue();
+                TextBlock txtCheck = (TextBlock) Main.getContentsSubPageController().cbEdit.getValue();
                 String txt = textArea.getText();
+                TextBlock txtBlock = new TextBlock();
 
-                if (txtBlock.getContentBlockID() == null) {
+                if (Objects.isNull(txtCheck)) {
                     TextInputDialog td = new TextInputDialog();
 
                     td.setTitle("Content Block name");
