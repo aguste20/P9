@@ -1,15 +1,14 @@
 package P9.controller;
 
 import P9.Main;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTreeCell;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.util.Callback;
+import javafx.scene.web.WebView;
 import javafx.util.StringConverter;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.net.URL;
@@ -34,13 +33,23 @@ public class OverviewSubPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Get reference to displayed doc
+        // Prepare table of contents tree view
+        prepareToc();
+
+        // Update table of contents
+        updateToc();
+    }
+
+    /**
+     * Helper method that prepares the toc tree view
+     * by creating a root node (mandatory)
+     * and sets a cell factory for the tree view cells
+     */
+    private void prepareToc() {
+        // Create root for toc tree view
         createTocTreeViewRoot();
 
-        // Create table of contents
-        updateToc();
-
-        // Set cell factory on tree view, so that it displays header strings in its cells
+        // Set cell factory on tree view, so it displays header strings in its cells
         setCellFactoryOnTocView();
     }
 
@@ -177,72 +186,123 @@ public class OverviewSubPageController implements Initializable {
         );
     }
 
-    // TODO Anne - gør sådan at den finder header position i preview
+
     /**
      * Event handler for toc tree view.
      * Is called when user clicks item in tree view.
-     * Sets text editor scene in focus and moves cursor to selected header
+     * Moves cursor to selected header in active window
      */
     @FXML
-    public void moveToSelectedHeaderInTextArea(){
+    public void setCursorToSelectedHeader(){
+        //Get selected header
+        Header h = tocView.getSelectionModel().getSelectedItem().getValue();
 
-        if(Main.getTextEditorController().isTextEditorActive()){
-            // Get textarea from text editor
-            TextArea textArea = Main.getTextEditorController().getTextArea();
-
-            // Request window focus
-            textArea.requestFocus();
-
-            // Get selected header in toc
-            Header h = tocView.getSelectionModel().getSelectedItem().getValue();
-
-            // Move cursor position to start index for selected heade
-            textArea.positionCaret(h.startIndex);
+        if(Main.getTextEditorController().isTextEditorActive()){ // If text editor window active
+            //Move cursor to selected header in text area
+            setCursorInTextAreaAtIndex(h.startIndex);
         }
-        else {
-            //Todo - Anne
-            //Request window focus
-            //Get index of selected header in toc
-            //Move cursor to index in html
-            // -- refresh TOC when switch to preview sub page
+        else{ // If preview window active
+            // Move cursor to selected header in preview
+            setCursorInPreviewAtIndex(h.startIndex);
+        }
+    }
+
+    // TODO Anne: kommentarer
+    private void setCursorInTextAreaAtIndex(int index){
+        // Get textarea from text editor
+        TextArea textArea = Main.getTextEditorController().getTextArea();
+
+        // Request window focus
+        textArea.requestFocus();
+
+        // Move cursor position to start index for selected header
+        textArea.positionCaret(index);
+    }
+
+    // TODO Anne: Kommentarer
+    public void setCursorInPreviewAtIndex(int index){
+
+        // Get webview/webengine
+        WebView webview = Main.getWebview();
+
+        //Request window focus
+        String focusScript = "document.getElementById(\"mySpan\").focus()";
+        webview.getEngine().executeScript(focusScript);
+        webview.requestFocus();
+
+        //Move cursor to index in html
+
+        /*
+               webview.getEngine().executeScript(setCaretScript);
+
+         */
+
+
+        webview.getEngine().executeScript("function placeCaretAtEnd(el) {\n" +
+                "    el.focus();\n" +
+                "    if (typeof window.getSelection != \"undefined\"\n" +
+                "            && typeof document.createRange != \"undefined\") {\n" +
+                "        var range = document.createRange();\n" +
+                "        range.selectNodeContents(el);\n" +
+                "        range.collapse(false);\n" +
+                "        var sel = window.getSelection();\n" +
+                "        sel.removeAllRanges();\n" +
+                "        sel.addRange(range);\n" +
+                "    } else if (typeof document.body.createTextRange != \"undefined\") {\n" +
+                "        var textRange = document.body.createTextRange();\n" +
+                "        textRange.moveToElementText(el);\n" +
+                "        textRange.collapse(false);\n" +
+                "        textRange.select();\n" +
+                "    }\n" +
+                "}\n" +
+                "\n" +
+                "placeCaretAtEnd( document.getElementById(\"mySpan\") );");
+
+
+
+        /*
+        webview.getEngine().executeScript(
+                "var el = document.body;\n" +
+                        "if (typeof window.getSelection != \"undefined\"\n" +
+                        "            && typeof document.createRange != \"undefined\") {\n" +
+                        "        var range = document.createRange();\n" +
+                        "        range.selectNodeContents(el);\n" +
+                        "        range.collapse(false);\n" +
+                        "        var sel = window.getSelection();\n" +
+                        "        sel.removeAllRanges();\n" +
+                        "        sel.addRange(range);\n" +
+                        "    } else if (typeof document.body.createTextRange != \"undefined\") {\n" +
+                        "        var textRange = document.body.createTextRange();\n" +
+                        "        textRange.moveToElementText(el);\n" +
+                        "        textRange.collapse(false);\n" +
+                        "        textRange.select();\n" +
+                        "    }");
+
+         */
 
 
 
 
-            //Main.getPreviewSubPageController().webGridPane.requestFocus();
-
-
-            //Main.getMainPageController().getPaneTextEditor().getContent().requestFocus();
-            Element body = Main.getEngine().getDocument().getElementById("mySpan");
-            Main.getEngine().executeScript("document.body.focus()");
-
-
-            //Main.getEngine().executeScript("body onLoad='document.body.focus();' contenteditable='true'");
-            Main.getWebview().requestFocus();
-            System.out.println("focus requested");
+        //TODO Anne: ikke her
+        // -- refresh TOC when switch to preview sub page
 
             /*
             Main.getEngine().executeScript("function setCaret() {\n" +
-                    "    var el = document.getElementById(\"mySpan\")\n" +
-                    "    var range = document.createRange()\n" +
-                    "    var sel = window.getSelection()\n" +
-                    "    \n" +
-                    "    range.setStart(el.childNodes[2], 5)\n" +
-                    "    range.collapse(true)\n" +
-                    "    \n" +
-                    "    sel.removeAllRanges()\n" +
-                    "    sel.addRange(range)\n" +
-                    "}");
+                "    var el = document.getElementById(\"mySpan\")\n" +
+                "    var range = document.createRange()\n" +
+                "    var sel = window.getSelection()\n" +
+                "    \n" +
+                "    range.setStart(el.childNodes[2], 5)\n" +
+                "    range.collapse(true)\n" +
+                "    \n" +
+                "    sel.removeAllRanges()\n" +
+                "    sel.addRange(range)\n" +
+                "}");
+
 
              */
-        }
 
-    }
 
-    // Todo - anne fjernes
-    public void moveToSelectedHeaderInPreview(){
-        // Get Preview html text
-        String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
     }
 
 

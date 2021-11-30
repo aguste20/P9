@@ -40,7 +40,7 @@
             </HBox>
          </children>
       </HBox>
-      <TreeView fx:id="tocView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#moveToSelectedHeaderInTextArea" style="-fx-background-color: #C4C4C4;" GridPane.rowIndex="1">
+      <TreeView fx:id="tocView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#setCursorToSelectedHeader" style="-fx-background-color: #C4C4C4;" GridPane.rowIndex="1">
          <opaqueInsets>
             <Insets bottom="1.0" left="1.0" />
          </opaqueInsets></TreeView>
