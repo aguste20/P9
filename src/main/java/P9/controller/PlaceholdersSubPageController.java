@@ -6,12 +6,10 @@ import P9.persistence.Setup;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,6 +27,9 @@ public class PlaceholdersSubPageController implements Initializable {
     public Label objWeight;
 
     public String phColor = "yellow";
+
+    @FXML
+    private TextField imageTextField;
 
     //TODO Lav en liste over placeholders
 
@@ -121,11 +122,21 @@ public class PlaceholdersSubPageController implements Initializable {
                     text.insertText(pos, "</xsl:text><span id=\"weight\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
                     }else{insertPlaceholderInHtml(eObject.getWeight().toString(), "weight", phColor);}
             }
+            switch (choice){
+                case "image":
+                    if (textEditorActive){
+                        text.insertText(pos, "</xsl:text><p><img src=\"" + imageTextField.getText() + "\"/></p><xsl:text>");
+                    }
+                    else{insertImage(imageTextField.getText());}
+                    //insertImage("https://tailandfur.com/wp-content/uploads/2014/03/Funny-pictures-of-animals-41.jpg");
+            }
 
             }
 
     public void insertPlaceholderInHtml(String ph, String pn, String color){
-
+        //runs script that inserts placeholder value inside span tags with id span
+        //the placeholder gets inserted at caret position or start of selection
+        //a background color is applied. the function is called when clicking at placeholder buttons
         Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
                 "var selectionContents = range.extractContents();\n" +
                 "var span = document.createElement(\"span\");\n" +
@@ -134,6 +145,15 @@ public class PlaceholdersSubPageController implements Initializable {
                 "span.textContent = \"" + ph + "\";\n" +
                 "span.appendChild(selectionContents);\n" +
                 "range.insertNode(span);");
+    }
+
+    public void insertImage(String src){
+        //runs script to insert picture at caret position.
+        //the picture is inserted inside p tags as a string containing the image source
+        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
+                "var image = '<p><img src=" + src + " /></p>';\n" +
+                "node = range.createContextualFragment(image);\n" +
+                "range.insertNode(node);");
     }
 
     /**
