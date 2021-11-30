@@ -3,10 +3,12 @@ package P9.controller;
 import P9.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
 import javafx.scene.web.WebView;
 import javafx.util.StringConverter;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.net.URL;
@@ -224,10 +226,102 @@ public class OverviewSubPageController implements Initializable {
         WebView webview = Main.getWebview();
 
         //Request window focus
-        webview.getEngine().executeScript("document.getElementById(\"mySpan\").focus()");
+        String focusScript = "document.getElementById(\"mySpan\").focus()";
+        webview.getEngine().executeScript(focusScript);
         webview.requestFocus();
 
         //Move cursor to index in html
+
+        /*
+               webview.getEngine().executeScript(setCaretScript);
+
+         */
+
+
+
+        webview.getEngine().executeScript("function placeCaretAtEnd(el) {\n" +
+                "    el.focus();\n" +
+                "    if (typeof window.getSelection != \"undefined\"\n" +
+                "            && typeof document.createRange != \"undefined\") {\n" +
+                "        var range = document.createRange();\n" +
+                "        range.selectNodeContents(el);\n" +
+                "        range.collapse(false);\n" +
+                "        var sel = window.getSelection();\n" +
+                "        sel.removeAllRanges();\n" +
+                "        sel.addRange(range);\n" +
+                "    } else if (typeof document.body.createTextRange != \"undefined\") {\n" +
+                "        var textRange = document.body.createTextRange();\n" +
+                "        textRange.moveToElementText(el);\n" +
+                "        textRange.collapse(false);\n" +
+                "        textRange.select();\n" +
+                "    }\n" +
+                "}\n" +
+                "\n" +
+                "placeCaretAtEnd( document.getElementById(\"mySpan\") );");
+
+
+
+        /*
+        webview.getEngine().executeScript(
+                "var el = document.body;\n" +
+                        "if (typeof window.getSelection != \"undefined\"\n" +
+                        "            && typeof document.createRange != \"undefined\") {\n" +
+                        "        var range = document.createRange();\n" +
+                        "        range.selectNodeContents(el);\n" +
+                        "        range.collapse(false);\n" +
+                        "        var sel = window.getSelection();\n" +
+                        "        sel.removeAllRanges();\n" +
+                        "        sel.addRange(range);\n" +
+                        "    } else if (typeof document.body.createTextRange != \"undefined\") {\n" +
+                        "        var textRange = document.body.createTextRange();\n" +
+                        "        textRange.moveToElementText(el);\n" +
+                        "        textRange.collapse(false);\n" +
+                        "        textRange.select();\n" +
+                        "    }");
+
+         */
+
+
+        /*
+        Main.getEngine().executeScript(" function setCaret() {\n" +
+                "            var el = document.getElementById(\"mySpan\")\n" +
+                "            var range = document.createRange()\n" +
+                "            var sel = window.getSelection()\n" +
+                "\n" +
+                "            range.setStart(el.childNodes[2], 5)\n" +
+                "            range.collapse(true)\n" +
+                "\n" +
+                "            sel.removeAllRanges()\n" +
+                "            sel.addRange(range)\n" +
+                "        }");
+
+         */
+
+
+/*
+        const el = document.getElementById('mySpan')
+    const selection = window.getSelection();
+    const range = document.createRange();
+        selection.removeAllRanges();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        selection.addRange(range);
+        el.focus();
+
+
+
+        function setCaret() {
+            var el = document.getElementById("mySpan")
+            var range = document.createRange()
+            var sel = window.getSelection()
+
+            range.setStart(el.childNodes[2], 5)
+            range.collapse(true)
+
+            sel.removeAllRanges()
+            sel.addRange(range)
+
+ */
 
 
         //TODO Anne: ikke her
@@ -247,18 +341,21 @@ public class OverviewSubPageController implements Initializable {
         //Main.getWebview().requestFocus();
         //System.out.println("focus requested");
 
+
+
             /*
             Main.getEngine().executeScript("function setCaret() {\n" +
-                    "    var el = document.getElementById(\"mySpan\")\n" +
-                    "    var range = document.createRange()\n" +
-                    "    var sel = window.getSelection()\n" +
-                    "    \n" +
-                    "    range.setStart(el.childNodes[2], 5)\n" +
-                    "    range.collapse(true)\n" +
-                    "    \n" +
-                    "    sel.removeAllRanges()\n" +
-                    "    sel.addRange(range)\n" +
-                    "}");
+                "    var el = document.getElementById(\"mySpan\")\n" +
+                "    var range = document.createRange()\n" +
+                "    var sel = window.getSelection()\n" +
+                "    \n" +
+                "    range.setStart(el.childNodes[2], 5)\n" +
+                "    range.collapse(true)\n" +
+                "    \n" +
+                "    sel.removeAllRanges()\n" +
+                "    sel.addRange(range)\n" +
+                "}");
+
 
              */
 
