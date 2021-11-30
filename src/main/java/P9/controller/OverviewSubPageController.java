@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTreeCell;
+import javafx.scene.web.WebView;
 import javafx.util.StringConverter;
 import org.w3c.dom.Element;
 
@@ -220,8 +221,11 @@ public class OverviewSubPageController implements Initializable {
     public void setCursorInPreviewAtIndex(int index){
 
         // Get webview/webengine
+        WebView webview = Main.getWebview();
 
         //Request window focus
+        webview.getEngine().executeScript("document.getElementById(\"mySpan\").focus()");
+        webview.requestFocus();
 
         //Move cursor to index in html
 
@@ -235,13 +239,13 @@ public class OverviewSubPageController implements Initializable {
 
 
         //Main.getMainPageController().getPaneTextEditor().getContent().requestFocus();
-        Element body = Main.getEngine().getDocument().getElementById("mySpan");
-        Main.getEngine().executeScript("document.body.focus()");
+        //Element body = Main.getEngine().getDocument().getElementById("mySpan");
+        //Main.getEngine().executeScript("document.body.focus()");
 
 
         //Main.getEngine().executeScript("body onLoad='document.body.focus();' contenteditable='true'");
-        Main.getWebview().requestFocus();
-        System.out.println("focus requested");
+        //Main.getWebview().requestFocus();
+        //System.out.println("focus requested");
 
             /*
             Main.getEngine().executeScript("function setCaret() {\n" +
