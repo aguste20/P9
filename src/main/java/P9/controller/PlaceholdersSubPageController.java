@@ -53,10 +53,18 @@ public class PlaceholdersSubPageController implements Initializable {
         objWeight.setText(eObject.getWeight().toString());
     }
 
+    /**
+     * Method used to call setLabelsVisible with the correct arguments
+     */
     public void callLabelsNull(){
         setLabelsVisible(objName, objVersion, objLength, objHeight, objWidth, objWeight);
     }
 
+    /**
+     * Changes the visibility of the labels displaying the eObject's values, depending on the
+     * creating doc variable from TextEditorController
+     * @param nodes The method can take an unlimited number of arguments of type node
+     */
     public void setLabelsVisible(Node... nodes){
         for (Node node : nodes){
             if (!Main.getTextEditorController().getCreatingDoc()){
@@ -66,7 +74,6 @@ public class PlaceholdersSubPageController implements Initializable {
                 node.setVisible(true);
             }
         }
-        System.out.println("Hej med dig");
     }
 
 

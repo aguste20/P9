@@ -6,27 +6,15 @@ import P9.model.DisplayContentBlock;
 import P9.model.ImageBlock;
 import P9.model.TextBlock;
 import P9.persistence.ContentBlockDao;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -44,6 +32,7 @@ public class ContentsSubPageController implements Initializable {
     ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
     ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
     TextArea text = Main.getTextEditorController().getTextArea();
+    private boolean newCB = false;
 
 
     /**
@@ -66,22 +55,40 @@ public class ContentsSubPageController implements Initializable {
 
     }
 
-    //Method that will generate the list of content blocks and show them in the view.
-    public void makeContentBlockList(){
+    public boolean isNewCB() {
+        return newCB;
+    }
 
+    public void setNewCB(boolean newCB) {
+        this.newCB = newCB;
+    }
+
+    /**
+     * Populates the listview in the GUI with all the ContentBlocks in the DB.
+     * Also adds a corresponding button that inserts the ContentBlock into the TextArea.
+     */
+    public void makeContentBlockList(){
+        //Iterating over the size of the ContentBlock list
         for (int i=0;i<cbList.size();i++){
+            //Creating a button and setting width
             Button button = new Button("⬅");
             button.setPrefWidth(65);
+            //Creating a variable to get the correct object in the cbList
             int finalI1 = i;
+            //Setting actionEvent on the button
             button.setOnAction(actionEvent -> {
+                    //If the current object in the cbList is a TextBlock this is executed
                     if(cbList.get(finalI1) instanceof TextBlock){
-                    text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt());
+                        //Inserting the text at the caret position
+                        text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt());
                     }
                     else {
+                        //Inserting the image at the caret position
                         text.insertText(getCaretPosition(), ((ImageBlock) cbList.get(finalI1)).getImagePath());
                     }
                     });
 
+            //Adds the object and the button to the displayCB list
             displayCB.add(new DisplayContentBlock(cbList.get(i), button));
         }
 
@@ -155,15 +162,24 @@ public class ContentsSubPageController implements Initializable {
 */
     }
 
+    /**
+     * Gets caret position from TextEditorController
+     * @return Returns caret position
+     */
     public int getCaretPosition(){
         return Main.getTextEditorController().getTextArea().getCaretPosition();
     }
 
+    /**
+     * Populates the combobox used to display all the ContentBlocks that the user can edit
+     */
     public void populateBox(){
         List<ContentBlock> cbList;
         cbList = cbdao.listAll();
         ObservableList<ContentBlock> ocbList = FXCollections.observableArrayList(cbList);
         cbEdit.setItems(ocbList);
+        //Creates a StringConverter that allows us to display the name of the content block in the GUI (toString)
+        //and find the Content Block again when the user selects a name String in the GUI (fromString)
         cbEdit.setConverter(new StringConverter<ContentBlock>() {
             @Override
             public String toString(ContentBlock contentBlock) {
@@ -178,26 +194,31 @@ public class ContentsSubPageController implements Initializable {
         });
     }
 
+    /**
+     * Called when user clicks on a ContentBlock they want to edit in the GUI
+     */
     public void editContentBlock() {
-        openRegisterNewContentBlock();
-        TextBlock txtBlock = (TextBlock) cbEdit.getValue();
-        text.setText(txtBlock.getTxt());
+        createOrEditContentBlock();
+        //If the ContentBlock they clicked on is a TextBlock this is executed
+        if(cbEdit.getValue() instanceof TextBlock txtBlock) {
+            text.setText(txtBlock.getTxt());
+        }
+        else {
+            ImageBlock img = (ImageBlock) cbEdit.getValue();
+            text.setText(img.getImagePath());
+        }
     }
 
     /**
-     * Event handler for the button "Registrer ny vare"
-     * Opens a modal window to enter details about the product and save in database
-     * Contents based on: https://www.codota.com/code/java/methods/javafx.stage.Stage/initModality
-     * Last visited: April 22th 2021.
+     * Changes a number of things in the GUI to show user they are creating a ContentBlock
+     * Also removes and changes certain functionality
      */
-
-    public void openRegisterNewContentBlock() {
+    public void createOrEditContentBlock() {
         Main.getTextEditorController().setCreatingDoc(false);
         text.clear();
         Main.getMainPageController().eObjectLabel.setText("You are creating a Content Block");
         Main.getTextEditorController().returnButton.setVisible(true);
         Main.getPlaceholdersSubPageController().callLabelsNull();
-
 
 
         /*
@@ -239,6 +260,14 @@ public class ContentsSubPageController implements Initializable {
          */
     }
 
+    /**
+     * Called when user clicks "create new ContentBlock" in the GUI
+     */
+    public void createNewContentBlock() {
+        createOrEditContentBlock();
+        //Sets boolean which is used to check if a new ContentBlock is being created to true
+        newCB = true;
+    }
 }
 
 

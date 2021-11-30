@@ -37,7 +37,7 @@
             <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" HBox.hgrow="SOMETIMES">
                <children>
                   <ComboBox fx:id="cbEdit" onAction="#editContentBlock" prefWidth="150.0" promptText="Edit..." />
-                  <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openRegisterNewContentBlock" style="-fx-background-color: #DFEBF7;" text="Create new">
+                  <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createNewContentBlock" style="-fx-background-color: #DFEBF7;" text="Create new">
                      <HBox.margin>
                         <Insets bottom="2.0" left="4.0" right="4.0" top="2.0" />
                      </HBox.margin>
