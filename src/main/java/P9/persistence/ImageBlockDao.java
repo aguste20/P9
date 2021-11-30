@@ -72,4 +72,10 @@ public class ImageBlockDao {
         //Returning list of objects retrieved from the database
         return objList;
     }
+
+    public void addOrUpdateImg(ImageBlock img) {
+        Session session = Setup.getSession();
+        session.saveOrUpdate(img);
+        Setup.closeSession(session);
+    }
 }
