@@ -163,10 +163,6 @@ public class TextEditorController implements Initializable {
                 txtBlock.setTxt(txt);
                 txtDao.addOrUpdateTxt(txtBlock);
                 Main.getContentsSubPageController().cbEdit.setPromptText("Edit...");
-                creatingDoc = true;
-                returnButton.setVisible(false);
-                Main.getMainPageController().changeEObject();
-                Main.getPlaceholdersSubPageController().updateEObjectValues();
             }catch (NullPointerException e){
                 e.printStackTrace();
             }
