@@ -3,6 +3,7 @@ package P9.controller;
 import P9.Main;
 import P9.model.ContentBlock;
 import P9.model.DisplayContentBlock;
+import P9.model.ImageBlock;
 import P9.model.TextBlock;
 import P9.persistence.ContentBlockDao;
 import javafx.beans.property.StringProperty;
@@ -72,8 +73,15 @@ public class ContentsSubPageController implements Initializable {
             Button button = new Button("⬅");
             button.setPrefWidth(65);
             int finalI1 = i;
-            button.setOnAction(actionEvent ->
-                    text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt()));
+            button.setOnAction(actionEvent -> {
+                    if(cbList.get(finalI1) instanceof TextBlock){
+                    text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt());
+                    }
+                    else {
+                        text.insertText(getCaretPosition(), ((ImageBlock) cbList.get(finalI1)).getImagePath());
+                    }
+                    });
+
             displayCB.add(new DisplayContentBlock(cbList.get(i), button));
         }
 
