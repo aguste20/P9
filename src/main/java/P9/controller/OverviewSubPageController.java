@@ -17,6 +17,7 @@ import java.util.*;
 public class OverviewSubPageController implements Initializable {
 
     private List<Header> headerList = new ArrayList<>();
+    private List<Header> allh2s = new ArrayList<>();
     private String text; // Text from the textarea
 
     @FXML
@@ -58,6 +59,9 @@ public class OverviewSubPageController implements Initializable {
      * Method that updates the table of contents
      */
     public void updateToc() {
+        headerList.clear();
+        allh2s.clear();
+
         // Clear previous table of content
         tocView.getRoot().getChildren().clear();
 
@@ -68,6 +72,7 @@ public class OverviewSubPageController implements Initializable {
         }
         else{
             text = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
+            System.out.println(text);
         }
 
 
@@ -76,8 +81,11 @@ public class OverviewSubPageController implements Initializable {
 
         //For every h1 in list
         for (Header h : headerList){
-            //Find all h2 for the parent header - add to list
+            //Find all h2 for the parent header - add to list for the current h
             h.h2List.addAll(findAllH(2, h));
+
+            // Add header's local h2 list to list with all h2's
+            allh2s.addAll(h.h2List);
 
             // Create tree item for h1 and add to tree view
             h.headerToTreeItem();
@@ -91,6 +99,20 @@ public class OverviewSubPageController implements Initializable {
                 h2.headerToTreeItem();
                 h.treeItem.getChildren().add(h2.treeItem);
             }
+        }
+
+        System.out.println("All h2's:");
+        for (Header h : allh2s){
+            System.out.println(allh2s.indexOf(h));
+            System.out.println(h.getHeaderText());
+
+        }
+
+        System.out.println("All h1's:");
+        for (Header h : headerList){
+            System.out.println(headerList.indexOf(h));
+            System.out.println(h.getHeaderText());
+
         }
     }
 
@@ -132,6 +154,7 @@ public class OverviewSubPageController implements Initializable {
 
             // Store index in new header object
             Header h = new Header(index, endIndex);
+            h.setType(type);
             h1List.add(h);
 
             // Update indexes to match indexes for next occurrence
@@ -197,18 +220,29 @@ public class OverviewSubPageController implements Initializable {
         //Get selected header
         Header h = tocView.getSelectionModel().getSelectedItem().getValue();
 
+        System.out.println(h.getHeaderText());
+
         if(Main.getTextEditorController().isTextEditorActive()){ // If text editor window active
             //Move cursor to selected header in text area
             setCursorInTextAreaAtIndex(h.startIndex);
         }
         else{ // If preview window active
             // Move cursor to selected header in preview
-            setCursorInPreviewAtIndex(h.startIndex);
+            //TODO anne: bohemian er også empty !! skal være et andet kriterie, fx type
+            if(h.type == 1){
+                setCursorInPreviewAtIndex(1, headerList.indexOf(h));
+            }else if (h.type == 2) {
+                setCursorInPreviewAtIndex(2, allh2s.indexOf(h));
+            }
+
         }
     }
 
     // TODO Anne: kommentarer
     private void setCursorInTextAreaAtIndex(int index){
+
+        System.out.println(index);
+
         // Get textarea from text editor
         TextArea textArea = Main.getTextEditorController().getTextArea();
 
@@ -220,7 +254,7 @@ public class OverviewSubPageController implements Initializable {
     }
 
     // TODO Anne: Kommentarer
-    public void setCursorInPreviewAtIndex(int index){
+    public void setCursorInPreviewAtIndex(int type, int index){
 
         // Get webview/webengine
         WebView webview = Main.getWebview();
@@ -237,6 +271,9 @@ public class OverviewSubPageController implements Initializable {
 
          */
 
+        System.out.println("Index of header is: " + index);
+
+
 
         webview.getEngine().executeScript("function placeCaretAtEnd(el) {\n" +
                 "    el.focus();\n" +
@@ -244,6 +281,29 @@ public class OverviewSubPageController implements Initializable {
                 "            && typeof document.createRange != \"undefined\") {\n" +
                 "        var range = document.createRange();\n" +
                 "        range.selectNodeContents(el);\n" +
+                //"        range.setStart(el.childNodes[4], 10)\n" +
+                "        range.collapse(false);\n" +
+                "        var sel = window.getSelection();\n" +
+                "        sel.removeAllRanges();\n" +
+                "        sel.addRange(range);\n" +
+                "    } else if (typeof document.body.createTextRange != \"undefined\") {\n" +
+                "        var textRange = document.body.createTextRange();\n" +
+                "        textRange.moveToElementText(el);\n" +
+                "        textRange.collapse(false);\n" +
+                "        textRange.select();\n" +
+                "    }\n" +
+                "}\n" +
+                "\n" +
+                "placeCaretAtEnd( document.querySelectorAll('h"+ type +"').item("+ index +") );");
+
+        /*
+        webview.getEngine().executeScript("function placeCaretAtEnd(el) {\n" +
+                "    el.focus();\n" +
+                "    if (typeof window.getSelection != \"undefined\"\n" +
+                "            && typeof document.createRange != \"undefined\") {\n" +
+                "        var range = document.createRange();\n" +
+               // "        range.selectNodeContents(el);\n" +
+                "        range.setStart(el.childNodes[4], 10)\n" +
                 "        range.collapse(false);\n" +
                 "        var sel = window.getSelection();\n" +
                 "        sel.removeAllRanges();\n" +
@@ -257,6 +317,8 @@ public class OverviewSubPageController implements Initializable {
                 "}\n" +
                 "\n" +
                 "placeCaretAtEnd( document.getElementById(\"mySpan\") );");
+
+         */
 
 
 
@@ -316,6 +378,7 @@ public class OverviewSubPageController implements Initializable {
         private Integer endTagIndex; //Index of the first character in "</h1>"
         private Integer endIndex; // Index of the next occurrence of "<h1>". Is set to final index position of text, if no more h1's
         private String headerText;
+        private int type;
         private List<Header> h2List; // List of the headers subheadings, if any
         private TreeItem<Header> treeItem; // The headers treeitem in the tree view
 
@@ -337,6 +400,10 @@ public class OverviewSubPageController implements Initializable {
 
         public void setHeaderText(String headerText) {
             this.headerText = headerText;
+        }
+
+        public void setType(int type) {
+            this.type = type;
         }
 
         /**
