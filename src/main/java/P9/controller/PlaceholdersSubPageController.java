@@ -125,7 +125,7 @@ public class PlaceholdersSubPageController implements Initializable {
             switch (choice){
                 case "image":
                     if (textEditorActive){
-                        text.insertText(pos, "</xsl:text><p><img src=\"" + imageTextField.getText() + "\"/></p><xsl:text>");
+                        text.insertText(pos, "</xsl:text><p><img src=\"" + imageTextField.getText() + "\" width=\"500\"/></p><xsl:text>");
                     }
                     else{insertImage(imageTextField.getText());}
                     //insertImage("https://tailandfur.com/wp-content/uploads/2014/03/Funny-pictures-of-animals-41.jpg");
@@ -151,7 +151,7 @@ public class PlaceholdersSubPageController implements Initializable {
         //runs script to insert picture at caret position.
         //the picture is inserted inside p tags as a string containing the image source
         Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
-                "var image = '<p><img src=" + src + " /></p>';\n" +
+                "var image = '<p><img src=" + src + " width=\"500\"/></p>';\n" +
                 "node = range.createContextualFragment(image);\n" +
                 "range.insertNode(node);");
     }
