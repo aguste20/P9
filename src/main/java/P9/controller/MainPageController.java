@@ -64,6 +64,8 @@ public class MainPageController implements Initializable{
     TextBlockDao txtDao = new TextBlockDao();
     EObjectDao eDao = new EObjectDao();
     String PDF_output = "src/main/resources/html2pdf.pdf";
+    private boolean checkedPreview = false;
+
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
@@ -213,19 +215,36 @@ public class MainPageController implements Initializable{
 
         //Main.getPlaceholdersSubPageController().setTextEditor(false);
         Main.getTextEditorController().setTextEditorActive(false);
+        checkedPreview = true;
     }
 
 
-    public void switchToTextEditorPage(){
-        //loads webview, if it contains any content
-        if (Main.getEngine()!=null){
-            Main.getPreviewSubPageController().createTXTFromWebView();
-            //Main.getPlaceholdersSubPageController().setTextEditor(false);
+    public void switchToTextEditorPage() {
+        if (Main.getTextEditorController().getCreatingDoc()) {
+            //loads webview, if it contains any content
+            if (Main.getEngine() != null) {
+                Main.getPreviewSubPageController().createTXTFromWebView();
+                //Main.getPlaceholdersSubPageController().setTextEditor(false);
+            }
+
+            paneTextEditor.setContent(Main.getTextEditorParent());
+
+            Main.getTextEditorController().setTextEditorActive(true);
+            checkedPreview = false;
         }
+        else{ if(checkedPreview){
+            if (Main.getEngine() != null) {
+                Main.getPreviewSubPageController().createTXTFromWebView();
+                //Main.getPlaceholdersSubPageController().setTextEditor(false);
+            }
 
-        paneTextEditor.setContent(Main.getTextEditorParent());
+            paneTextEditor.setContent(Main.getTextEditorParent());
 
-        Main.getTextEditorController().setTextEditorActive(true);
+            Main.getTextEditorController().setTextEditorActive(true);
+            checkedPreview = false;
+        }
+        // do nothing
+        }
     }
 
     public void switchToContentsSubPage(){
