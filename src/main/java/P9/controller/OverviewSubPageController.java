@@ -1,14 +1,10 @@
 package P9.controller;
 
 import P9.Main;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTreeCell;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.util.Callback;
 import javafx.util.StringConverter;
 import org.w3c.dom.Element;
 
@@ -187,50 +183,65 @@ public class OverviewSubPageController implements Initializable {
         );
     }
 
-    // TODO Anne - gør sådan at den finder header position i preview
+
     /**
      * Event handler for toc tree view.
      * Is called when user clicks item in tree view.
      * Moves cursor to selected header in active window
      */
     @FXML
-    public void moveToSelectedHeaderInTextArea(){
+    public void setCursorToSelectedHeader(){
+        //Get selected header
+        Header h = tocView.getSelectionModel().getSelectedItem().getValue();
 
-        // If text editor window (full text) window is active
-        if(Main.getTextEditorController().isTextEditorActive()){
-            // Get textarea from text editor
-            TextArea textArea = Main.getTextEditorController().getTextArea();
-
-            // Request window focus
-            textArea.requestFocus();
-
-            // Get selected header in toc
-            Header h = tocView.getSelectionModel().getSelectedItem().getValue();
-
-            // Move cursor position to start index for selected heade
-            textArea.positionCaret(h.startIndex);
+        if(Main.getTextEditorController().isTextEditorActive()){ // If text editor window active
+            //Move cursor to selected header in text area
+            setCursorInTextAreaAtIndex(h.startIndex);
         }
-        else { // If preview is active
-            //Todo - Anne
-            //Request window focus
-            //Get index of selected header in toc
-            //Move cursor to index in html
-            // -- refresh TOC when switch to preview sub page
+        else{ // If preview window active
+            // Move cursor to selected header in preview
+            setCursorInPreviewAtIndex(h.startIndex);
+        }
+    }
+
+    // TODO Anne: kommentarer
+    private void setCursorInTextAreaAtIndex(int index){
+        // Get textarea from text editor
+        TextArea textArea = Main.getTextEditorController().getTextArea();
+
+        // Request window focus
+        textArea.requestFocus();
+
+        // Move cursor position to start index for selected header
+        textArea.positionCaret(index);
+    }
+
+    // TODO Anne: Kommentarer
+    public void setCursorInPreviewAtIndex(int index){
+
+        // Get webview/webengine
+
+        //Request window focus
+
+        //Move cursor to index in html
+
+
+        //TODO Anne: ikke her
+        // -- refresh TOC when switch to preview sub page
 
 
 
-
-            //Main.getPreviewSubPageController().webGridPane.requestFocus();
-
-
-            //Main.getMainPageController().getPaneTextEditor().getContent().requestFocus();
-            Element body = Main.getEngine().getDocument().getElementById("mySpan");
-            Main.getEngine().executeScript("document.body.focus()");
+        //Main.getPreviewSubPageController().webGridPane.requestFocus();
 
 
-            //Main.getEngine().executeScript("body onLoad='document.body.focus();' contenteditable='true'");
-            Main.getWebview().requestFocus();
-            System.out.println("focus requested");
+        //Main.getMainPageController().getPaneTextEditor().getContent().requestFocus();
+        Element body = Main.getEngine().getDocument().getElementById("mySpan");
+        Main.getEngine().executeScript("document.body.focus()");
+
+
+        //Main.getEngine().executeScript("body onLoad='document.body.focus();' contenteditable='true'");
+        Main.getWebview().requestFocus();
+        System.out.println("focus requested");
 
             /*
             Main.getEngine().executeScript("function setCaret() {\n" +
@@ -246,14 +257,8 @@ public class OverviewSubPageController implements Initializable {
                     "}");
 
              */
-        }
 
-    }
 
-    // Todo - anne fjernes
-    public void moveToSelectedHeaderInPreview(){
-        // Get Preview html text
-        String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
     }
 
 

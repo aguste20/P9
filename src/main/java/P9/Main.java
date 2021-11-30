@@ -182,7 +182,7 @@ public class Main extends Application {
         engine.load(f.toURI().toString());
 
         // Add webview to preview sub page
-        previewSubPageController.getWebGridPane().add(Main.getWebview(), 0 , 0);
+        previewSubPageController.getWebGridPane().add(webview, 0 , 0);
     }
 
     /**
