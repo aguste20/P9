@@ -79,7 +79,7 @@ public class PlaceholdersSubPageController implements Initializable {
 
     /**
      * Inserts placeholders that later will be converted to the actual value in the DB,
-     * when the documentation is converted to
+     * when the documentation is converted to either xsl or html determined by value of boolean textEditorActive
      * @param e ActionEvent is defined in the fxml. Method activates when button in GUI
      *          is pressed
      */
@@ -140,10 +140,15 @@ public class PlaceholdersSubPageController implements Initializable {
 
             }
 
+    /**
+     * runs script that inserts placeholder value inside span tags with id span
+     * the placeholder gets inserted at caret position or start of selection
+     * a background color is applied. the function is called when clicking at placeholder buttons
+     * @param ph placeholder value
+     * @param pn placeholder name, used as id
+     * @param color background color for placeholder in html. Making it recognisable
+     */
     public void insertPlaceholderInHtml(String ph, String pn, String color){
-        //runs script that inserts placeholder value inside span tags with id span
-        //the placeholder gets inserted at caret position or start of selection
-        //a background color is applied. the function is called when clicking at placeholder buttons
         Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
                 "var selectionContents = range.extractContents();\n" +
                 "var span = document.createElement(\"span\");\n" +
@@ -154,9 +159,13 @@ public class PlaceholdersSubPageController implements Initializable {
                 "range.insertNode(span);");
     }
 
+    /**
+     * runs script to insert picture at caret position.
+     * the picture is inserted inside p tags as a string containing the image source
+     * @param src image source
+     */
     public void insertImage(String src){
-        //runs script to insert picture at caret position.
-        //the picture is inserted inside p tags as a string containing the image source
+
         Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
                 "var image = '<p><img src=" + src + " width=\"500\"/></p>';\n" +
                 "node = range.createContextualFragment(image);\n" +
