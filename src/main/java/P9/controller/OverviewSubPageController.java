@@ -13,6 +13,14 @@ import java.util.*;
 
 public class OverviewSubPageController implements Initializable {
 
+    // References to other controllers
+    private ContentsSubPageController contentsSubPageController;
+    private OverviewSubPageController overviewSubPageController;
+    private PlaceholdersSubPageController placeholdersSubPageController;
+    private PreviewSubPageController previewSubPageController;
+    private RegisterNewContentBlockController registerNewContentBlockController;
+    private TextEditorController textEditorController;
+
     private List<Header> allH1s = new ArrayList<>(); // All h1 headers in the text
     private List<Header> allH2s = new ArrayList<>(); // All h2 headers in the text
     private String text; // Text from the textarea
@@ -33,9 +41,6 @@ public class OverviewSubPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Prepare table of contents tree view
         prepareToc();
-
-        // Update table of contents
-        updateToc();
     }
 
     /**
@@ -63,7 +68,7 @@ public class OverviewSubPageController implements Initializable {
         tocView.getRoot().getChildren().clear();
 
         // Get text from text area
-        text = Main.getTextEditorController().getTextArea().getText();
+        text = textEditorController.getTextArea().getText();
 
         //Find all h1 - add to list
         allH1s = findAllH(1);
@@ -196,7 +201,7 @@ public class OverviewSubPageController implements Initializable {
         Header h = tocView.getSelectionModel().getSelectedItem().getValue();
 
         // Move cursor to either text area window or preview window
-        if(Main.getTextEditorController().isTextEditorActive()){ // If text editor window active
+        if(textEditorController.isTextEditorActive()){ // If text editor window active
             //Move cursor to selected header in text area
             setCursorInTextAreaAtIndex(h.startIndex);
         }
@@ -218,7 +223,7 @@ public class OverviewSubPageController implements Initializable {
      */
     private void setCursorInTextAreaAtIndex(int index){
         // Get textarea from text editor
-        TextArea textArea = Main.getTextEditorController().getTextArea();
+        TextArea textArea = textEditorController.getTextArea();
 
         // Request window focus
         textArea.requestFocus();
@@ -331,6 +336,19 @@ public class OverviewSubPageController implements Initializable {
         private void headerToTreeItem(){
             treeItem = new TreeItem<>(this);
         }
+    }
+
+    /**
+     * Method that gets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
     }
 
 }

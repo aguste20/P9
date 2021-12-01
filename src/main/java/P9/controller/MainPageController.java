@@ -226,7 +226,7 @@ public class MainPageController implements Initializable{
         checkedPreview = true;
     }
 
-
+    // TODO Anne: Hvad foregår der i den her metode?
     public void switchToTextEditorPage() {
         if (textEditorController.getCreatingDoc()) {
             //loads webview, if it contains any content
@@ -239,6 +239,7 @@ public class MainPageController implements Initializable{
 
             textEditorController.setTextEditorActive(true);
             checkedPreview = false;
+
         }
         else{ if(checkedPreview){
             if (Main.getEngine() != null) {
@@ -260,6 +261,10 @@ public class MainPageController implements Initializable{
         contentsSubPageController.setText(textEditorController.getTextArea());
     }
 
+    /**
+     * Method that gets references to other controllers
+     * to be able to pass data between them
+     */
     public void setControllers(){
         this.contentsSubPageController = Main.getContentsSubPageController();
         this.overviewSubPageController = Main.getOverviewSubPageController();

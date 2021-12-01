@@ -195,6 +195,7 @@ public class Main extends Application {
     private void setContentInMainPage() {
         //Inserts the textEditor into the middle Pane of the main page.
         mainPageController.getPaneTextEditor().setContent(textEditorParent);
+        overviewSubPageController.updateToc();
 
         //Inserts the overviewSubPage(Table of contents) into the left-side scrollPane of the main page.
         mainPageController.getPaneOverviewSubPage().setContent(overviewSubPageParent);
@@ -207,6 +208,7 @@ public class Main extends Application {
     private void setControllerReferences(){
         contentsSubPageController.setControllers();
         mainPageController.setControllers();
+        overviewSubPageController.setControllers();
 
     }
 }
