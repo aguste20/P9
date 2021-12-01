@@ -2,9 +2,6 @@ package P9.controller;
 
 import P9.Main;
 import P9.model.EObject;
-import P9.persistence.Setup;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,9 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class PlaceholdersSubPageController implements Initializable {
@@ -69,7 +63,7 @@ public class PlaceholdersSubPageController implements Initializable {
     /**
      * Method used to call setLabelsVisible with the correct arguments
      */
-    public void callLabelsNull(){
+    public void callLabelsVisible(){
         setLabelsVisible(objName, objVersion, objLength, objHeight, objWidth, objWeight);
     }
 
@@ -190,7 +184,7 @@ public class PlaceholdersSubPageController implements Initializable {
      */
     public void updateEObjectValues(){
         eObject = mainPageController.geteObject();
-        callLabelsNull();
+        callLabelsVisible();
         setLabels();
     }
 

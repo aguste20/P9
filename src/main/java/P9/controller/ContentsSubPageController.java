@@ -77,8 +77,11 @@ public class ContentsSubPageController implements Initializable {
      */
     public void makeContentBlockList(){
 
-        cbList = FXCollections.observableArrayList(cbdao.listAll());
+        cbList.clear();
+        displayCB.clear();
         contentBlockTableView.getItems().clear();
+
+        cbList = FXCollections.observableArrayList(cbdao.listAll());
 
         //Iterating over the size of the ContentBlock list
         for (int i=0;i<cbList.size();i++){
@@ -108,72 +111,7 @@ public class ContentsSubPageController implements Initializable {
         insertCBlockButton.setCellValueFactory(new PropertyValueFactory<>("Button"));
 
         contentBlockTableView.getItems().addAll(displayCB);
-        cbList.clear();
-        displayCB.clear();
-        /*
-        //List of ALL (Both the content blocks and the buttons)
-        //ArrayList tableViewContentsList = (ArrayList) ContentBlockTableViewContentsSubPage.getItems();
 
-        //Empty list meant to hold the content blocks we create when we load them from the database
-        //List contentBlockList;
-
-        //Empty list meant to hold the buttons we create for each loaded content block from the database
-        //ArrayList contentButtonList = new ArrayList();
-
-        for (int i = 0; i < contentBlockList.size(); i++){
-            //System.out.println(contentBlockList.get(i));
-            ContentBlock contentBlock = contentBlockList.get(i);
-            //Label label = new Label(contentBlock.getName());
-            Button button = new Button("(>)" + i);
-            //TableView<String> test = new TableView(FXCollections.observableList(new ArrayList<String>().add(contentButtonList.get(i).toString())));
-
-            //observableNameList.add(contentBlock.getName());
-            contentBlockList.add(contentBlock);
-            contentButtonList.add(button);
-
-
-            //ContentBlockTableViewContentsSubPage.getItems().add(button);
-
-        }
-
-
-        Callback<TableColumn<Button, Void>, TableCell<Button, Void>> cellFactory = new Callback<TableColumn<Button, Void>, TableCell<Button, Void>>() {
-            @Override
-            public TableCell<Button, Void> call(final TableColumn<Button, Void> param) {
-                final TableCell<Button, Void> cell = new TableCell<Button, Void>() {
-
-                    private final Button btn = new Button("Action");
-
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-                            //Button data = getTableView().getItems().get(getIndex());
-                            System.out.println("Gaming?");
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-
-        InsertCBlockButtonContentsSubPage.setCellFactory(cellFactory);
-
-        //ContentBlockTableViewContentsSubPage.getColumns().add(InsertCBlockButtonContentsSubPage);
-
-
-        ContentBlockTableViewContentsSubPage.getColumns().add(CBlockNameColumnContentsSubPage);
-        ContentBlockTableViewContentsSubPage.getColumns().add(InsertCBlockButtonContentsSubPage);
-
-*/
     }
 
     /**
@@ -232,46 +170,8 @@ public class ContentsSubPageController implements Initializable {
         text.clear();
         mainPageController.eObjectLabel.setText("You are creating a Content Block");
         textEditorController.returnButton.setVisible(true);
-        placeholdersSubPageController.callLabelsNull();
+        placeholdersSubPageController.callLabelsVisible();
 
-
-        /*
-        // If register new content block window hasn't been opened before
-        if (registerNewCBlockStage == null) {
-            // Create new stage, set scene with fxml root, set title
-            Stage stage = new Stage();
-            stage.setScene(new Scene(Main.getRegisterNewContentBlockPageParent()));
-            stage.setTitle("Register a new Content Block");
-
-
-            //https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Stage.html#initModality-javafx.stage.Modality-
-            //Set stage to have the modality of WINDOW_MODAL.
-            //The stage blocks input events from being delivered to all windows from its owner (parent) to its root. Its root is the closest ancestor window without an owner.
-            stage.initModality(Modality.WINDOW_MODAL);
-            //initOwner specifies the owner Window for this stage. In this case we set dataInsertionPage to be the owner.
-            //This one 'locks' the user to the window, so they can't click elsewhere.
-            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-
-            //When the user tries to close the window
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent windowEvent) {
-                    //TODO: Specify here what we want to happen when the window is closed.
-                    // An example is, that we want to update the original list of content blocks.
-
-                    //Close stage/window
-                    registerNewCBlockStage.close();
-                }
-            });
-
-            // If stage already exists, update reference to the stage
-            registerNewCBlockStage = stage;
-        }
-
-        // Show stage
-        registerNewCBlockStage.show();
-
-         */
     }
 
     /**
