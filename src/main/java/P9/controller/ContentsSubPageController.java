@@ -76,6 +76,10 @@ public class ContentsSubPageController implements Initializable {
      * Also adds a corresponding button that inserts the ContentBlock into the TextArea.
      */
     public void makeContentBlockList(){
+
+        cbList = FXCollections.observableArrayList(cbdao.listAll());
+        contentBlockTableView.getItems().clear();
+
         //Iterating over the size of the ContentBlock list
         for (int i=0;i<cbList.size();i++){
             //Creating a button and setting width
@@ -104,6 +108,8 @@ public class ContentsSubPageController implements Initializable {
         insertCBlockButton.setCellValueFactory(new PropertyValueFactory<>("Button"));
 
         contentBlockTableView.getItems().addAll(displayCB);
+        cbList.clear();
+        displayCB.clear();
         /*
         //List of ALL (Both the content blocks and the buttons)
         //ArrayList tableViewContentsList = (ArrayList) ContentBlockTableViewContentsSubPage.getItems();

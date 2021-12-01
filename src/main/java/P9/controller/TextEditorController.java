@@ -209,7 +209,7 @@ public class TextEditorController implements Initializable {
                             finalTxtBlock.setTxt(txt);
                             System.out.println("Saved textBlock");
                             //TODO tilføj DB kald igen
-                            //txtDao.addOrUpdateTxt(finalTxtBlock);
+                            txtDao.addOrUpdateTxt(finalTxtBlock);
                         }
                         else{
                             //The ImageBlock gets filled with user data and gets saved in DB
@@ -217,7 +217,7 @@ public class TextEditorController implements Initializable {
                             finalImg.setImagePath(txt);
                             System.out.println("Saved Img");
                             //TODO tilføj DB kald igen
-                            //imgDao.addOrUpdateImg(finalImg);
+                            imgDao.addOrUpdateImg(finalImg);
                         }
                     });
                     //Setting the boolean used for checking if new content block back to false
