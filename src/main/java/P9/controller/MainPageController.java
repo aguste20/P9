@@ -47,6 +47,14 @@ import java.util.ResourceBundle;
 public class MainPageController implements Initializable{
 
 
+    // References to other controllers
+    private ContentsSubPageController contentsSubPageController;
+    private OverviewSubPageController overviewSubPageController;
+    private PlaceholdersSubPageController placeholdersSubPageController;
+    private PreviewSubPageController previewSubPageController;
+    private RegisterNewContentBlockController registerNewContentBlockController;
+    private TextEditorController textEditorController;
+
     //We annotate the containers of the mainPage.fxml
     @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
@@ -154,7 +162,7 @@ public class MainPageController implements Initializable{
 
         eObject = eDao.getById(eObject.geteObjectId());
         eObjectLabel.setText(eObject.getName());
-        Main.getPlaceholdersSubPageController().updateEObjectValues();
+        placeholdersSubPageController.updateEObjectValues();
     }
 
     /**
@@ -165,10 +173,10 @@ public class MainPageController implements Initializable{
     public void changeEObject() {
         eObject = eObjectChoice.getValue();
         loadEObject();
-        Main.getPlaceholdersSubPageController().updateEObjectValues();
-        Main.getTextEditorController().insertXmlTextInTextArea();
-        Main.getPreviewSubPageController().createXslFromTextArea();
-        Main.getOverviewSubPageController().updateToc();
+        placeholdersSubPageController.updateEObjectValues();
+        textEditorController.insertXmlTextInTextArea();
+        previewSubPageController.createXslFromTextArea();
+        overviewSubPageController.updateToc();
     }
 
     /**
@@ -209,18 +217,18 @@ public class MainPageController implements Initializable{
     }
 
     public void switchToPreviewSubPage (ActionEvent event){
-        Main.getPreviewSubPageController().createXslFromTextArea();
+        previewSubPageController.createXslFromTextArea();
 
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
 
         //Main.getPlaceholdersSubPageController().setTextEditor(false);
-        Main.getTextEditorController().setTextEditorActive(false);
+        textEditorController.setTextEditorActive(false);
         checkedPreview = true;
     }
 
 
     public void switchToTextEditorPage() {
-        if (Main.getTextEditorController().getCreatingDoc()) {
+        if (textEditorController.getCreatingDoc()) {
             //loads webview, if it contains any content
             if (Main.getEngine() != null) {
                 Main.getPreviewSubPageController().createTXTFromWebView();
@@ -229,18 +237,18 @@ public class MainPageController implements Initializable{
 
             paneTextEditor.setContent(Main.getTextEditorParent());
 
-            Main.getTextEditorController().setTextEditorActive(true);
+            textEditorController.setTextEditorActive(true);
             checkedPreview = false;
         }
         else{ if(checkedPreview){
             if (Main.getEngine() != null) {
-                Main.getPreviewSubPageController().createTXTFromWebView();
+                previewSubPageController.createTXTFromWebView();
                 //Main.getPlaceholdersSubPageController().setTextEditor(false);
             }
 
             paneTextEditor.setContent(Main.getTextEditorParent());
 
-            Main.getTextEditorController().setTextEditorActive(true);
+            textEditorController.setTextEditorActive(true);
             checkedPreview = false;
         }
         // do nothing
@@ -249,7 +257,16 @@ public class MainPageController implements Initializable{
 
     public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
-        Main.getContentsSubPageController().setText(Main.getTextEditorController().getTextArea());
+        contentsSubPageController.setText(textEditorController.getTextArea());
+    }
+
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
     }
 
 }

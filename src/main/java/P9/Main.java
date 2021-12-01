@@ -206,6 +206,7 @@ public class Main extends Application {
     //TODO Anne: lav metode der skyder referencer til relevante controllere ud i alle andre controllere
     private void setControllerReferences(){
         contentsSubPageController.setControllers();
+        mainPageController.setControllers();
 
     }
 }
