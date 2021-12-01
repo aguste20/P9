@@ -106,6 +106,9 @@ public class Main extends Application {
         // Set content roots in main page
         setContentInMainPage();
 
+        // Set values in main page based on loaded data from db
+        setValuesInMainPage();
+
         // Create new scene from main page root, set scene, and show stage
         scene = new Scene(mainPageParent);
         stage.setTitle("Documentation Assist 😎");
@@ -201,12 +204,18 @@ public class Main extends Application {
 
         //Inserts the contentsSubPage into the right-side scrollPane of the main page as the default option.
         mainPageController.getPaneContentsPlaceholders().setContent(contentsSubPageParent);
+    }
+
+    private void setValuesInMainPage(){
+        // Set labels on placeholder page
+        placeholdersSubPageController.setLabels();
+
+        // Insert text and user information in text editor
+        textEditorController.insertXmlTextInTextArea();
+        textEditorController.insertLastEditUserInLabels();
 
         // Update table of contents
         overviewSubPageController.updateToc();
-
-        // Set labels on placeholder page
-        placeholdersSubPageController.setLabels();
     }
 
     //TODO Anne: lav metode der skyder referencer til relevante controllere ud i alle andre controllere
@@ -216,6 +225,7 @@ public class Main extends Application {
         overviewSubPageController.setControllers();
         placeholdersSubPageController.setControllers();
         previewSubPageController.setControllers();
+        textEditorController.setControllers();
 
     }
 }

@@ -25,6 +25,16 @@ import java.util.ResourceBundle;
 
 public class TextEditorController implements Initializable {
 
+    // References to other controllers
+    private ContentsSubPageController contentsSubPageController;
+    private MainPageController mainPageController;
+    private OverviewSubPageController overviewSubPageController;
+    private PlaceholdersSubPageController placeholdersSubPageController;
+    private PreviewSubPageController previewSubPageController;
+    private RegisterNewContentBlockController registerNewContentBlockController;
+    private TextEditorController textEditorController;
+
+
     @FXML
     public TextArea textArea;
 
@@ -73,10 +83,13 @@ public class TextEditorController implements Initializable {
                         new FileChooser.ExtensionFilter("xml", "*.xml"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
 
+        /*
         // Load xml text from the eObject that the user is working on
         insertXmlTextInTextArea();
         //Load the date and the responsible user of the last edit into labels.
         insertLastEditUserInLabels();
+
+         */
 
         textEditorActive = true;
 
@@ -149,9 +162,9 @@ public class TextEditorController implements Initializable {
         }
         else {
                 //Creates a boolean to ascertain whether then user is creating a new Content Block
-                boolean checkIfNew = Main.getContentsSubPageController().isNewCB();
+                boolean checkIfNew = contentsSubPageController.isNewCB();
                 //Creating an object to hold the object the user selected for editing in the GUI
-                Object obj = Main.getContentsSubPageController().cbEdit.getValue();
+                Object obj = contentsSubPageController.cbEdit.getValue();
                 //Fetches the text from the TextArea in the GUI
                 String txt = textArea.getText();
                 //Creating TextBlock used for saving to DB later
@@ -216,21 +229,21 @@ public class TextEditorController implements Initializable {
                         }
                     });
                     //Setting the boolean used for checking if new content block back to false
-                    Main.getContentsSubPageController().setNewCB(false);
-                    Main.getContentsSubPageController().makeContentBlockList();
-                    Main.getContentsSubPageController().populateBox();
+                    contentsSubPageController.setNewCB(false);
+                    contentsSubPageController.makeContentBlockList();
+                    contentsSubPageController.populateBox();
                 }
                 //If the ContentBlock the user wanted to edit is a TextBlock this gets executed
                 else if (obj instanceof TextBlock) {
                     //Getting the TextBlock from the user inputs and saving in DB
-                    txtBlock = (TextBlock) Main.getContentsSubPageController().cbEdit.getValue();
+                    txtBlock = (TextBlock) contentsSubPageController.cbEdit.getValue();
                     txtBlock.setTxt(txt);
                     System.out.println("Gemt");
                     //txtDao.addOrUpdateTxt(txtBlock);
                 }
                 else {
                     //Getting the ImageBlock from the user inputs and saving in DB
-                    img = (ImageBlock) Main.getContentsSubPageController().cbEdit.getValue();
+                    img = (ImageBlock) contentsSubPageController.cbEdit.getValue();
                     img.setImagePath(txt);
                     System.out.println("Gemt");
                     //imgDao.addOrUpdateImg(img);
@@ -282,8 +295,8 @@ public class TextEditorController implements Initializable {
     public void returnToDoc() {
         creatingDoc = true;
         returnButton.setVisible(false);
-        Main.getMainPageController().changeEObject();
-        Main.getPlaceholdersSubPageController().updateEObjectValues();
+        mainPageController.changeEObject();
+        placeholdersSubPageController.updateEObjectValues();
     }
 
     //TODO slettes?
@@ -373,7 +386,7 @@ public class TextEditorController implements Initializable {
 
         textArea.clear();
         // Get loaded eObject from mainPageController
-        eObject = Main.getMainPageController().geteObject();
+        eObject = mainPageController.geteObject();
 
         // Get doc from eObject
         doc = eObject.getDoc();
@@ -397,9 +410,23 @@ public class TextEditorController implements Initializable {
 
             //This part is pretty dumb at the moment. It is not dynamic.
             //It gets the name of a user, and in this case the user with id = 1
-            UserDao userDao = Main.getMainPageController().userDAO;
+            UserDao userDao = mainPageController.userDAO;
             User user = userDao.getById(1);
             lastUserLabel.setText(" performed by: " + user.getName());
         }
+    }
+
+    /**
+     * Method that gets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.mainPageController = Main.getMainPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
     }
 }
