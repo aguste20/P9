@@ -97,8 +97,6 @@ public class PlaceholdersSubPageController implements Initializable {
             int pos = textEditorController.getTextArea().getCaretPosition();
 
             boolean textEditorActive = textEditorController.isTextEditorActive();
-            System.out.println(textEditorActive);
-
 
             switch (choice) {
                 case "name":
@@ -156,13 +154,13 @@ public class PlaceholdersSubPageController implements Initializable {
      * @param color background color for placeholder in html. Making it recognisable
      */
     public void insertPlaceholderInHtml(String ph, String pn, String color){
-        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
-                "var selectionContents = range.extractContents();\n" +
-                "var span = document.createElement(\"span\");\n" +
-                "span.setAttribute(\"id\",\"" + pn + "\");\n" +
-                "span.style.backgroundColor = \"" + color + "\";\n" +
-                "span.textContent = \"" + ph + "\";\n" +
-                "span.appendChild(selectionContents);\n" +
+        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
+                "var selectionContents = range.extractContents();" +
+                "var span = document.createElement(\"span\");" +
+                "span.setAttribute(\"id\",\"" + pn + "\");" +
+                "span.style.backgroundColor = \"" + color + "\";" +
+                "span.textContent = \"" + ph + "\";" +
+                "span.appendChild(selectionContents);" +
                 "range.insertNode(span);");
     }
 
