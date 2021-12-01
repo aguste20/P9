@@ -19,6 +19,15 @@ import java.util.ResourceBundle;
 
 public class PlaceholdersSubPageController implements Initializable {
 
+    // References to other controllers
+    private ContentsSubPageController contentsSubPageController;
+    private MainPageController mainPageController;
+    private OverviewSubPageController overviewSubPageController;
+    private PlaceholdersSubPageController placeholdersSubPageController;
+    private PreviewSubPageController previewSubPageController;
+    private RegisterNewContentBlockController registerNewContentBlockController;
+    private TextEditorController textEditorController;
+
     public Label objName;
     public Label objVersion;
     public Label objLength;
@@ -33,18 +42,22 @@ public class PlaceholdersSubPageController implements Initializable {
 
     //TODO Lav en liste over placeholders
 
-    EObject eObject = new EObject();
+    private EObject eObject;
+
+    public void seteObject(EObject eObject) {
+        this.eObject = eObject;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        eObject = Main.getMainPageController().geteObject();
-        setLabels();
     }
 
     /**
      * Adds values from the selected eObject to the labels next to buttons
      */
     public void setLabels(){
+        eObject = mainPageController.geteObject();
+
         objName.setText(eObject.getName());
         objVersion.setText(eObject.getVersion().toString());
         objLength.setText(eObject.getLength().toString());
@@ -67,7 +80,7 @@ public class PlaceholdersSubPageController implements Initializable {
      */
     public void setLabelsVisible(Node... nodes){
         for (Node node : nodes){
-            if (!Main.getTextEditorController().getCreatingDoc()){
+            if (!textEditorController.getCreatingDoc()){
                 node.setVisible(false);
             }
             else {
@@ -86,10 +99,10 @@ public class PlaceholdersSubPageController implements Initializable {
     public void insertPlaceholder(ActionEvent e) {
         String choice = ((Button) e.getSource()).getId();
 
-            TextArea text = Main.getTextEditorController().getTextArea();
-            int pos = Main.getTextEditorController().getTextArea().getCaretPosition();
+            TextArea text = textEditorController.getTextArea();
+            int pos = textEditorController.getTextArea().getCaretPosition();
 
-            boolean textEditorActive = Main.getTextEditorController().isTextEditorActive();
+            boolean textEditorActive = textEditorController.isTextEditorActive();
             System.out.println(textEditorActive);
 
 
@@ -176,9 +189,23 @@ public class PlaceholdersSubPageController implements Initializable {
      * Updates the eObject labels in the GUI with the latest eObject values from DB
      */
     public void updateEObjectValues(){
-        eObject = Main.getMainPageController().geteObject();
+        eObject = mainPageController.geteObject();
         callLabelsNull();
         setLabels();
+    }
+
+    /**
+     * Method that gets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.mainPageController = Main.getMainPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
     }
 
 }

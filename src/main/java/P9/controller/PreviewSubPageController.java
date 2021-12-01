@@ -11,6 +11,15 @@ import java.util.ResourceBundle;
 
 public class PreviewSubPageController implements Initializable {
 
+    // References to other controllers
+    private ContentsSubPageController contentsSubPageController;
+    private MainPageController mainPageController;
+    private OverviewSubPageController overviewSubPageController;
+    private PlaceholdersSubPageController placeholdersSubPageController;
+    private PreviewSubPageController previewSubPageController;
+    private RegisterNewContentBlockController registerNewContentBlockController;
+    private TextEditorController textEditorController;
+
     @FXML
     public GridPane webGridPane;
 
@@ -57,7 +66,7 @@ public class PreviewSubPageController implements Initializable {
     public void createXslFromTextArea() {
 
         // Get textarea string
-        String textAreaString = Main.getTextEditorController().getTextArea().getText();
+        String textAreaString = textEditorController.getTextArea().getText();
 
         // Create string with xsl document start tag
         String xslStartString = getXslText();
@@ -142,12 +151,12 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll("<p>", "</xsl:text><p>")
                 .replaceAll("></p>", "/></p><xsl:text>")
                 .replaceAll("<br>", " ")
-                .replaceAll(name, " </xsl:text><span id=\"name\" style=\"background-color: " + Main.getPlaceholdersSubPageController().phColor + ";\"><xsl:value-of select=\"eObject/name\"/>")
-                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"background-color: "+ Main.getPlaceholdersSubPageController().phColor +";\"><xsl:value-of select=\"eObject/version\"/>")
-                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"background-color: "+ Main.getPlaceholdersSubPageController().phColor +";\"><xsl:value-of select=\"eObject/length\"/>")
-                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"background-color: "+ Main.getPlaceholdersSubPageController().phColor +";\"><xsl:value-of select=\"eObject/height\"/>")
-                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"background-color: "+ Main.getPlaceholdersSubPageController().phColor +";\"><xsl:value-of select=\"eObject/width\"/>")
-                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"background-color: "+ Main.getPlaceholdersSubPageController().phColor +";\"><xsl:value-of select=\"eObject/weight\"/>")
+                .replaceAll(name, " </xsl:text><span id=\"name\" style=\"background-color: " + placeholdersSubPageController.phColor + ";\"><xsl:value-of select=\"eObject/name\"/>")
+                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/version\"/>")
+                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/length\"/>")
+                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/height\"/>")
+                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/width\"/>")
+                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/weight\"/>")
                 .replaceAll("</span>", "</span><xsl:text>");
 
         // Write to file with string
@@ -156,8 +165,8 @@ public class PreviewSubPageController implements Initializable {
 
         File file = new File(path);
 
-        Main.getTextEditorController().getTextArea().clear();
-        Main.getTextEditorController().readText(file);
+        textEditorController.getTextArea().clear();
+        textEditorController.readText(file);
 
     }
 
@@ -238,6 +247,20 @@ public class PreviewSubPageController implements Initializable {
                 "\n" +       "<span id=\"mySpan\" onLoad='document.getElementById(\"mySpan\").focus()' contenteditable=\"true\" coloronblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?><xsl:text> ";
 
         return  xslText;
+    }
+
+    /**
+     * Method that gets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.mainPageController = Main.getMainPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
     }
 
 }

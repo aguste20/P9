@@ -87,6 +87,9 @@ public class Main extends Application {
     public void init() throws IOException {
         // Load all fxml files from directory and load related controllers
         loadFxmlFilesFromDirectory();
+
+        // Pass references to relevant controllers to instantiated controllers
+        setControllerReferences();
     }
 
     /**
@@ -102,6 +105,9 @@ public class Main extends Application {
 
         // Set content roots in main page
         setContentInMainPage();
+
+        // Set values in main page based on loaded data from db
+        setValuesInMainPage();
 
         // Create new scene from main page root, set scene, and show stage
         scene = new Scene(mainPageParent);
@@ -200,4 +206,29 @@ public class Main extends Application {
         mainPageController.getPaneContentsPlaceholders().setContent(contentsSubPageParent);
     }
 
+    private void setValuesInMainPage(){
+        // Set labels on placeholder page
+        placeholdersSubPageController.setLabels();
+
+        // Insert text and user information in text editor
+        textEditorController.insertXmlTextInTextArea();
+        textEditorController.insertLastEditUserInLabels();
+
+        // Update table of contents
+        overviewSubPageController.updateToc();
+
+        // Send text to content block controller
+        contentsSubPageController.setText(textEditorController.getTextArea());
+    }
+
+    //TODO Anne: lav metode der skyder referencer til relevante controllere ud i alle andre controllere
+    private void setControllerReferences(){
+        contentsSubPageController.setControllers();
+        mainPageController.setControllers();
+        overviewSubPageController.setControllers();
+        placeholdersSubPageController.setControllers();
+        previewSubPageController.setControllers();
+        textEditorController.setControllers();
+
+    }
 }
