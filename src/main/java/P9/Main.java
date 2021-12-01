@@ -216,6 +216,9 @@ public class Main extends Application {
 
         // Update table of contents
         overviewSubPageController.updateToc();
+
+        // Send text to content block controller
+        contentsSubPageController.setText(textEditorController.getTextArea());
     }
 
     //TODO Anne: lav metode der skyder referencer til relevante controllere ud i alle andre controllere

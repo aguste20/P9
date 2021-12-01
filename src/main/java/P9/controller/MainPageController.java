@@ -258,7 +258,6 @@ public class MainPageController implements Initializable{
 
     public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
-        contentsSubPageController.setText(textEditorController.getTextArea());
     }
 
     /**
