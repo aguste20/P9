@@ -2,9 +2,6 @@ package P9.controller;
 
 import P9.Main;
 import P9.model.EObject;
-import P9.persistence.Setup;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,9 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class PlaceholdersSubPageController implements Initializable {
@@ -69,7 +63,7 @@ public class PlaceholdersSubPageController implements Initializable {
     /**
      * Method used to call setLabelsVisible with the correct arguments
      */
-    public void callLabelsNull(){
+    public void callLabelsVisible(){
         setLabelsVisible(objName, objVersion, objLength, objHeight, objWidth, objWeight);
     }
 
@@ -103,8 +97,6 @@ public class PlaceholdersSubPageController implements Initializable {
             int pos = textEditorController.getTextArea().getCaretPosition();
 
             boolean textEditorActive = textEditorController.isTextEditorActive();
-            System.out.println(textEditorActive);
-
 
             switch (choice) {
                 case "name":
@@ -162,13 +154,13 @@ public class PlaceholdersSubPageController implements Initializable {
      * @param color background color for placeholder in html. Making it recognisable
      */
     public void insertPlaceholderInHtml(String ph, String pn, String color){
-        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
-                "var selectionContents = range.extractContents();\n" +
-                "var span = document.createElement(\"span\");\n" +
-                "span.setAttribute(\"id\",\"" + pn + "\");\n" +
-                "span.style.backgroundColor = \"" + color + "\";\n" +
-                "span.textContent = \"" + ph + "\";\n" +
-                "span.appendChild(selectionContents);\n" +
+        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
+                "var selectionContents = range.extractContents();" +
+                "var span = document.createElement(\"span\");" +
+                "span.setAttribute(\"id\",\"" + pn + "\");" +
+                "span.style.backgroundColor = \"" + color + "\";" +
+                "span.textContent = \"" + ph + "\";" +
+                "span.appendChild(selectionContents);" +
                 "range.insertNode(span);");
     }
 
@@ -190,7 +182,7 @@ public class PlaceholdersSubPageController implements Initializable {
      */
     public void updateEObjectValues(){
         eObject = mainPageController.geteObject();
-        callLabelsNull();
+        callLabelsVisible();
         setLabels();
     }
 

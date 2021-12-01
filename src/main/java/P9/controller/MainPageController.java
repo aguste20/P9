@@ -75,7 +75,9 @@ public class MainPageController implements Initializable{
     UserDao userDAO = new UserDao();
     TextBlockDao txtDao = new TextBlockDao();
     EObjectDao eDao = new EObjectDao();
+    //path to pdf
     String PDF_output = "src/main/resources/html2pdf.pdf";
+    //boolean used for context blocks to check whether preview is checked or not
     private boolean checkedPreview = false;
 
 
@@ -237,27 +239,22 @@ public class MainPageController implements Initializable{
         if (textEditorController.getCreatingDoc()) {
             //loads webview, if it contains any content
             if (Main.getEngine() != null) {
-                Main.getPreviewSubPageController().createTXTFromWebView();
-                //Main.getPlaceholdersSubPageController().setTextEditor(false);
-            }
-
-            paneTextEditor.setContent(Main.getTextEditorParent());
-
-            textEditorController.setTextEditorActive(true);
-            checkedPreview = false;
-
-        }
-        else{ if(checkedPreview){
-            if (Main.getEngine() != null) {
                 previewSubPageController.createTXTFromWebView();
-                //Main.getPlaceholdersSubPageController().setTextEditor(false);
             }
-
             paneTextEditor.setContent(Main.getTextEditorParent());
-
             textEditorController.setTextEditorActive(true);
             checkedPreview = false;
+
         }
+        else{
+            if(checkedPreview){
+                if (Main.getEngine() != null) {
+                    previewSubPageController.createTXTFromWebView();
+                }
+                paneTextEditor.setContent(Main.getTextEditorParent());
+                textEditorController.setTextEditorActive(true);
+                checkedPreview = false;
+            }
         // do nothing
         }
     }
