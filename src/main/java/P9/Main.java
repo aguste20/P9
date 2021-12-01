@@ -215,6 +215,7 @@ public class Main extends Application {
         mainPageController.setControllers();
         overviewSubPageController.setControllers();
         placeholdersSubPageController.setControllers();
+        previewSubPageController.setControllers();
 
     }
 }
