@@ -20,6 +20,11 @@ import java.util.ResourceBundle;
 
 public class ContentsSubPageController implements Initializable {
 
+    // References to other controllers
+    private TextEditorController textEditorController;
+    private MainPageController mainPageController;
+    private PlaceholdersSubPageController placeholdersSubPageController;
+
     // Attribute to hold the secondary stage for the "Register new Content Block" window
     //private Stage registerNewCBlockStage;
 
@@ -28,12 +33,17 @@ public class ContentsSubPageController implements Initializable {
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
     @FXML public ComboBox<ContentBlock> cbEdit;
 
+    // TODO Anne: ryd op og gør private, måske ikke instantiation og declaration i samme linje?
     ContentBlockDao cbdao = new ContentBlockDao();
     ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
     ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
-    TextArea text = Main.getTextEditorController().getTextArea();
+    private TextArea text;
     private boolean newCB = false;
 
+
+    public void setText(TextArea text) {
+        this.text = text;
+    }
 
     /**
      * This method initializes a controller after its root element has already been processed.
@@ -43,11 +53,9 @@ public class ContentsSubPageController implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-
         //CBlockNameColumnContentsSubPage.setCellValueFactory(new PropertyValueFactory("name"));
 
         //ContentBlockTableViewContentsSubPage.setPlaceholder(new Text("No content blocks currently exists. Use the 'Create new content blcok'-button to create new block."));
-
 
         makeContentBlockList();
 
@@ -167,7 +175,7 @@ public class ContentsSubPageController implements Initializable {
      * @return Returns caret position
      */
     public int getCaretPosition(){
-        return Main.getTextEditorController().getTextArea().getCaretPosition();
+        return textEditorController.getTextArea().getCaretPosition();
     }
 
     /**
@@ -214,11 +222,11 @@ public class ContentsSubPageController implements Initializable {
      * Also removes and changes certain functionality
      */
     public void createOrEditContentBlock() {
-        Main.getTextEditorController().setCreatingDoc(false);
+        textEditorController.setCreatingDoc(false);
         text.clear();
-        Main.getMainPageController().eObjectLabel.setText("You are creating a Content Block");
-        Main.getTextEditorController().returnButton.setVisible(true);
-        Main.getPlaceholdersSubPageController().callLabelsNull();
+        mainPageController.eObjectLabel.setText("You are creating a Content Block");
+        textEditorController.returnButton.setVisible(true);
+        placeholdersSubPageController.callLabelsNull();
 
 
         /*
@@ -267,6 +275,16 @@ public class ContentsSubPageController implements Initializable {
         createOrEditContentBlock();
         //Sets boolean which is used to check if a new ContentBlock is being created to true
         newCB = true;
+    }
+
+    /**
+     * Method that gets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.textEditorController = Main.getTextEditorController();
+        this.mainPageController = Main.getMainPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
     }
 }
 

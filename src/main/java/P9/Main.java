@@ -87,6 +87,9 @@ public class Main extends Application {
     public void init() throws IOException {
         // Load all fxml files from directory and load related controllers
         loadFxmlFilesFromDirectory();
+
+        // Pass references to relevant controllers to instantiated controllers
+        setControllerReferences();
     }
 
     /**
@@ -201,4 +204,8 @@ public class Main extends Application {
     }
 
     //TODO Anne: lav metode der skyder referencer til relevante controllere ud i alle andre controllere
+    private void setControllerReferences(){
+        contentsSubPageController.setControllers();
+
+    }
 }
