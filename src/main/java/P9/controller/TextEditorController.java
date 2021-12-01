@@ -83,14 +83,6 @@ public class TextEditorController implements Initializable {
                         new FileChooser.ExtensionFilter("xml", "*.xml"),
                         new FileChooser.ExtensionFilter("All Files", "*.*"));
 
-        /*
-        // Load xml text from the eObject that the user is working on
-        insertXmlTextInTextArea();
-        //Load the date and the responsible user of the last edit into labels.
-        insertLastEditUserInLabels();
-
-         */
-
         textEditorActive = true;
 
     }
