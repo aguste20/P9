@@ -244,7 +244,7 @@ public class PreviewSubPageController implements Initializable {
                 "<option value=\"h1\">Title 1</option>\n" +
                 "<option value=\"h2\">Title 2</option>\n" +
                 "</select>\n" +
-                "\n" +       "<span id=\"mySpan\" onLoad='document.getElementById(\"mySpan\").focus()' contenteditable=\"true\" coloronblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?><xsl:text> ";
+                "\n" +       "<span id=\"mySpan\" onLoad='document.getElementById(\"mySpan\").focus()' contenteditable=\"true\" coloronblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?><xsl:text>";
 
         return  xslText;
     }
