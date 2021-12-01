@@ -240,26 +240,21 @@ public class MainPageController implements Initializable{
             //loads webview, if it contains any content
             if (Main.getEngine() != null) {
                 previewSubPageController.createTXTFromWebView();
-                //Main.getPlaceholdersSubPageController().setTextEditor(false);
             }
-
             paneTextEditor.setContent(Main.getTextEditorParent());
-
             textEditorController.setTextEditorActive(true);
             checkedPreview = false;
 
         }
-        else{ if(checkedPreview){
-            if (Main.getEngine() != null) {
-                previewSubPageController.createTXTFromWebView();
-                //Main.getPlaceholdersSubPageController().setTextEditor(false);
+        else{
+            if(checkedPreview){
+                if (Main.getEngine() != null) {
+                    previewSubPageController.createTXTFromWebView();
+                }
+                paneTextEditor.setContent(Main.getTextEditorParent());
+                textEditorController.setTextEditorActive(true);
+                checkedPreview = false;
             }
-
-            paneTextEditor.setContent(Main.getTextEditorParent());
-
-            textEditorController.setTextEditorActive(true);
-            checkedPreview = false;
-        }
         // do nothing
         }
     }

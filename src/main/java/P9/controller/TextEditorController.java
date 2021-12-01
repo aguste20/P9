@@ -95,42 +95,6 @@ public class TextEditorController implements Initializable {
         return textArea;
     }
 
-    //TODO slettes?
-    /*
-    public void exit() {
-        if (textArea.getText().isEmpty()) {
-            return;
-        }
-        ButtonType button1 = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-        ButtonType button2 = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
-        ButtonType button3 = new ButtonType("Don't save", ButtonBar.ButtonData.NO);
-
-        Alert alert = new Alert(
-                Alert.AlertType.CONFIRMATION,
-                "Close without saving?",
-                button1,
-                button2,
-                button3);
-        /*
-        ((Button) alert.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Yes, do not save");
-                ((Button) alert.getDialogPane().lookupButton(ButtonType.OK)).setText("No, I want to save");
-                ((Button) alert.getDialogPane().lookupButton(ButtonType.NO)).setText("Cancel");
-
-
-        alert.setHeaderText("Are you sure you want to close without saving?");
-        alert.showAndWait();
-
-        if (alert.getResult() == button1) {
-            alert.close();
-        }
-        if (alert.getResult() == button2) {
-            save();
-        }
-        if (alert.getResult() == button3){
-            textArea.clear();
-        }
-    }
-*/
     /**
      * Method that saves content from text area in the database. The method has two different functions. Firstly,
      * it can save documentation from the user, and secondly it can save content blocks created or edited by the user.
@@ -153,8 +117,6 @@ public class TextEditorController implements Initializable {
             dao.addOrUpdateEObjectDoc(doc);
         }
         else {
-                //Creates a boolean to ascertain whether then user is creating a new Content Block
-                boolean checkIfNew = contentsSubPageController.isNewCB();
                 //Creating an object to hold the object the user selected for editing in the GUI
                 Object obj = contentsSubPageController.cbEdit.getValue();
                 //Fetches the text from the TextArea in the GUI
@@ -165,7 +127,7 @@ public class TextEditorController implements Initializable {
                 ImageBlock img = new ImageBlock();
 
                 //Checks if a new Content Block is being created
-                if (checkIfNew) {
+                if (contentsSubPageController.isNewCB()) {
                     //Creates a Dialog that is displayed in the GUI when the user is creating new Content Block and
                     //presses save
                     Dialog<Results> td = new Dialog<>();
@@ -207,16 +169,12 @@ public class TextEditorController implements Initializable {
                             //The TextBlock Object gets filled with user data and gets saved in DB
                             finalTxtBlock.setName(results.text);
                             finalTxtBlock.setTxt(txt);
-                            System.out.println("Saved textBlock");
-                            //TODO tilføj DB kald igen
                             txtDao.addOrUpdateTxt(finalTxtBlock);
                         }
                         else{
                             //The ImageBlock gets filled with user data and gets saved in DB
                             finalImg.setName(results.choice);
                             finalImg.setImagePath(txt);
-                            System.out.println("Saved Img");
-                            //TODO tilføj DB kald igen
                             imgDao.addOrUpdateImg(finalImg);
                         }
                     });
@@ -230,39 +188,15 @@ public class TextEditorController implements Initializable {
                     //Getting the TextBlock from the user inputs and saving in DB
                     txtBlock = (TextBlock) contentsSubPageController.cbEdit.getValue();
                     txtBlock.setTxt(txt);
-                    System.out.println("Gemt");
-                    //txtDao.addOrUpdateTxt(txtBlock);
+                    txtDao.addOrUpdateTxt(txtBlock);
                 }
                 else {
                     //Getting the ImageBlock from the user inputs and saving in DB
                     img = (ImageBlock) contentsSubPageController.cbEdit.getValue();
                     img.setImagePath(txt);
-                    System.out.println("Gemt");
-                    //imgDao.addOrUpdateImg(img);
+                    imgDao.addOrUpdateImg(img);
                 }
-
-
         }
-
-
-        //TODO Anne - har bare udkommenteret for nu. Tænker det skal slettes?
-        /*
-         try {
-            fileChooser.setTitle("Save As");
-            File file = fileChooser.showSaveDialog(stage);
-
-            if (file != null) {
-                PrintWriter savedText = new PrintWriter(file);
-                BufferedWriter out = new BufferedWriter(savedText);
-                out.write(textArea.getText());
-                out.close();
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: " + e);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-         */
     }
 
     /**
@@ -291,19 +225,6 @@ public class TextEditorController implements Initializable {
         placeholdersSubPageController.updateEObjectValues();
     }
 
-    //TODO slettes?
-    /*
-    @FXML
-    public void openFile() {
-        fileChooser.setTitle("Open File");
-        File file = fileChooser.showOpenDialog(stage);
-
-        if (file != null) {
-            textArea.clear();
-            readText(file);
-        }
-    }
-    */
     // sets the textArea to the text of the opened file
     public void readText(File file) {
         String text;
@@ -317,27 +238,6 @@ public class TextEditorController implements Initializable {
         }
     }
 
-    //TODO add confirmation window if text editor has text and wasn't saved
-
-    //TODO slettes?
-    /*
-    @FXML
-    public void newFile() {
-        textArea.clear();
-    }
-    */
-
-/*
-    @FXML
-    public void about() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-
-        alert.setTitle("About");
-        alert.setHeaderText("Ayy");
-        alert.setContentText("Lmao");
-        alert.showAndWait();
-    }
-*/
     /**
      * Method to enclose selected text in tags (<> </>)
      * @param tag String for the tag (eg. "h1")
