@@ -1,6 +1,8 @@
 package P9;
 
 import P9.controller.*;
+import P9.model.User;
+import P9.persistence.UserDao;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 
 public class Main extends Application {
 
@@ -108,6 +111,7 @@ public class Main extends Application {
 
         // Set values in main page based on loaded data from db
         setValuesInMainPage();
+
 
         // Create new scene from main page root, set scene, and show stage
         scene = new Scene(mainPageParent);
@@ -212,7 +216,6 @@ public class Main extends Application {
 
         // Insert text and user information in text editor
         textEditorController.insertXmlTextInTextArea();
-        textEditorController.insertLastEditUserInLabels();
 
         // Send text to content block controller
         contentsSubPageController.setText(textEditorController.getTextArea());
@@ -238,4 +241,5 @@ public class Main extends Application {
         textEditorController.setControllers();
 
     }
+
 }
