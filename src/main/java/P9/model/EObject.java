@@ -227,10 +227,14 @@ public class EObject {
         }
     }
 
-    // TODO Anne: Kommmentarer
+    /**
+     * Method to get the names of an eObjects components as a String
+     * @return String concatenated from the names of the eObject's components
+     */
     public String componentNames(){
         String componentNames = "";
 
+        // Add name for every component to the concatenated string
         for (EObject component : componentList){
             componentNames += component.getName() + " ";
         }
