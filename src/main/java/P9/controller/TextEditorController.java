@@ -74,17 +74,6 @@ public class TextEditorController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        //TODO Anne - ryd op her, det bruges vel ikke?
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser
-                .getExtensionFilters()
-                .addAll(
-                        new FileChooser.ExtensionFilter("xml", "*.xml"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-
-        textEditorActive = true;
-
     }
 
     public void init(Stage myStage) {
@@ -253,20 +242,23 @@ public class TextEditorController implements Initializable {
         textArea.insertText(range.getStart(),"</xsl:text><" + tag + ">");
     }
 
-    //TODO kommentarer
+    /**
+     * Method that creates a header from the currently selected text in the text area
+     * Event handler on Typography dropdown menuitem
+     * @param e Event fired by the dropdown menuitem
+     */
     @FXML
     public void createHeader(ActionEvent e) {
+        // Get chosen menuitem (header from typography drop down)
         String choice = ((CheckMenuItem) e.getSource()).getId();
 
         switch (choice) {
-            case "h1":
+            case "h1": // If 'h1' is selected, surround selected text with h1 tag
                 tagSelectedText("h1");
                 break;
-            case "h2":
+            case "h2": // If 'h2' is selected, surround selected text with h2 tag
                 tagSelectedText("h2");
                 break;
-            default:
-                textArea.setStyle("-fx-font-size: 22px");
         }
     }
 

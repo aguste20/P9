@@ -214,14 +214,21 @@ public class Main extends Application {
         textEditorController.insertXmlTextInTextArea();
         textEditorController.insertLastEditUserInLabels();
 
-        // Update table of contents
-        overviewSubPageController.updateToc();
-
         // Send text to content block controller
         contentsSubPageController.setText(textEditorController.getTextArea());
+
+        // Switch to preview page, so it is displayed to the user
+        mainPageController.switchToPreviewSubPage();
+
+        // Update table of contents
+        overviewSubPageController.updateToc();
     }
 
-    //TODO Anne: lav metode der skyder referencer til relevante controllere ud i alle andre controllere
+
+    /**
+     * Helper method that sets references to relevant instantiated controllers
+     * by calling set methods in all controllers
+     */
     private void setControllerReferences(){
         contentsSubPageController.setControllers();
         mainPageController.setControllers();
