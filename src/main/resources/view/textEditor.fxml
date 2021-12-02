@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.TextEditorController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="800.0" prefWidth="800.0" style="-fx-background-color: #C4C4C4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.TextEditorController">
         <center>
             <TextArea fx:id="textArea" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="772.0" wrapText="true" BorderPane.alignment="TOP_LEFT">
                 <BorderPane.margin>
@@ -29,7 +29,7 @@
    <top>
       <VBox prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox>
+            <HBox alignment="CENTER_LEFT" maxHeight="35.0" prefHeight="30.0">
                <children>
                   <Label text="Label" />
                </children>
