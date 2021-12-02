@@ -220,6 +220,8 @@ public class Main extends Application {
         contentsSubPageController.setText(textEditorController.getTextArea());
         contentsSubPageController.makeContentBlockList();
 
+        textEditorController.setTextEditorActive(true);
+
         //overviewSubPageController.updateToc();
         // Switch to preview page, so it is displayed to the user
         //mainPageController.switchToPreviewSubPage();
