@@ -219,6 +219,7 @@ public class Main extends Application {
 
         // Send text to content block controller
         contentsSubPageController.setText(textEditorController.getTextArea());
+        contentsSubPageController.makeContentBlockList();
     }
 
     //TODO Anne: lav metode der skyder referencer til relevante controllere ud i alle andre controllere
