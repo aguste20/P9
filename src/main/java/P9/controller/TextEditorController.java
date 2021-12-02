@@ -98,7 +98,7 @@ public class TextEditorController implements Initializable {
         }
         else {
                 //Creating an object to hold the object the user selected for editing in the GUI
-                Object obj = contentsSubPageController.cbEdit.getValue();
+                Object obj = contentsSubPageController.getSelectedCB();
                 //Fetches the text from the TextArea in the GUI
                 String txt = textArea.getText();
                 //Creating TextBlock used for saving to DB later
@@ -161,18 +161,17 @@ public class TextEditorController implements Initializable {
                     //Setting the boolean used for checking if new content block back to false
                     contentsSubPageController.setNewCB(false);
                     contentsSubPageController.makeContentBlockList();
-                    contentsSubPageController.populateBox();
                 }
                 //If the ContentBlock the user wanted to edit is a TextBlock this gets executed
                 else if (obj instanceof TextBlock) {
                     //Getting the TextBlock from the user inputs and saving in DB
-                    txtBlock = (TextBlock) contentsSubPageController.cbEdit.getValue();
+                    txtBlock = (TextBlock) contentsSubPageController.getSelectedCB();
                     txtBlock.setTxt(txt);
                     txtDao.addOrUpdateTxt(txtBlock);
                 }
                 else {
                     //Getting the ImageBlock from the user inputs and saving in DB
-                    img = (ImageBlock) contentsSubPageController.cbEdit.getValue();
+                    img = (ImageBlock) contentsSubPageController.getSelectedCB();
                     img.setImagePath(txt);
                     imgDao.addOrUpdateImg(img);
                 }
