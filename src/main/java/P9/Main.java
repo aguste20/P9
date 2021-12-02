@@ -114,7 +114,7 @@ public class Main extends Application {
 
         // Create new scene from main page root, set scene, and show stage
         scene = new Scene(mainPageParent);
-        stage.setTitle("Documentation Assist 😎");
+        stage.setTitle("ida901e21 - Documentation");
         //TODO Anne: Skal der ske noget her?
         //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
         //stage.getIcons().add(icon);
