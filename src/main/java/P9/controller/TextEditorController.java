@@ -19,9 +19,7 @@ import java.io.*;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class TextEditorController implements Initializable {
 
@@ -179,6 +177,8 @@ public class TextEditorController implements Initializable {
                     imgDao.addOrUpdateImg(img);
                 }
         }
+        mainPageController.setSavedAlertText("Saved ✅");
+        removeSavedAlert();
     }
 
     /**
@@ -194,6 +194,23 @@ public class TextEditorController implements Initializable {
             this.choice = choice;
         }
     }
+
+    public void removeSavedAlert(){
+        //Creates a new TimerTask that will set the "gemt" alert message to false after the TimerTask is over
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                mainPageController.removeSavedAlert();
+            }
+        };
+        //Creates a timer. True means the timer can be forced to close, when user exists application
+        Timer timer = new Timer(true);
+        //Defines how long the timer will last
+        long delay = 3000;
+        //Starts the timer
+        timer.schedule(task, delay);
+    }
+
 
     /**
      * Button on the GUI that changes a variety of things in the GUI to reflect that the user

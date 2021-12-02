@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane gridLinesVisible="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.MainPageController">
+<GridPane gridLinesVisible="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.MainPageController">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" prefWidth="180.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="800.0" minWidth="800.0" prefWidth="800.0" />
@@ -69,18 +69,30 @@
                </children>
             </HBox>
             <ScrollPane fx:id="paneTextEditor" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="NEVER" VBox.vgrow="ALWAYS" />
-            <HBox alignment="CENTER_LEFT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" VBox.vgrow="NEVER">
+            <HBox alignment="CENTER" maxHeight="30.0" minHeight="30.0" prefHeight="30.0" VBox.vgrow="NEVER">
                <children>
-                  <Label fx:id="lastEditLabel" text="Last edit">
+                  <HBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="lastEditLabel" text="Last edit">
+                           <padding>
+                              <Insets left="2.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="lastUserLabel" text="Edited by">
+                           <padding>
+                              <Insets left="2.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" HBox.hgrow="NEVER">
+                     <children>
+                        <Label fx:id="savedAlert" text="Label" visible="false" />
+                     </children>
                      <padding>
-                        <Insets left="2.0" />
+                        <Insets right="2.0" />
                      </padding>
-                  </Label>
-                  <Label fx:id="lastUserLabel" text="Edited by">
-                     <padding>
-                        <Insets left="2.0" />
-                     </padding>
-                  </Label>
+                  </HBox>
                </children>
             </HBox>
          </children>
