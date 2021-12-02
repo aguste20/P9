@@ -223,11 +223,11 @@ public class MainPageController implements Initializable{
      * Methods for changing the contents of the middle AnchorPane of the mainPage.fxml.
      * When user presses one of the buttons, the interface shows the associated viewfile.
      */
-    public void switchToPlaceholdersSubPage (){
+    public void switchToPlaceholdersSubPage(){
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
 
-    public void switchToPreviewSubPage (ActionEvent event){
+    public void switchToPreviewSubPage(){
         previewSubPageController.createXslFromTextArea();
 
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
