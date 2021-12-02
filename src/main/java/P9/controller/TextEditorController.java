@@ -83,18 +83,7 @@ public class TextEditorController implements Initializable {
     @FXML
     private void save() {
         if (creatingDoc) {
-            // Get text from text area
-            String txt = textArea.getText();
-
-            // Set xml text in doc
-            doc.setXmlText(txt);
-
-            // Set last edit to today's date
-            doc.setLastEdit(Date.valueOf(LocalDate.now()));
-
-            // Update the database with the changed doc
-            EObjectDocDao dao = new EObjectDocDao();
-            dao.addOrUpdateEObjectDoc(doc);
+            saveDocumentation();
         }
         else {
                 //Creating an object to hold the object the user selected for editing in the GUI
@@ -108,54 +97,20 @@ public class TextEditorController implements Initializable {
 
                 //Checks if a new Content Block is being created
                 if (contentsSubPageController.isNewCB()) {
-                    //Creates a Dialog that is displayed in the GUI when the user is creating new Content Block and
-                    //presses save
-                    Dialog<Results> td = new Dialog<>();
-
-                    //Sets title and header of dialog
-                    td.setTitle("Content Block name");
-                    td.setHeaderText("Select name and type of Content Block");
-                    //Creates a dialogPane for the Dialog
-                    DialogPane dialogPane = td.getDialogPane();
-                    //Inserts buttons
-                    dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-                    //Creates a textfield and sets a prompt
-                    TextField dialogTxt = new TextField();
-                    dialogTxt.setPromptText("Name of Content Block");
-                    //Creates a combobox with two options and sets a prompt text
-                    ObservableList<String> options = FXCollections.observableArrayList("Text", "Image");
-                    ComboBox<String> comboBox = new ComboBox<>(options);
-                    comboBox.setPromptText("Select Content Block type");
-                    //Puts the text and combobox into the dialog view in GUI
-                    dialogPane.setContent(new VBox(8, dialogTxt, comboBox));
-                    //Checks which button was pressed
-                    td.setResultConverter((ButtonType button) ->{
-                        //if "OK" button was pressed it returns a results object with the values from the textarea
-                        //and combobox
-                        if (button == ButtonType.OK) {
-                            return new Results(dialogTxt.getText(), comboBox.getValue());
-                        }
-                        return null;
-                    });
-                    //Storing the results
-                    Optional<Results> result = td.showAndWait();
-                    //Creating objects used for saving to DB
-                    TextBlock finalTxtBlock = txtBlock;
-                    ImageBlock finalImg = img;
                     //Checks whether there are any results
-                    result.ifPresent((Results results) ->{
+                    createDialogBox().ifPresent((Results results) ->{
                         //If the user chose the "Text" option in the Combobox this code is executed
                         if(results.choice.equals("Text")) {
                             //The TextBlock Object gets filled with user data and gets saved in DB
-                            finalTxtBlock.setName(results.text);
-                            finalTxtBlock.setTxt(txt);
-                            txtDao.addOrUpdateTxt(finalTxtBlock);
+                            txtBlock.setName(results.text);
+                            txtBlock.setTxt(txt);
+                            txtDao.addOrUpdateTxt(txtBlock);
                         }
                         else{
                             //The ImageBlock gets filled with user data and gets saved in DB
-                            finalImg.setName(results.choice);
-                            finalImg.setImagePath(txt);
-                            imgDao.addOrUpdateImg(finalImg);
+                            img.setName(results.choice);
+                            img.setImagePath(txt);
+                            imgDao.addOrUpdateImg(img);
                         }
                     });
                     //Setting the boolean used for checking if new content block back to false
@@ -165,15 +120,11 @@ public class TextEditorController implements Initializable {
                 //If the ContentBlock the user wanted to edit is a TextBlock this gets executed
                 else if (obj instanceof TextBlock) {
                     //Getting the TextBlock from the user inputs and saving in DB
-                    txtBlock = (TextBlock) contentsSubPageController.getSelectedCB();
-                    txtBlock.setTxt(txt);
-                    txtDao.addOrUpdateTxt(txtBlock);
+                    updateTextBlock(txtBlock, txt);
                 }
                 else {
                     //Getting the ImageBlock from the user inputs and saving in DB
-                    img = (ImageBlock) contentsSubPageController.getSelectedCB();
-                    img.setImagePath(txt);
-                    imgDao.addOrUpdateImg(img);
+                    updateImgBlock(img, txt);
                 }
         }
         mainPageController.setSavedAlertText("Saved ✅");
@@ -192,6 +143,76 @@ public class TextEditorController implements Initializable {
             this.text = text;
             this.choice = choice;
         }
+    }
+
+    /**
+     *
+     */
+    public void saveDocumentation(){
+        // Get text from text area
+        String txt = textArea.getText();
+
+        // Set xml text in doc
+        doc.setXmlText(txt);
+
+        // Set last edit to today's date
+        doc.setLastEdit(Date.valueOf(LocalDate.now()));
+
+        // Update the database with the changed doc
+        EObjectDocDao dao = new EObjectDocDao();
+        dao.addOrUpdateEObjectDoc(doc);
+    }
+
+    /**
+     * Updating image block
+     * @param txtBlock
+     * @param txt
+     */
+    public void updateTextBlock(TextBlock txtBlock, String txt){
+        txtBlock = (TextBlock) contentsSubPageController.getSelectedCB();
+        txtBlock.setTxt(txt);
+        txtDao.addOrUpdateTxt(txtBlock);
+    }
+
+    public void updateImgBlock(ImageBlock img, String txt){
+        img = (ImageBlock) contentsSubPageController.getSelectedCB();
+        img.setImagePath(txt);
+        imgDao.addOrUpdateImg(img);
+    }
+
+    public Optional<Results> createDialogBox(){
+        //Creates a Dialog that is displayed in the GUI when the user is creating new Content Block and
+        //presses save
+        Dialog<Results> td = new Dialog<>();
+
+        //Sets title and header of dialog
+        td.setTitle("Content Block name");
+        td.setHeaderText("Select name and type of Content Block");
+        //Creates a dialogPane for the Dialog
+        DialogPane dialogPane = td.getDialogPane();
+        //Inserts buttons
+        dialogPane.getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        //Creates a textfield and sets a prompt
+        TextField dialogTxt = new TextField();
+        dialogTxt.setPromptText("Name of Content Block");
+        //Creates a combobox with two options and sets a prompt text
+        ObservableList<String> options = FXCollections.observableArrayList("Text", "Image");
+        ComboBox<String> comboBox = new ComboBox<>(options);
+        comboBox.setPromptText("Select Content Block type");
+        //Puts the text and combobox into the dialog view in GUI
+        dialogPane.setContent(new VBox(8, dialogTxt, comboBox));
+        //Checks which button was pressed
+        td.setResultConverter((ButtonType button) ->{
+            //if "OK" button was pressed it returns a results object with the values from the textarea
+            //and combobox
+            if (button == ButtonType.OK) {
+                return new Results(dialogTxt.getText(), comboBox.getValue());
+            }
+            return null;
+        });
+        //Storing the results
+        Optional<Results> result = td.showAndWait();
+        return result;
     }
 
     public void removeSavedAlert(){
