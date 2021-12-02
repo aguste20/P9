@@ -21,6 +21,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
 
+//TODO Anne/cleanup: Mangler dokumentation
+
 public class TextEditorController implements Initializable {
 
     // References to other controllers
@@ -145,6 +147,7 @@ public class TextEditorController implements Initializable {
         }
     }
 
+    //TODO Anne/cleanup: Mangler dokumentation
     /**
      *
      */
@@ -174,12 +177,14 @@ public class TextEditorController implements Initializable {
         txtDao.addOrUpdateTxt(txtBlock);
     }
 
+    //TODO Anne/cleanup: Mangler dokumentation
     public void updateImgBlock(ImageBlock img, String txt){
         img = (ImageBlock) contentsSubPageController.getSelectedCB();
         img.setImagePath(txt);
         imgDao.addOrUpdateImg(img);
     }
 
+    //TODO Anne/cleanup: Mangler dokumentation
     public Optional<Results> createDialogBox(){
         //Creates a Dialog that is displayed in the GUI when the user is creating new Content Block and
         //presses save
@@ -215,6 +220,7 @@ public class TextEditorController implements Initializable {
         return result;
     }
 
+    //TODO Anne/cleanup: Mangler dokumentation
     public void removeSavedAlert(){
         //Creates a new TimerTask that will set the "gemt" alert message to false after the TimerTask is over
         TimerTask task = new TimerTask() {
@@ -244,6 +250,7 @@ public class TextEditorController implements Initializable {
         placeholdersSubPageController.updateEObjectValues();
     }
 
+    //TODO Anne/cleanup: Mangler dokumentation
     // sets the textArea to the text of the opened file
     public void readText(File file) {
         String text;

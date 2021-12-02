@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+//TODO Anne/cleanup: Mangler dokumentation
+
 public class ContentsSubPageController implements Initializable {
 
     // References to other controllers
@@ -139,6 +141,7 @@ public class ContentsSubPageController implements Initializable {
 
     }
 
+    // TODO Anne/cleanup: Mangler dokumentation
     public void insertContentBlockInHTML(String cb) {
         Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
                 "var selectionContents = range.extractContents();" +

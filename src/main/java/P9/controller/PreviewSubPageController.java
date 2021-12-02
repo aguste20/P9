@@ -9,6 +9,8 @@ import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+//TODO Anne/cleanup: Mangler dokumentation
+
 public class PreviewSubPageController implements Initializable {
 
     // References to other controllers
@@ -40,6 +42,7 @@ public class PreviewSubPageController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
     }
 
+    //TODO Anne/cleanup: Mangler dokumentation
     public void overwriteFile(String fileString, String path){
 
         // Write to file with string
@@ -116,6 +119,7 @@ public class PreviewSubPageController implements Initializable {
         return change;
     }
 
+    //TODO Anne/cleanup: Hvorfor ligger den her her?
     int i = 0;
 
     /**

@@ -11,6 +11,8 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+//TODO Anne/cleanup: Mangler dokumentation
+
 public class PlaceholdersSubPageController implements Initializable {
 
     // References to other controllers
@@ -154,9 +156,9 @@ public class PlaceholdersSubPageController implements Initializable {
             //insertImage("https://tailandfur.com/wp-content/uploads/2014/03/Funny-pictures-of-animals-41.jpg")
             case "components":
                 if (textEditorActive) {
-                    // TODO: Insert in text area
+                    // TODO next iteration: Insert in text area
                 } else {
-                    // TODO: Insert in html
+                    // TODO next iteration: Insert in html
                 }
                 break;
         }

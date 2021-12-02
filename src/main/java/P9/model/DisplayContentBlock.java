@@ -4,6 +4,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
 
+//TODO Anne/cleanup: Mangler dokumentation
+
 public class DisplayContentBlock {
 
     private final ObjectProperty<ContentBlock> contentBlockProp = new SimpleObjectProperty<>();

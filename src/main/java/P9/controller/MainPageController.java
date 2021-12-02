@@ -51,6 +51,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+//TODO Anne/cleanup: Mangler dokumentation
+
 public class MainPageController implements Initializable{
 
 
@@ -335,9 +337,6 @@ public class MainPageController implements Initializable{
         this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
         this.textEditorController = Main.getTextEditorController();
     }
-
-
-
 
 }
 
