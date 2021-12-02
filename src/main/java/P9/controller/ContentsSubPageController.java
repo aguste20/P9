@@ -32,6 +32,7 @@ public class ContentsSubPageController implements Initializable {
     @FXML private TableView<DisplayContentBlock> contentBlockTableView;
     @FXML private TableColumn<DisplayContentBlock, String> cBlockNameColumn;
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
+    @FXML private TableColumn<DisplayContentBlock, String> editCBColumn;
     @FXML public ComboBox<ContentBlock> cbEdit;
 
     // TODO Anne/cleanup: ryd op og gør private, måske ikke instantiation og declaration i samme linje?
@@ -40,6 +41,8 @@ public class ContentsSubPageController implements Initializable {
     ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
     private TextArea text;
     private boolean newCB = false;
+    private ContentBlock selectedCB;
+    public String txt;
 
 
     public void setText(TextArea text) {
@@ -58,10 +61,6 @@ public class ContentsSubPageController implements Initializable {
 
         //ContentBlockTableViewContentsSubPage.setPlaceholder(new Text("No content blocks currently exists. Use the 'Create new content blcok'-button to create new block."));
 
-        makeContentBlockList();
-
-        populateBox();
-
     }
 
     public boolean isNewCB() {
@@ -72,7 +71,13 @@ public class ContentsSubPageController implements Initializable {
         this.newCB = newCB;
     }
 
-    public String txt;
+    public ContentBlock getSelectedCB() {
+        return selectedCB;
+    }
+
+    public void setSelectedCB(ContentBlock selectedCB) {
+        this.selectedCB = selectedCB;
+    }
 
     /**
      * Populates the listview in the GUI with all the ContentBlocks in the DB.
@@ -89,12 +94,13 @@ public class ContentsSubPageController implements Initializable {
         //Iterating over the size of the ContentBlock list
         for (int i=0;i<cbList.size();i++){
             //Creating a button and setting width
-            Button button = new Button("⬅");
-            button.setPrefWidth(65);
+            Button insertBtn = new Button("⬅");
+            Button editBtn = new Button("Edit");
+            insertBtn.setPrefWidth(65);
             //Creating a variable to get the correct object in the cbList
             int finalI1 = i;
             //Setting actionEvent on the button
-            button.setOnAction(actionEvent -> {
+            insertBtn.setOnAction(actionEvent -> {
                     //If the current object in the cbList is a TextBlock this is executed
                     if(cbList.get(finalI1) instanceof TextBlock){
                         if (textEditorController.isTextEditorActive()) {
@@ -112,12 +118,20 @@ public class ContentsSubPageController implements Initializable {
                     }
                     });
 
+            editBtn.setOnAction(actionEvent -> {
+                selectedCB = cbList.get(finalI1);
+                editContentBlock();
+                mainPageController.setCheckedPreview(false);
+            });
+
             //Adds the object and the button to the displayCB list
-            displayCB.add(new DisplayContentBlock(cbList.get(i), button));
+            displayCB.add(new DisplayContentBlock(cbList.get(i), insertBtn, editBtn));
         }
 
         cBlockNameColumn.setCellValueFactory(cb -> cb.getValue().getContentBlock().nameProperty());
-        insertCBlockButton.setCellValueFactory(new PropertyValueFactory<>("Button"));
+        insertCBlockButton.setCellValueFactory(new PropertyValueFactory<>("button"));
+        editCBColumn.setCellValueFactory(new PropertyValueFactory<>("editBtn"));
+
 
         contentBlockTableView.getItems().addAll(displayCB);
 
@@ -142,40 +156,16 @@ public class ContentsSubPageController implements Initializable {
     }
 
     /**
-     * Populates the combobox used to display all the ContentBlocks that the user can edit
-     */
-    public void populateBox(){
-        List<ContentBlock> cbList;
-        cbList = cbdao.listAll();
-        ObservableList<ContentBlock> ocbList = FXCollections.observableArrayList(cbList);
-        cbEdit.setItems(ocbList);
-        //Creates a StringConverter that allows us to display the name of the content block in the GUI (toString)
-        //and find the Content Block again when the user selects a name String in the GUI (fromString)
-        cbEdit.setConverter(new StringConverter<ContentBlock>() {
-            @Override
-            public String toString(ContentBlock contentBlock) {
-                return contentBlock.getName();
-            }
-
-            @Override
-            public ContentBlock fromString(String s) {
-                return cbEdit.getItems().stream().filter(
-                        cb -> cb.getName().equals(s)).findFirst().orElse(null);
-            }
-        });
-    }
-
-    /**
      * Called when user clicks on a ContentBlock they want to edit in the GUI
      */
     public void editContentBlock() {
         createOrEditContentBlock();
         //If the ContentBlock they clicked on is a TextBlock this is executed
-        if(cbEdit.getValue() instanceof TextBlock txtBlock) {
+        if(selectedCB instanceof TextBlock txtBlock) {
             text.setText(txtBlock.getTxt());
         }
         else {
-            ImageBlock img = (ImageBlock) cbEdit.getValue();
+            ImageBlock img = (ImageBlock) selectedCB;
             text.setText(img.getImagePath());
         }
     }
@@ -200,6 +190,7 @@ public class ContentsSubPageController implements Initializable {
         createOrEditContentBlock();
         //Sets boolean which is used to check if a new ContentBlock is being created to true
         newCB = true;
+        mainPageController.setCheckedPreview(false);
     }
 
     /**

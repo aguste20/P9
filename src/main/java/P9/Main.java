@@ -112,7 +112,6 @@ public class Main extends Application {
         // Set values in main page based on loaded data from db
         setValuesInMainPage();
 
-
         // Create new scene from main page root, set scene, and show stage
         scene = new Scene(mainPageParent);
         stage.setTitle("Documentation Assist 😎");
@@ -219,12 +218,16 @@ public class Main extends Application {
 
         // Send text to content block controller
         contentsSubPageController.setText(textEditorController.getTextArea());
+        contentsSubPageController.makeContentBlockList();
 
+        //overviewSubPageController.updateToc();
         // Switch to preview page, so it is displayed to the user
-        mainPageController.switchToPreviewSubPage();
+        //mainPageController.switchToPreviewSubPage();
+
+
 
         // Update table of contents
-        overviewSubPageController.updateToc();
+
     }
 
 
@@ -241,5 +244,4 @@ public class Main extends Application {
         textEditorController.setControllers();
 
     }
-
 }
