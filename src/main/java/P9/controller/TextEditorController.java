@@ -19,9 +19,7 @@ import java.io.*;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class TextEditorController implements Initializable {
 
@@ -38,13 +36,8 @@ public class TextEditorController implements Initializable {
     @FXML
     public TextArea textArea;
 
-    @FXML
-    public Label lastEditLabel;
-
-    @FXML
-    public Label lastUserLabel;
-    @FXML
-    public Menu returnButton;
+    //@FXML public Menu save;
+    @FXML public Menu returnButton;
 
     private Stage stage;
     private final FileChooser fileChooser = new FileChooser();
@@ -56,9 +49,7 @@ public class TextEditorController implements Initializable {
     private TextBlockDao txtDao = new TextBlockDao();
     private ImageBlockDao imgDao = new ImageBlockDao();
 
-    public void setCreatingDoc(boolean bool){
-        this.creatingDoc = bool;
-    }
+    public void setCreatingDoc(boolean bool){this.creatingDoc = bool;}
 
     public boolean getCreatingDoc(){
         return creatingDoc;
@@ -74,17 +65,6 @@ public class TextEditorController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        //TODO Anne - ryd op her, det bruges vel ikke?
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser
-                .getExtensionFilters()
-                .addAll(
-                        new FileChooser.ExtensionFilter("xml", "*.xml"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-
-        textEditorActive = true;
-
     }
 
     public void init(Stage myStage) {
@@ -196,6 +176,8 @@ public class TextEditorController implements Initializable {
                     imgDao.addOrUpdateImg(img);
                 }
         }
+        mainPageController.setSavedAlertText("Saved ✅");
+        removeSavedAlert();
     }
 
     /**
@@ -211,6 +193,23 @@ public class TextEditorController implements Initializable {
             this.choice = choice;
         }
     }
+
+    public void removeSavedAlert(){
+        //Creates a new TimerTask that will set the "gemt" alert message to false after the TimerTask is over
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                mainPageController.removeSavedAlert();
+            }
+        };
+        //Creates a timer. True means the timer can be forced to close, when user exists application
+        Timer timer = new Timer(true);
+        //Defines how long the timer will last
+        long delay = 3000;
+        //Starts the timer
+        timer.schedule(task, delay);
+    }
+
 
     /**
      * Button on the GUI that changes a variety of things in the GUI to reflect that the user
@@ -252,20 +251,23 @@ public class TextEditorController implements Initializable {
         textArea.insertText(range.getStart(),"</xsl:text><" + tag + ">");
     }
 
-    //TODO kommentarer
+    /**
+     * Method that creates a header from the currently selected text in the text area
+     * Event handler on Typography dropdown menuitem
+     * @param e Event fired by the dropdown menuitem
+     */
     @FXML
     public void createHeader(ActionEvent e) {
+        // Get chosen menuitem (header from typography drop down)
         String choice = ((CheckMenuItem) e.getSource()).getId();
 
         switch (choice) {
-            case "h1":
+            case "h1": // If 'h1' is selected, surround selected text with h1 tag
                 tagSelectedText("h1");
                 break;
-            case "h2":
+            case "h2": // If 'h2' is selected, surround selected text with h2 tag
                 tagSelectedText("h2");
                 break;
-            default:
-                textArea.setStyle("-fx-font-size: 22px");
         }
     }
 
@@ -289,23 +291,6 @@ public class TextEditorController implements Initializable {
         }
     }
 
-    /**
-     * Method for inserting the date of the last time the document was saved.
-     */
-    public void insertLastEditUserInLabels(){
-        //Variable that stores the last edit of the document.
-        Date editDate = doc.getLastEdit();
-        //If the variable is not null, its value is inserted into the label.
-        if (editDate != null){
-            lastEditLabel.setText("Last edit " + editDate);
-
-            //This part is pretty dumb at the moment. It is not dynamic.
-            //It gets the name of a user, and in this case the user with id = 1
-            UserDao userDao = mainPageController.userDAO;
-            User user = userDao.getById(1);
-            lastUserLabel.setText(" performed by: " + user.getName());
-        }
-    }
 
     /**
      * Method that gets references to other controllers

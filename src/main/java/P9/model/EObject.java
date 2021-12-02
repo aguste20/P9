@@ -226,4 +226,15 @@ public class EObject {
             e.printStackTrace();
         }
     }
+
+    // TODO Anne: Kommmentarer
+    public String componentNames(){
+        String componentNames = "";
+
+        for (EObject component : componentList){
+            componentNames += component.getName() + " ";
+        }
+
+        return componentNames;
+    }
 }

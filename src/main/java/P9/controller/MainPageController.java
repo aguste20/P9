@@ -2,7 +2,9 @@ package P9.controller;
 
 import P9.Main;
 import P9.model.EObject;
+import P9.model.EObjectDoc;
 import P9.model.TextBlock;
+import P9.model.User;
 import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDao;
 import P9.persistence.TextBlockDao;
@@ -44,6 +46,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -64,10 +67,14 @@ public class MainPageController implements Initializable{
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
     //Annotating label and button
-    @FXML public Label eObjectLabel;
-    @FXML public Button eOjbectUpdate;
+
     @FXML public ComboBox<EObject> eObjectChoice;
     @FXML public Button exportPDFButton;
+
+    @FXML public Label eObjectLabel;
+    @FXML public Label lastEditLabel;
+    @FXML public Label lastUserLabel;
+    @FXML private Label savedAlert;
 
     // Reference to the engineering object that the user is working on
     EObject eObject;
@@ -100,6 +107,19 @@ public class MainPageController implements Initializable{
         this.checkedPreview = checkedPreview;
     }
 
+    public Label getSavedAlert() {
+        return savedAlert;
+    }
+
+    public void setSavedAlertText(String text) {
+        this.savedAlert.setText(text);
+        savedAlert.setVisible(true);
+    }
+
+    public void removeSavedAlert(){
+        savedAlert.setVisible(false);
+    }
+
     /**
      * This method initializes a controller after its root element has already been processed.
      * I think this means that this method is needed to keep content in the view pages updated visually.
@@ -117,6 +137,8 @@ public class MainPageController implements Initializable{
 
         // Marshal eObject to XML file, which is saved in resources/xml
         eObject.eObjectToXML();
+
+        insertLastEditUserInLabels();
 
     }
 
@@ -231,11 +253,12 @@ public class MainPageController implements Initializable{
      * Methods for changing the contents of the middle AnchorPane of the mainPage.fxml.
      * When user presses one of the buttons, the interface shows the associated viewfile.
      */
-    public void switchToPlaceholdersSubPage (){
+    public void switchToPlaceholdersSubPage(){
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
 
-    public void switchToPreviewSubPage (ActionEvent event){
+    //TODO Anne/cleanup: Mangler dokumentation
+    public void switchToPreviewSubPage(){
         previewSubPageController.createXslFromTextArea();
 
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
@@ -245,7 +268,7 @@ public class MainPageController implements Initializable{
         checkedPreview = true;
     }
 
-    // TODO Anne: Hvad foregår der i den her metode?
+    // TODO Anne/cleanup: Mangler dokumentation
     public void switchToTextEditorPage() {
         if (textEditorController.getCreatingDoc()) {
             //loads webview, if it contains any content
@@ -273,6 +296,7 @@ public class MainPageController implements Initializable{
         }
     }
 
+    //TODO Anne/Cleanup: Mangler dokumentation
     public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
@@ -288,6 +312,26 @@ public class MainPageController implements Initializable{
         this.previewSubPageController = Main.getPreviewSubPageController();
         this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
         this.textEditorController = Main.getTextEditorController();
+    }
+
+
+    /**
+     * Method for inserting the date of the last time the document was saved.
+     */
+    public void insertLastEditUserInLabels(){
+        // Get doc from eObject
+        EObjectDoc doc = eObject.getDoc();
+        //Variable that stores the last edit of the document.
+        Date editDate = doc.getLastEdit();
+        //If the variable is not null, its value is inserted into the label.
+        if (editDate != null){
+            lastEditLabel.setText("Last edit " + editDate);
+
+            //This part is pretty dumb at the moment. It is not dynamic.
+            //It gets the name of a user, and in this case the user with id = 1
+            User user = userDAO.getById(1);
+            lastUserLabel.setText(" performed by: " + user.getName());
+        }
     }
 
 }

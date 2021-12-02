@@ -8,7 +8,6 @@ import P9.model.TextBlock;
 import P9.persistence.ContentBlockDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,6 +17,7 @@ import javafx.util.StringConverter;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ContentsSubPageController implements Initializable {
 
@@ -35,13 +35,14 @@ public class ContentsSubPageController implements Initializable {
     @FXML private TableColumn<DisplayContentBlock, String> editCBColumn;
     @FXML public ComboBox<ContentBlock> cbEdit;
 
-    // TODO Anne: ryd op og gør private, måske ikke instantiation og declaration i samme linje?
+    // TODO Anne/cleanup: ryd op og gør private, måske ikke instantiation og declaration i samme linje?
     ContentBlockDao cbdao = new ContentBlockDao();
     ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
     ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
     private TextArea text;
     private boolean newCB = false;
     private ContentBlock selectedCB;
+    public String txt;
 
 
     public void setText(TextArea text) {
@@ -102,12 +103,18 @@ public class ContentsSubPageController implements Initializable {
             insertBtn.setOnAction(actionEvent -> {
                     //If the current object in the cbList is a TextBlock this is executed
                     if(cbList.get(finalI1) instanceof TextBlock){
-                        //Inserting the text at the caret position
-                        text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt());
+                        if (textEditorController.isTextEditorActive()) {
+                            //Inserting the text at the caret position
+                            text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt());
+                        }
+                        else {txt = ((TextBlock) cbList.get(finalI1)).getTxt().lines().collect(Collectors.joining(" ")); insertContentBlockInHTML(txt);}
                     }
                     else {
-                        //Inserting the image at the caret position
-                        text.insertText(getCaretPosition(), ((ImageBlock) cbList.get(finalI1)).getImagePath());
+                        if (textEditorController.isTextEditorActive()) {
+                            //Inserting the image at the caret position
+                            text.insertText(getCaretPosition(), ((ImageBlock) cbList.get(finalI1)).getImagePath());
+                        }
+                        else {txt = ((ImageBlock) cbList.get(finalI1)).getImagePath().lines().collect(Collectors.joining(" ")); insertContentBlockInHTML(txt);}
                     }
                     });
 
@@ -128,6 +135,16 @@ public class ContentsSubPageController implements Initializable {
 
         contentBlockTableView.getItems().addAll(displayCB);
 
+    }
+
+    public void insertContentBlockInHTML(String cb) {
+        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
+                "var selectionContents = range.extractContents();" +
+                "var span = document.createElement(\"span\");" +
+                "span.style.backgroundColor = \"" + "transparent" + "\";" +
+                "span.textContent = \"" + cb + "\";" +
+                "span.appendChild(selectionContents);" +
+                "range.insertNode(span);");
     }
 
     /**

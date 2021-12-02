@@ -28,6 +28,8 @@ public class PlaceholdersSubPageController implements Initializable {
     public Label objHeight;
     public Label objWidth;
     public Label objWeight;
+    @FXML
+    private Label objComponents;
 
     public String phColor = "yellow";
 
@@ -58,6 +60,7 @@ public class PlaceholdersSubPageController implements Initializable {
         objHeight.setText(eObject.getHeight().toString());
         objWidth.setText(eObject.getWidth().toString());
         objWeight.setText(eObject.getWeight().toString());
+        objComponents.setText(eObject.componentNames().replaceAll(" ", "\n"));
     }
 
     /**
@@ -92,58 +95,74 @@ public class PlaceholdersSubPageController implements Initializable {
      */
     public void insertPlaceholder(ActionEvent e) {
         String choice = ((Button) e.getSource()).getId();
+        System.out.println(choice);
 
-            TextArea text = textEditorController.getTextArea();
-            int pos = textEditorController.getTextArea().getCaretPosition();
+        TextArea text = textEditorController.getTextArea();
+        int pos = textEditorController.getTextArea().getCaretPosition();
 
-            boolean textEditorActive = textEditorController.isTextEditorActive();
+        boolean textEditorActive = textEditorController.isTextEditorActive();
 
-            switch (choice) {
-                case "name":
-                    if (textEditorActive) {
-                        text.insertText(pos, "</xsl:text><span id=\"name\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/name\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getName(), "name",  phColor);}
-            }
-            switch (choice) {
-                case "version":
-                    if (textEditorActive) {
-                        text.insertText(pos, "</xsl:text><span id=\"version\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/version\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getVersion().toString(), "version", phColor);}
-            }
-            switch (choice) {
-                case "length":
-                    if (textEditorActive) {
+        switch (choice) {
+            case "name":
+                if (textEditorActive) {
+                    text.insertText(pos, "</xsl:text><span id=\"name\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/name\"/></span><xsl:text>");
+                } else {
+                    insertPlaceholderInHtml(eObject.getName(), "name", phColor);
+                }
+                break;
+            case "version":
+                if (textEditorActive) {
+                    text.insertText(pos, "</xsl:text><span id=\"version\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/version\"/></span><xsl:text>");
+                } else {
+                    insertPlaceholderInHtml(eObject.getVersion().toString(), "version", phColor);
+                }
+                break;
+            case "length":
+                if (textEditorActive) {
                     text.insertText(pos, "</xsl:text><span id=\"length\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/length\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getLength().toString(), "length", phColor);}
-            }
-            switch (choice) {
-                case "height":
-                    if (textEditorActive) {
+                } else {
+                    insertPlaceholderInHtml(eObject.getLength().toString(), "length", phColor);
+                }
+                break;
+            case "height":
+                if (textEditorActive) {
                     text.insertText(pos, "</xsl:text><span id=\"height\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/height\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getHeight().toString(), "height", phColor);}
-            }
-            switch (choice) {
-                case "width":
-                    if (textEditorActive) {
+                } else {
+                    insertPlaceholderInHtml(eObject.getHeight().toString(), "height", phColor);
+                }
+                break;
+            case "width":
+                if (textEditorActive) {
                     text.insertText(pos, "</xsl:text><span id=\"width\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/width\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getWidth().toString(), "width", phColor);}
-            }
-            switch (choice) {
-                case "weight":
-                    if (textEditorActive) {
+                } else {
+                    insertPlaceholderInHtml(eObject.getWidth().toString(), "width", phColor);
+                }
+                break;
+            case "weight":
+                if (textEditorActive) {
                     text.insertText(pos, "</xsl:text><span id=\"weight\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
-                    }else{insertPlaceholderInHtml(eObject.getWeight().toString(), "weight", phColor);}
-            }
-            switch (choice){
-                case "image":
-                    if (textEditorActive){
-                        text.insertText(pos, "</xsl:text><p><img src=\"" + imageTextField.getText() + "\" width=\"500\"/></p><xsl:text>");
-                    }
-                    else{insertImage(imageTextField.getText());}
-                    //insertImage("https://tailandfur.com/wp-content/uploads/2014/03/Funny-pictures-of-animals-41.jpg");
-            }
-
-            }
+                } else {
+                    insertPlaceholderInHtml(eObject.getWeight().toString(), "weight", phColor);
+                }
+                break;
+            case "image":
+                if (textEditorActive) {
+                    text.insertText(pos, "</xsl:text><p><img src=\"" + imageTextField.getText() + "\" width=\"500\"/></p><xsl:text>");
+                } else {
+                    insertImage(imageTextField.getText());
+                }
+                break;
+            //insertImage("https://tailandfur.com/wp-content/uploads/2014/03/Funny-pictures-of-animals-41.jpg")
+            case "components":
+                if (textEditorActive) {
+                    // TODO Anne: det er lort, fordi components ikke kommer med i xml'en
+                    text.insertText(pos, "</xsl:text><span id=\"weight\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
+                } else {
+                    insertPlaceholderInHtml(eObject.componentNames(), "components", phColor);
+                }
+                break;
+        }
+    }
 
     /**
      * runs script that inserts placeholder value inside span tags with id span
