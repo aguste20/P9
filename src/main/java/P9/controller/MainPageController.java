@@ -278,6 +278,9 @@ public class MainPageController implements Initializable{
 
     //TODO Anne/cleanup: Mangler dokumentation
     public void switchToPreviewSubPage(){
+        // Update table of contents
+        overviewSubPageController.updateToc();
+
         previewSubPageController.createXslFromTextArea();
 
         paneTextEditor.setContent(Main.getPreviewSubPageParent());
