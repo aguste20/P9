@@ -192,8 +192,11 @@ public class MainPageController implements Initializable{
         //Storing HTML from fancy editor in a String
         String inputHTML = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
 
+        //Modify background colors to white
+        String PDF = inputHTML.replaceAll("yellow", "transparent");
+
         //Parsing HTML to a document Object
-        Document document = Jsoup.parse(inputHTML, "UTF-8");
+        Document document = Jsoup.parse(PDF, "UTF-8");
         //Setting syntax
         document.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
         //Defining output

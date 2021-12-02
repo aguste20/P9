@@ -247,23 +247,23 @@ public class OverviewSubPageController implements Initializable {
         webview.requestFocus();
 
         //Move cursor to index in html using beautiful javascript
-        webview.getEngine().executeScript("function placeCaretAtEnd(el) {\n" +
-                "    if (typeof window.getSelection != \"undefined\"\n" +
-                "            && typeof document.createRange != \"undefined\") {\n" +
-                "        var range = document.createRange();\n" +
-                "        range.selectNodeContents(el);\n" +
-                "        range.collapse(false);\n" +
-                "        var sel = window.getSelection();\n" +
-                "        sel.removeAllRanges();\n" +
-                "        sel.addRange(range);\n" +
-                "    } else if (typeof document.body.createTextRange != \"undefined\") {\n" +
-                "        var textRange = document.body.createTextRange();\n" +
-                "        textRange.moveToElementText(el);\n" +
-                "        textRange.collapse(false);\n" +
-                "        textRange.select();\n" +
-                "    }\n" +
-                "}\n" +
-                "\n" +
+        webview.getEngine().executeScript("function placeCaretAtEnd(el) {" +
+                "    if (typeof window.getSelection != \"undefined\"" +
+                "            && typeof document.createRange != \"undefined\") {" +
+                "        var range = document.createRange();" +
+                "        range.selectNodeContents(el);" +
+                "        range.collapse(false);" +
+                "        var sel = window.getSelection();" +
+                "        sel.removeAllRanges();" +
+                "        sel.addRange(range);" +
+                "    } else if (typeof document.body.createTextRange != \"undefined\") {" +
+                "        var textRange = document.body.createTextRange();" +
+                "        textRange.moveToElementText(el);" +
+                "        textRange.collapse(false);" +
+                "        textRange.select();" +
+                "    }" +
+                "}" +
+                "" +
                 "placeCaretAtEnd( document.querySelectorAll('h"+ type +"').item("+ index +") );");
     }
 
