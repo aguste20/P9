@@ -181,7 +181,6 @@ public class TextEditorController implements Initializable {
                     //Setting the boolean used for checking if new content block back to false
                     contentsSubPageController.setNewCB(false);
                     contentsSubPageController.makeContentBlockList();
-                    contentsSubPageController.populateBox();
                 }
                 //If the ContentBlock the user wanted to edit is a TextBlock this gets executed
                 else if (obj instanceof TextBlock) {

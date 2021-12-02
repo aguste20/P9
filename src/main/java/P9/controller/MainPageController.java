@@ -78,7 +78,7 @@ public class MainPageController implements Initializable{
     //path to pdf
     String PDF_output = "src/main/resources/html2pdf.pdf";
     //boolean used for context blocks to check whether preview is checked or not
-    private boolean checkedPreview = false;
+    private boolean checkedPreview;
 
 
     // ---- Getters ----
@@ -91,6 +91,14 @@ public class MainPageController implements Initializable{
         return eObject;
     }
     public UserDao getUserDAO() { return userDAO; }
+
+    public boolean isCheckedPreview() {
+        return checkedPreview;
+    }
+
+    public void setCheckedPreview(boolean checkedPreview) {
+        this.checkedPreview = checkedPreview;
+    }
 
     /**
      * This method initializes a controller after its root element has already been processed.
@@ -246,7 +254,6 @@ public class MainPageController implements Initializable{
             }
             paneTextEditor.setContent(Main.getTextEditorParent());
             textEditorController.setTextEditorActive(true);
-            checkedPreview = false;
 
         }
         else{
@@ -256,9 +263,13 @@ public class MainPageController implements Initializable{
                 }
                 paneTextEditor.setContent(Main.getTextEditorParent());
                 textEditorController.setTextEditorActive(true);
-                checkedPreview = false;
             }
-        // do nothing
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Illegal action");
+                alert.setHeaderText("This button cannot be pressed before checking preview");
+                alert.showAndWait();
+            }
         }
     }
 

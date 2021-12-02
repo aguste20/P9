@@ -60,10 +60,6 @@ public class ContentsSubPageController implements Initializable {
 
         //ContentBlockTableViewContentsSubPage.setPlaceholder(new Text("No content blocks currently exists. Use the 'Create new content blcok'-button to create new block."));
 
-
-
-        //populateBox();
-
     }
 
     public boolean isNewCB() {
@@ -118,6 +114,7 @@ public class ContentsSubPageController implements Initializable {
             editBtn.setOnAction(actionEvent -> {
                 selectedCB = cbList.get(finalI1);
                 editContentBlock();
+                mainPageController.setCheckedPreview(false);
             });
 
             //Adds the object and the button to the displayCB list
@@ -139,30 +136,6 @@ public class ContentsSubPageController implements Initializable {
      */
     public int getCaretPosition(){
         return textEditorController.getTextArea().getCaretPosition();
-    }
-
-    /**
-     * Populates the combobox used to display all the ContentBlocks that the user can edit
-     */
-    public void populateBox(){
-        List<ContentBlock> cbList;
-        cbList = cbdao.listAll();
-        ObservableList<ContentBlock> ocbList = FXCollections.observableArrayList(cbList);
-        cbEdit.setItems(ocbList);
-        //Creates a StringConverter that allows us to display the name of the content block in the GUI (toString)
-        //and find the Content Block again when the user selects a name String in the GUI (fromString)
-        cbEdit.setConverter(new StringConverter<ContentBlock>() {
-            @Override
-            public String toString(ContentBlock contentBlock) {
-                return contentBlock.getName();
-            }
-
-            @Override
-            public ContentBlock fromString(String s) {
-                return cbEdit.getItems().stream().filter(
-                        cb -> cb.getName().equals(s)).findFirst().orElse(null);
-            }
-        });
     }
 
     /**
@@ -200,6 +173,7 @@ public class ContentsSubPageController implements Initializable {
         createOrEditContentBlock();
         //Sets boolean which is used to check if a new ContentBlock is being created to true
         newCB = true;
+        mainPageController.setCheckedPreview(false);
     }
 
     /**
