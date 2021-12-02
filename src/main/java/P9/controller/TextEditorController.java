@@ -38,13 +38,8 @@ public class TextEditorController implements Initializable {
     @FXML
     public TextArea textArea;
 
-    @FXML
-    public Label lastEditLabel;
-
-    @FXML
-    public Label lastUserLabel;
-    @FXML
-    public Menu returnButton;
+    //@FXML public Menu save;
+    @FXML public Menu returnButton;
 
     private Stage stage;
     private final FileChooser fileChooser = new FileChooser();
@@ -56,9 +51,7 @@ public class TextEditorController implements Initializable {
     private TextBlockDao txtDao = new TextBlockDao();
     private ImageBlockDao imgDao = new ImageBlockDao();
 
-    public void setCreatingDoc(boolean bool){
-        this.creatingDoc = bool;
-    }
+    public void setCreatingDoc(boolean bool){this.creatingDoc = bool;}
 
     public boolean getCreatingDoc(){
         return creatingDoc;
@@ -290,23 +283,6 @@ public class TextEditorController implements Initializable {
         }
     }
 
-    /**
-     * Method for inserting the date of the last time the document was saved.
-     */
-    public void insertLastEditUserInLabels(){
-        //Variable that stores the last edit of the document.
-        Date editDate = doc.getLastEdit();
-        //If the variable is not null, its value is inserted into the label.
-        if (editDate != null){
-            lastEditLabel.setText("Last edit " + editDate);
-
-            //This part is pretty dumb at the moment. It is not dynamic.
-            //It gets the name of a user, and in this case the user with id = 1
-            UserDao userDao = mainPageController.userDAO;
-            User user = userDao.getById(1);
-            lastUserLabel.setText(" performed by: " + user.getName());
-        }
-    }
 
     /**
      * Method that gets references to other controllers

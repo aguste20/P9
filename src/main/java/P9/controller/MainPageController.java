@@ -2,7 +2,9 @@ package P9.controller;
 
 import P9.Main;
 import P9.model.EObject;
+import P9.model.EObjectDoc;
 import P9.model.TextBlock;
+import P9.model.User;
 import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDao;
 import P9.persistence.TextBlockDao;
@@ -44,6 +46,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -64,10 +67,13 @@ public class MainPageController implements Initializable{
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
     //Annotating label and button
-    @FXML public Label eObjectLabel;
-    @FXML public Button eOjbectUpdate;
+
     @FXML public ComboBox<EObject> eObjectChoice;
     @FXML public Button exportPDFButton;
+
+    @FXML public Label eObjectLabel;
+    @FXML public Label lastEditLabel;
+    @FXML public Label lastUserLabel;
 
     // Reference to the engineering object that the user is working on
     EObject eObject;
@@ -109,6 +115,8 @@ public class MainPageController implements Initializable{
 
         // Marshal eObject to XML file, which is saved in resources/xml
         eObject.eObjectToXML();
+
+        insertLastEditUserInLabels();
 
     }
 
@@ -277,6 +285,26 @@ public class MainPageController implements Initializable{
         this.previewSubPageController = Main.getPreviewSubPageController();
         this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
         this.textEditorController = Main.getTextEditorController();
+    }
+
+
+    /**
+     * Method for inserting the date of the last time the document was saved.
+     */
+    public void insertLastEditUserInLabels(){
+        // Get doc from eObject
+        EObjectDoc doc = eObject.getDoc();
+        //Variable that stores the last edit of the document.
+        Date editDate = doc.getLastEdit();
+        //If the variable is not null, its value is inserted into the label.
+        if (editDate != null){
+            lastEditLabel.setText("Last edit " + editDate);
+
+            //This part is pretty dumb at the moment. It is not dynamic.
+            //It gets the name of a user, and in this case the user with id = 1
+            User user = userDAO.getById(1);
+            lastUserLabel.setText(" performed by: " + user.getName());
+        }
     }
 
 }

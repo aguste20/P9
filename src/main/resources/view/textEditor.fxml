@@ -8,8 +8,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="1.7976931348623157E308" maxWidth="800.0" prefWidth="800.0" style="-fx-background-color: #C4C4C4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.TextEditorController">
         <center>
@@ -18,48 +16,26 @@
                     <Insets bottom="10.0" left="4.0" right="4.0" />
                 </BorderPane.margin></TextArea>
         </center>
-        <bottom>
-            <HBox alignment="CENTER_LEFT" prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER_LEFT">
-                <children>
-                    <Label fx:id="lastEditLabel" text="Last edit">
-               <padding>
-                  <Insets left="2.0" />
-               </padding></Label>
-                    <Label fx:id="lastUserLabel" text="Edited by">
-               <padding>
-                  <Insets left="2.0" />
-               </padding></Label>
-                </children>
-            </HBox>
-        </bottom>
    <top>
-      <VBox prefWidth="800.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0">
-               <children>
-                  <Label text="Label">
-                     <padding>
-                        <Insets left="2.0" />
-                     </padding></Label>
-               </children>
-            </HBox>
-                  <MenuBar maxHeight="-Infinity" maxWidth="800.0" minHeight="20.0" prefHeight="25.6">
-                      <menus>
-                          <Menu fx:id="save" mnemonicParsing="false" onAction="#save" text="Save" />
-                          <Menu mnemonicParsing="false" text="Typography">
-                              <items>
-                                  <CheckMenuItem fx:id="h1" mnemonicParsing="false" onAction="#createHeader" text="Heading 1 ( 30px )" />
-                                  <CheckMenuItem fx:id="h2" mnemonicParsing="false" onAction="#createHeader" text="Heading 2 ( 30px )" />
-                              </items>
-                          </Menu>
-                  <Menu fx:id="returnButton" mnemonicParsing="false" onAction="#returnToDoc" text="Return to eObject documentation" visible="false">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Return" />
-                    </items>
-                  </Menu>
-                      </menus>
-                  </MenuBar>
-         </children>
-      </VBox>
+            <MenuBar maxHeight="-Infinity" maxWidth="800.0" minHeight="20.0" prefHeight="25.6" BorderPane.alignment="CENTER">
+                <menus>
+                    <Menu mnemonicParsing="false">
+               <graphic>
+                  <Label onMouseClicked="#save" text="Save" />
+               </graphic>
+            </Menu>
+                    <Menu mnemonicParsing="false" text="Typography">
+                        <items>
+                            <CheckMenuItem fx:id="h1" mnemonicParsing="false" onAction="#createHeader" text="Heading 1 ( 30px )" />
+                            <CheckMenuItem fx:id="h2" mnemonicParsing="false" onAction="#createHeader" text="Heading 2 ( 30px )" />
+                        </items>
+                    </Menu>
+            <Menu fx:id="returnButton" mnemonicParsing="false" onAction="#returnToDoc" text="Return to eObject documentation" visible="false">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Return" />
+              </items>
+            </Menu>
+                </menus>
+            </MenuBar>
    </top>
     </BorderPane>
