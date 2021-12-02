@@ -8,6 +8,7 @@ import P9.model.TextBlock;
 import P9.persistence.ContentBlockDao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -31,6 +32,7 @@ public class ContentsSubPageController implements Initializable {
     @FXML private TableView<DisplayContentBlock> contentBlockTableView;
     @FXML private TableColumn<DisplayContentBlock, String> cBlockNameColumn;
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
+    @FXML private TableColumn<DisplayContentBlock, String> editCBColumn;
     @FXML public ComboBox<ContentBlock> cbEdit;
 
     // TODO Anne: ryd op og gør private, måske ikke instantiation og declaration i samme linje?
@@ -39,6 +41,7 @@ public class ContentsSubPageController implements Initializable {
     ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
     private TextArea text;
     private boolean newCB = false;
+    private ContentBlock selectedCB;
 
 
     public void setText(TextArea text) {
@@ -57,9 +60,9 @@ public class ContentsSubPageController implements Initializable {
 
         //ContentBlockTableViewContentsSubPage.setPlaceholder(new Text("No content blocks currently exists. Use the 'Create new content blcok'-button to create new block."));
 
-        makeContentBlockList();
 
-        populateBox();
+
+        //populateBox();
 
     }
 
@@ -69,6 +72,14 @@ public class ContentsSubPageController implements Initializable {
 
     public void setNewCB(boolean newCB) {
         this.newCB = newCB;
+    }
+
+    public ContentBlock getSelectedCB() {
+        return selectedCB;
+    }
+
+    public void setSelectedCB(ContentBlock selectedCB) {
+        this.selectedCB = selectedCB;
     }
 
     /**
@@ -86,12 +97,13 @@ public class ContentsSubPageController implements Initializable {
         //Iterating over the size of the ContentBlock list
         for (int i=0;i<cbList.size();i++){
             //Creating a button and setting width
-            Button button = new Button("⬅");
-            button.setPrefWidth(65);
+            Button insertBtn = new Button("⬅");
+            Button editBtn = new Button("Edit");
+            insertBtn.setPrefWidth(65);
             //Creating a variable to get the correct object in the cbList
             int finalI1 = i;
             //Setting actionEvent on the button
-            button.setOnAction(actionEvent -> {
+            insertBtn.setOnAction(actionEvent -> {
                     //If the current object in the cbList is a TextBlock this is executed
                     if(cbList.get(finalI1) instanceof TextBlock){
                         //Inserting the text at the caret position
@@ -103,12 +115,19 @@ public class ContentsSubPageController implements Initializable {
                     }
                     });
 
+            editBtn.setOnAction(actionEvent -> {
+                selectedCB = cbList.get(finalI1);
+                editContentBlock();
+            });
+
             //Adds the object and the button to the displayCB list
-            displayCB.add(new DisplayContentBlock(cbList.get(i), button));
+            displayCB.add(new DisplayContentBlock(cbList.get(i), insertBtn, editBtn));
         }
 
         cBlockNameColumn.setCellValueFactory(cb -> cb.getValue().getContentBlock().nameProperty());
-        insertCBlockButton.setCellValueFactory(new PropertyValueFactory<>("Button"));
+        insertCBlockButton.setCellValueFactory(new PropertyValueFactory<>("button"));
+        editCBColumn.setCellValueFactory(new PropertyValueFactory<>("editBtn"));
+
 
         contentBlockTableView.getItems().addAll(displayCB);
 
@@ -152,11 +171,11 @@ public class ContentsSubPageController implements Initializable {
     public void editContentBlock() {
         createOrEditContentBlock();
         //If the ContentBlock they clicked on is a TextBlock this is executed
-        if(cbEdit.getValue() instanceof TextBlock txtBlock) {
+        if(selectedCB instanceof TextBlock txtBlock) {
             text.setText(txtBlock.getTxt());
         }
         else {
-            ImageBlock img = (ImageBlock) cbEdit.getValue();
+            ImageBlock img = (ImageBlock) selectedCB;
             text.setText(img.getImagePath());
         }
     }
