@@ -67,8 +67,15 @@ public class OverviewSubPageController implements Initializable {
         // Clear previous table of content
         tocView.getRoot().getChildren().clear();
 
-        // Get text from text area
-        text = textEditorController.getTextArea().getText();
+        // Get text from text area or preview, depending on which view is currently active
+        if (textEditorController.isTextEditorActive()){
+            text = textEditorController.getTextArea().getText();
+        }
+        else {
+            text = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
+        }
+
+
 
         //Find all h1 - add to list
         allH1s = findAllH(1);
