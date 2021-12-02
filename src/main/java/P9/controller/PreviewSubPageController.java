@@ -157,6 +157,7 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll(height, "</xsl:text><span id=\"height\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/height\"/>")
                 .replaceAll(width, "</xsl:text><span id=\"width\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/width\"/>")
                 .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/weight\"/>")
+                .replaceAll("<span style", "</xsl:text><span style")
                 .replaceAll("</span>", "</span><xsl:text>");
 
         // Write to file with string
