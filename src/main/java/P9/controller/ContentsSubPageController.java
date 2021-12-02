@@ -112,9 +112,11 @@ public class ContentsSubPageController implements Initializable {
                     else {
                         if (textEditorController.isTextEditorActive()) {
                             //Inserting the image at the caret position
-                            text.insertText(getCaretPosition(), ((ImageBlock) cbList.get(finalI1)).getImagePath());
+                            text.insertText(getCaretPosition(), "</xsl:text><p><img src=\"" +
+                                    ((ImageBlock) cbList.get(finalI1)).getImagePath() + "\" width=\"500\"/></p><xsl:text>");
                         }
-                        else {txt = ((ImageBlock) cbList.get(finalI1)).getImagePath().lines().collect(Collectors.joining(" ")); insertContentBlockInHTML(txt);}
+                        else {txt = ((ImageBlock) cbList.get(finalI1)).getImagePath().lines().collect(Collectors.joining(" "));
+                            placeholdersSubPageController.insertImage(txt);}
                     }
                     });
 
