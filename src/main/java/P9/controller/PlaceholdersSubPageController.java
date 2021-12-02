@@ -155,7 +155,7 @@ public class PlaceholdersSubPageController implements Initializable {
             //insertImage("https://tailandfur.com/wp-content/uploads/2014/03/Funny-pictures-of-animals-41.jpg")
             case "components":
                 if (textEditorActive) {
-                    // TODO Anne: det er lort, fordi components  ikke kommer med i xml'en
+                    // TODO Anne: det er lort, fordi components ikke kommer med i xml'en
                     text.insertText(pos, "</xsl:text><span id=\"weight\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
                 } else {
                     insertPlaceholderInHtml(eObject.componentNames(), "components", phColor);
