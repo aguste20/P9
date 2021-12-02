@@ -74,17 +74,6 @@ public class TextEditorController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        //TODO Anne - ryd op her, det bruges vel ikke?
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser
-                .getExtensionFilters()
-                .addAll(
-                        new FileChooser.ExtensionFilter("xml", "*.xml"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-
-        textEditorActive = true;
-
     }
 
     public void init(Stage myStage) {
