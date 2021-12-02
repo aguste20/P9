@@ -17,6 +17,7 @@ import javafx.util.StringConverter;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ContentsSubPageController implements Initializable {
 
@@ -71,6 +72,8 @@ public class ContentsSubPageController implements Initializable {
         this.newCB = newCB;
     }
 
+    public String txt;
+
     /**
      * Populates the listview in the GUI with all the ContentBlocks in the DB.
      * Also adds a corresponding button that inserts the ContentBlock into the TextArea.
@@ -94,12 +97,18 @@ public class ContentsSubPageController implements Initializable {
             button.setOnAction(actionEvent -> {
                     //If the current object in the cbList is a TextBlock this is executed
                     if(cbList.get(finalI1) instanceof TextBlock){
-                        //Inserting the text at the caret position
-                        text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt());
+                        if (textEditorController.isTextEditorActive()) {
+                            //Inserting the text at the caret position
+                            text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt());
+                        }
+                        else {txt = ((TextBlock) cbList.get(finalI1)).getTxt().lines().collect(Collectors.joining(" ")); insertContentBlockInHTML(txt);}
                     }
                     else {
-                        //Inserting the image at the caret position
-                        text.insertText(getCaretPosition(), ((ImageBlock) cbList.get(finalI1)).getImagePath());
+                        if (textEditorController.isTextEditorActive()) {
+                            //Inserting the image at the caret position
+                            text.insertText(getCaretPosition(), ((ImageBlock) cbList.get(finalI1)).getImagePath());
+                        }
+                        else {txt = ((ImageBlock) cbList.get(finalI1)).getImagePath().lines().collect(Collectors.joining(" ")); insertContentBlockInHTML(txt);}
                     }
                     });
 
@@ -112,6 +121,16 @@ public class ContentsSubPageController implements Initializable {
 
         contentBlockTableView.getItems().addAll(displayCB);
 
+    }
+
+    public void insertContentBlockInHTML(String cb) {
+        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
+                "var selectionContents = range.extractContents();" +
+                "var span = document.createElement(\"span\");" +
+                "span.style.backgroundColor = \"" + "transparent" + "\";" +
+                "span.textContent = \"" + cb + "\";" +
+                "span.appendChild(selectionContents);" +
+                "range.insertNode(span);");
     }
 
     /**
