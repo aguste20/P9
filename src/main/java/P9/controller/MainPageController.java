@@ -250,6 +250,25 @@ public class MainPageController implements Initializable{
     }
 
     /**
+     * Method for inserting the date of the last time the document was saved.
+     */
+    public void insertLastEditUserInLabels(){
+        // Get doc from eObject
+        EObjectDoc doc = eObject.getDoc();
+        //Variable that stores the last edit of the document.
+        Date editDate = doc.getLastEdit();
+        //If the variable is not null, its value is inserted into the label.
+        if (editDate != null){
+            lastEditLabel.setText("Last edit " + editDate);
+
+            //This part is pretty dumb at the moment. It is not dynamic.
+            //It gets the name of a user, and in this case the user with id = 1
+            User user = userDAO.getById(1);
+            lastUserLabel.setText(" performed by: " + user.getName());
+        }
+    }
+
+    /**
      * Methods for changing the contents of the middle AnchorPane of the mainPage.fxml.
      * When user presses one of the buttons, the interface shows the associated viewfile.
      */
@@ -315,24 +334,7 @@ public class MainPageController implements Initializable{
     }
 
 
-    /**
-     * Method for inserting the date of the last time the document was saved.
-     */
-    public void insertLastEditUserInLabels(){
-        // Get doc from eObject
-        EObjectDoc doc = eObject.getDoc();
-        //Variable that stores the last edit of the document.
-        Date editDate = doc.getLastEdit();
-        //If the variable is not null, its value is inserted into the label.
-        if (editDate != null){
-            lastEditLabel.setText("Last edit " + editDate);
 
-            //This part is pretty dumb at the moment. It is not dynamic.
-            //It gets the name of a user, and in this case the user with id = 1
-            User user = userDAO.getById(1);
-            lastUserLabel.setText(" performed by: " + user.getName());
-        }
-    }
 
 }
 
