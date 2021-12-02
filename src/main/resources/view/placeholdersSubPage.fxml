@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="280.0" style="-fx-background-color: #C4C4C4;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.PlaceholdersSubPageController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="280.0" style="-fx-background-color: #C4C4C4;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="P9.controller.PlaceholdersSubPageController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -85,6 +85,11 @@
                         <Insets left="2.0" top="2.0" />
                      </VBox.margin>
                   </Button>
+                  <Button fx:id="components" mnemonicParsing="false" onAction="#insertPlaceholder" prefHeight="25.6" prefWidth="100.0" style="-fx-background-color: #DFEBF7;" text="Components">
+                     <VBox.margin>
+                        <Insets left="2.0" top="2.0" />
+                     </VBox.margin>
+                  </Button>
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
@@ -117,6 +122,7 @@
                      <VBox.margin>
                         <Insets left="2.0" right="2.0" top="2.0" />
                      </VBox.margin></TextField>
+                  <Label fx:id="objComponents" prefHeight="55.0" prefWidth="100.0" text="Label" />
                </children>
             </VBox>
          </children>
