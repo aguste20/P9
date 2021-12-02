@@ -54,6 +54,7 @@ import java.util.ResourceBundle;
 public class MainPageController implements Initializable{
 
 
+
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private OverviewSubPageController overviewSubPageController;
@@ -74,6 +75,7 @@ public class MainPageController implements Initializable{
     @FXML public Label eObjectLabel;
     @FXML public Label lastEditLabel;
     @FXML public Label lastUserLabel;
+    @FXML private Label savedAlert;
 
     // Reference to the engineering object that the user is working on
     EObject eObject;
@@ -97,6 +99,19 @@ public class MainPageController implements Initializable{
         return eObject;
     }
     public UserDao getUserDAO() { return userDAO; }
+
+    public Label getSavedAlert() {
+        return savedAlert;
+    }
+
+    public void setSavedAlertText(String text) {
+        this.savedAlert.setText(text);
+        savedAlert.setVisible(true);
+    }
+
+    public void removeSavedAlert(){
+        savedAlert.setVisible(false);
+    }
 
     /**
      * This method initializes a controller after its root element has already been processed.
