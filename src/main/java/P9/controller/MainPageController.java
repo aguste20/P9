@@ -227,6 +227,7 @@ public class MainPageController implements Initializable{
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
 
+    //TODO Anne/cleanup: Mangler dokumentation
     public void switchToPreviewSubPage(){
         previewSubPageController.createXslFromTextArea();
 
@@ -237,7 +238,7 @@ public class MainPageController implements Initializable{
         checkedPreview = true;
     }
 
-    // TODO Anne: Hvad foregår der i den her metode?
+    // TODO Anne/cleanup: Mangler dokumentation
     public void switchToTextEditorPage() {
         if (textEditorController.getCreatingDoc()) {
             //loads webview, if it contains any content
@@ -262,6 +263,7 @@ public class MainPageController implements Initializable{
         }
     }
 
+    //TODO Anne/Cleanup: Mangler dokumentation
     public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }

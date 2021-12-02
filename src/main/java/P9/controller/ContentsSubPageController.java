@@ -33,7 +33,7 @@ public class ContentsSubPageController implements Initializable {
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
     @FXML public ComboBox<ContentBlock> cbEdit;
 
-    // TODO Anne: ryd op og gør private, måske ikke instantiation og declaration i samme linje?
+    // TODO Anne/cleanup: ryd op og gør private, måske ikke instantiation og declaration i samme linje?
     ContentBlockDao cbdao = new ContentBlockDao();
     ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
     ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
