@@ -21,17 +21,26 @@
         <bottom>
             <HBox prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER_LEFT">
                 <children>
-                    <Label fx:id="lastEditLabel" text="Last edit" />
-                    <Label fx:id="lastUserLabel" text="Edited by" />
+                    <Label fx:id="lastEditLabel" text="Last edit">
+               <padding>
+                  <Insets left="2.0" />
+               </padding></Label>
+                    <Label fx:id="lastUserLabel" text="Edited by">
+               <padding>
+                  <Insets left="2.0" />
+               </padding></Label>
                 </children>
             </HBox>
         </bottom>
    <top>
       <VBox prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="35.0" prefHeight="30.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="30.0" minHeight="30.0" prefHeight="30.0">
                <children>
-                  <Label text="Label" />
+                  <Label text="Label">
+                     <padding>
+                        <Insets left="2.0" />
+                     </padding></Label>
                </children>
             </HBox>
                   <MenuBar maxHeight="-Infinity" maxWidth="800.0" minHeight="20.0" prefHeight="25.6">
