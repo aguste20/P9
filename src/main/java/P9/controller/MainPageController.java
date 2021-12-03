@@ -338,6 +338,14 @@ public class MainPageController implements Initializable{
         this.textEditorController = Main.getTextEditorController();
     }
 
+    /**
+     * Method for saving the changes made to either contentBlocks, the Source Text editor, or the Preview editor
+     */
+    public void saveChanges(){
+        //TODO: Her Anne :O!!!!
+        System.out.println("Hjælp jeg er en fisk!");
+    }
+
 }
 
 
