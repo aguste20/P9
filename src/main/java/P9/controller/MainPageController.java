@@ -55,7 +55,7 @@ import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable{
 
-
+    // ----- Properties -----
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private OverviewSubPageController overviewSubPageController;
@@ -64,63 +64,38 @@ public class MainPageController implements Initializable{
     private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
-    //We annotate the containers of the mainPage.fxml
+    // FXML elements
     @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
-    //Annotating label and button
-
     @FXML public ComboBox<EObject> eObjectChoice;
     @FXML public Button exportPDFButton;
-
     @FXML public Label eObjectLabel;
     @FXML public Label lastEditLabel;
     @FXML public Label lastUserLabel;
     @FXML private Label savedAlert;
 
-    // Reference to the engineering object that the user is working on
-    EObject eObject;
-    // Reference to DAO objects.
-    UserDao userDAO = new UserDao();
-    TextBlockDao txtDao = new TextBlockDao();
-    EObjectDao eDao = new EObjectDao();
-    //path to pdf
-    String PDF_output = "src/main/resources/html2pdf.pdf";
-    //boolean used for context blocks to check whether preview is checked or not
-    private boolean checkedPreview;
+    // Local DAO instances
+    private UserDao userDAO = new UserDao();
+    private TextBlockDao txtDao = new TextBlockDao();
+    private EObjectDao eDao = new EObjectDao();
 
+    private EObject eObject; // Reference to the engineering object that the user is working on
+    String PDF_output = "src/main/resources/html2pdf.pdf"; // Path to pdf
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
     public ScrollPane getPaneTextEditor() { return paneTextEditor; }
     public ScrollPane getPaneOverviewSubPage() { return paneOverviewSubPage; }
     public ScrollPane getPaneContentsPlaceholders() { return paneContentsPlaceholders; }
-
     public EObject geteObject() {
         return eObject;
     }
     public UserDao getUserDAO() { return userDAO; }
-
-    public boolean isCheckedPreview() {
-        return checkedPreview;
-    }
-
-    public void setCheckedPreview(boolean checkedPreview) {
-        this.checkedPreview = checkedPreview;
-    }
-
     public Label getSavedAlert() {
         return savedAlert;
     }
 
-    public void setSavedAlertText(String text) {
-        this.savedAlert.setText(text);
-        savedAlert.setVisible(true);
-    }
-
-    public void removeSavedAlert(){
-        savedAlert.setVisible(false);
-    }
 
     /**
      * This method initializes a controller after its root element has already been processed.
@@ -130,7 +105,6 @@ public class MainPageController implements Initializable{
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-
         //Loads eObject selected by user in GUI
         loadEObject();
 
@@ -141,7 +115,19 @@ public class MainPageController implements Initializable{
         eObject.eObjectToXML();
 
         insertLastEditUserInLabels();
+    }
 
+
+    // ----- Instance methods -----
+    // TODO Anne/cleanup: Mangler dokumentation
+    public void setSavedAlertText(String text) {
+        this.savedAlert.setText(text);
+        savedAlert.setVisible(true);
+    }
+
+    // TODO Anne/cleanup: Mangler dokumentation
+    public void removeSavedAlert(){
+        savedAlert.setVisible(false);
     }
 
     /**
@@ -190,7 +176,6 @@ public class MainPageController implements Initializable{
             }
         });
     }
-
 
     /**
      * Fetches the eObject in the DB, when the update button is pressed in the GUI,
@@ -271,6 +256,15 @@ public class MainPageController implements Initializable{
     }
 
     /**
+     * Method for saving the changes made to either contentBlocks,
+     * the Source Text editor, or the Preview editor
+     */
+    @FXML // Event handler for "Save changes" button
+    public void saveChanges(){
+        textEditorController.save();
+    }
+
+    /**
      * Methods for changing the contents of the middle AnchorPane of the mainPage.fxml.
      * When user presses one of the buttons, the interface shows the associated viewfile.
      */
@@ -296,7 +290,6 @@ public class MainPageController implements Initializable{
 
             //Main.getPlaceholdersSubPageController().setTextEditor(false);
             textEditorController.setTextEditorActive(false);
-            checkedPreview = true;
         }
     }
 
@@ -316,25 +309,8 @@ public class MainPageController implements Initializable{
                 }
                 paneTextEditor.setContent(Main.getTextEditorParent());
                 textEditorController.setTextEditorActive(true);
-
-            }
-            else{
-                if(checkedPreview){
-                    if (Main.getEngine() != null) {
-                        previewSubPageController.createTXTFromWebView();
-                    }
-                    paneTextEditor.setContent(Main.getTextEditorParent());
-                    textEditorController.setTextEditorActive(true);
-                }
-                else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Illegal action");
-                    alert.setHeaderText("This button cannot be pressed before checking preview");
-                    alert.showAndWait();
-                }
             }
         }
-
     }
 
     //TODO Anne/Cleanup: Mangler dokumentation
@@ -354,15 +330,6 @@ public class MainPageController implements Initializable{
         this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
         this.textEditorController = Main.getTextEditorController();
     }
-
-    /**
-     * Method for saving the changes made to either contentBlocks, the Source Text editor, or the Preview editor
-     */
-    public void saveChanges(){
-        //TODO: Her Anne :O!!!!
-        textEditorController.save();
-    }
-
 }
 
 

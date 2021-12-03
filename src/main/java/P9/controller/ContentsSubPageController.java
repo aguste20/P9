@@ -23,33 +23,48 @@ import java.util.stream.Collectors;
 
 public class ContentsSubPageController implements Initializable {
 
+    // ----- Properties -----
     // References to other controllers
     private TextEditorController textEditorController;
     private MainPageController mainPageController;
     private PlaceholdersSubPageController placeholdersSubPageController;
     private OverviewSubPageController overviewSubPageController;
 
-    // Attribute to hold the secondary stage for the "Register new Content Block" window
-    //private Stage registerNewCBlockStage;
-
+    // FXML elements
     @FXML private TableView<DisplayContentBlock> contentBlockTableView;
     @FXML private TableColumn<DisplayContentBlock, String> cBlockNameColumn;
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
     @FXML private TableColumn<DisplayContentBlock, String> editCBColumn;
     @FXML public ComboBox<ContentBlock> cbEdit;
 
-    // TODO Anne/cleanup: ryd op og gør private, måske ikke instantiation og declaration i samme linje?
-    ContentBlockDao cbdao = new ContentBlockDao();
-    ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
-    ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
-    private TextArea text;
-    private boolean newCB = false;
-    private ContentBlock selectedCB;
-    public String txt;
+    // Local DAO instance
+    private ContentBlockDao cbdao = new ContentBlockDao();
+
+    // List of content blocks from the database
+    private ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
+    // List of content blocks to display
+    private ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
+    private TextArea text; // Reference to the text area in text editor
+    private boolean newCB = false; // Is the user currently creating a new content block?
+    private ContentBlock selectedCB; // Selected content block from content block list
+    public String txt; //TODO Anne/cleanup: jeg aner ikke hvad den her dækker over
 
 
+    // ----- Getters and setters -----
     public void setText(TextArea text) {
         this.text = text;
+    }
+    public boolean isNewCB() {
+        return newCB;
+    }
+    public void setNewCB(boolean newCB) {
+        this.newCB = newCB;
+    }
+    public ContentBlock getSelectedCB() {
+        return selectedCB;
+    }
+    public void setSelectedCB(ContentBlock selectedCB) {
+        this.selectedCB = selectedCB;
     }
 
     /**
@@ -60,34 +75,14 @@ public class ContentsSubPageController implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-        //CBlockNameColumnContentsSubPage.setCellValueFactory(new PropertyValueFactory("name"));
-
-        //ContentBlockTableViewContentsSubPage.setPlaceholder(new Text("No content blocks currently exists. Use the 'Create new content blcok'-button to create new block."));
-
     }
 
-    public boolean isNewCB() {
-        return newCB;
-    }
-
-    public void setNewCB(boolean newCB) {
-        this.newCB = newCB;
-    }
-
-    public ContentBlock getSelectedCB() {
-        return selectedCB;
-    }
-
-    public void setSelectedCB(ContentBlock selectedCB) {
-        this.selectedCB = selectedCB;
-    }
-
+    // ----- Instance methods -----
     /**
      * Populates the listview in the GUI with all the ContentBlocks in the DB.
      * Also adds a corresponding button that inserts the ContentBlock into the TextArea.
      */
     public void makeContentBlockList(){
-
         cbList.clear();
         displayCB.clear();
         contentBlockTableView.getItems().clear();
@@ -126,7 +121,6 @@ public class ContentsSubPageController implements Initializable {
             editBtn.setOnAction(actionEvent -> {
                 selectedCB = cbList.get(finalI1);
                 editContentBlock();
-                mainPageController.setCheckedPreview(false);
             });
 
             //Adds the object and the button to the displayCB list
@@ -191,7 +185,7 @@ public class ContentsSubPageController implements Initializable {
         textEditorController.setCreatingDoc(false);
         text.clear();
         mainPageController.eObjectLabel.setText("You are creating a Content Block");
-        textEditorController.returnButton.setVisible(true);
+        textEditorController.getReturnButton().setVisible(true);
         placeholdersSubPageController.callLabelsVisible();
     }
 

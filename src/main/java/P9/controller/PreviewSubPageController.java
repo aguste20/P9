@@ -155,12 +155,12 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll("<p>", "</xsl:text><p>")
                 .replaceAll("></p>", "/></p><xsl:text>")
                 .replaceAll("<br>", "</xsl:text><br/><xsl:text>")
-                .replaceAll(name, "</xsl:text><span id=\"name\" style=\"background-color: " + placeholdersSubPageController.phColor + ";\"><xsl:value-of select=\"eObject/name\"/>")
-                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/version\"/>")
-                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/length\"/>")
-                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/height\"/>")
-                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/width\"/>")
-                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/weight\"/>")
+                .replaceAll(name, "</xsl:text><span id=\"name\" style=\"background-color: " + placeholdersSubPageController.getPhColor() + ";\"><xsl:value-of select=\"eObject/name\"/>")
+                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"background-color: "+ placeholdersSubPageController.getPhColor() +";\"><xsl:value-of select=\"eObject/version\"/>")
+                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"background-color: "+ placeholdersSubPageController.getPhColor() +";\"><xsl:value-of select=\"eObject/length\"/>")
+                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"background-color: "+ placeholdersSubPageController.getPhColor() +";\"><xsl:value-of select=\"eObject/height\"/>")
+                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"background-color: "+ placeholdersSubPageController.getPhColor() +";\"><xsl:value-of select=\"eObject/width\"/>")
+                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"background-color: "+ placeholdersSubPageController.getPhColor() +";\"><xsl:value-of select=\"eObject/weight\"/>")
                 .replaceAll("<span style", "</xsl:text><span style")
                 .replaceAll("</span>", "</span><xsl:text>");
 

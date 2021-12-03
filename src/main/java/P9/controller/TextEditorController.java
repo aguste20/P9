@@ -25,7 +25,7 @@ import java.util.*;
 //TODO Anne/cleanup: Mangler dokumentation
 
 public class TextEditorController implements Initializable {
-
+    // ----- Properties -----
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private MainPageController mainPageController;
@@ -35,48 +35,42 @@ public class TextEditorController implements Initializable {
     private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
+    // FXML elements
+    @FXML private TextArea textArea;
+    @FXML private Menu returnButton;
 
-    @FXML
-    public TextArea textArea;
-
-    //@FXML public Menu save;
-    @FXML public Menu returnButton;
-
-    private Stage stage;
-    private final FileChooser fileChooser = new FileChooser();
+    // Local DAO instances
+    private TextBlockDao txtDao = new TextBlockDao();
+    private ImageBlockDao imgDao = new ImageBlockDao();
 
     private EObject eObject;
     private EObjectDoc doc;
     private boolean creatingDoc = true;
     private boolean textEditorActive;
-    private TextBlockDao txtDao = new TextBlockDao();
-    private ImageBlockDao imgDao = new ImageBlockDao();
-
-    public void setCreatingDoc(boolean bool){this.creatingDoc = bool;}
-
-    public boolean getCreatingDoc(){
-        return creatingDoc;
-    }
 
     // ----- Getters and setters -----
     public boolean isTextEditorActive() {
         return textEditorActive;
     }
+    public TextArea getTextArea() {
+        return textArea;
+    }
+    public boolean getCreatingDoc(){
+        return creatingDoc;
+    }
+    public Menu getReturnButton() {
+        return returnButton;
+    }
     public void setTextEditorActive(boolean textEditorActive) {
         this.textEditorActive = textEditorActive;
     }
+    public void setCreatingDoc(boolean bool){this.creatingDoc = bool;}
 
+    // TODO Anne/cleanup: Mangler dokumentation
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void init(Stage myStage) {
-        this.stage = myStage;
-    }
-
-    public TextArea getTextArea() {
-        return textArea;
-    }
 
     /**
      * Method that saves content from text area in the database. The method has two different functions. Firstly,

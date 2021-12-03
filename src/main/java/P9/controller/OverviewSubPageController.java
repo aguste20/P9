@@ -15,6 +15,7 @@ import java.util.*;
 
 public class OverviewSubPageController implements Initializable {
 
+    // ----- Properties -----
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private OverviewSubPageController overviewSubPageController;
@@ -23,15 +24,13 @@ public class OverviewSubPageController implements Initializable {
     private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
+    // FXML elements
+    @FXML private Button refreshTocButton; // Button to refresh the table of contents
+    @FXML private TreeView<Header> tocView; // The tree view that holds all header elements
+
     private List<Header> allH1s = new ArrayList<>(); // All h1 headers in the text
     private List<Header> allH2s = new ArrayList<>(); // All h2 headers in the text
     private String text; // Text from the textarea
-
-    @FXML
-    private Button refreshTocButton; // Button to refresh the table of contents
-
-    @FXML
-    private TreeView<Header> tocView; // The tree view that holds all header elements
 
     /**
      * Method that initializes a controller object after its root element has been loaded.
@@ -45,20 +44,7 @@ public class OverviewSubPageController implements Initializable {
         prepareToc();
     }
 
-    /**
-     * Helper method that prepares the toc tree view
-     * by creating a root node (mandatory)
-     * and sets a cell factory for the tree view cells
-     */
-    private void prepareToc() {
-        // Create root for toc tree view
-        createTocTreeViewRoot();
-
-        // Set cell factory on tree view, so it displays header strings in its cells
-        setCellFactoryOnTocView();
-    }
-
-
+    // ----- Public instance methods -----
     /**
      * Method that updates the table of contents
      */
@@ -103,6 +89,33 @@ public class OverviewSubPageController implements Initializable {
         }
     }
 
+    /**
+     * Method that gets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
+    }
+
+    // ----- Private instance methods -----
+
+    /**
+     * Helper method that prepares the toc tree view
+     * by creating a root node (mandatory)
+     * and sets a cell factory for the tree view cells
+     */
+    private void prepareToc() {
+        // Create root for toc tree view
+        createTocTreeViewRoot();
+
+        // Set cell factory on tree view, so it displays header strings in its cells
+        setCellFactoryOnTocView();
+    }
 
     /**
      * Overloaded method that returns a list of headers for the type
@@ -198,11 +211,10 @@ public class OverviewSubPageController implements Initializable {
 
 
     /**
-     * Event handler for toc tree view.
-     * Is called when user clicks item in tree view.
      * Moves cursor to selected header in active window
+     * Is called when user clicks item in tree view.
      */
-    @FXML
+    @FXML // Event handler for toc tree view
     private void setCursorToSelectedHeader(){
         //Get selected header
         Header h = tocView.getSelectionModel().getSelectedItem().getValue();
@@ -272,19 +284,6 @@ public class OverviewSubPageController implements Initializable {
                 "}" +
                 "" +
                 "placeCaretAtEnd( document.querySelectorAll('h"+ type +"').item("+ index +") );");
-    }
-
-    /**
-     * Method that gets references to other controllers
-     * to be able to pass data between them
-     */
-    public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
-        this.textEditorController = Main.getTextEditorController();
     }
 
 

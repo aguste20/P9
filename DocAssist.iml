@@ -12,7 +12,7 @@
       </configuration>
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_17">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_15">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -53,5 +53,13 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-web:win:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-media:17.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-media:win:17.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.14.3" level="project" />
+    <orderEntry type="library" name="Maven: org.xhtmlrenderer:flying-saucer-pdf:9.1.22" level="project" />
+    <orderEntry type="library" name="Maven: com.lowagie:itext:2.1.7" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcmail-jdk14:1.64" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcpkix-jdk14:1.64" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bctsp-jdk14:1.46" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk14:1.64" level="project" />
+    <orderEntry type="library" name="Maven: org.xhtmlrenderer:flying-saucer-core:9.1.22" level="project" />
   </component>
 </module>

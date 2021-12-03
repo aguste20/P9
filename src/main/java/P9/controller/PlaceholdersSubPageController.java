@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
 //TODO Anne/cleanup: Mangler dokumentation
 
 public class PlaceholdersSubPageController implements Initializable {
-
+    // ----- Properties -----
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private MainPageController mainPageController;
@@ -24,32 +24,34 @@ public class PlaceholdersSubPageController implements Initializable {
     private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
-    public Label objName;
-    public Label objVersion;
-    public Label objLength;
-    public Label objHeight;
-    public Label objWidth;
-    public Label objWeight;
-    @FXML
-    private Label objComponents;
+    // FXML elements
+    @FXML private Label objName;
+    @FXML private Label objVersion;
+    @FXML private Label objLength;
+    @FXML private Label objHeight;
+    @FXML private Label objWidth;
+    @FXML private Label objWeight;
+    @FXML private Label objComponents;
+    @FXML private TextField imageTextField;
 
-    public String phColor = "yellow";
+    private String phColor; // Background color for placeholders in preview
+    private EObject eObject; // EObject the user is currently working on
 
-    @FXML
-    private TextField imageTextField;
 
-    //TODO Lav en liste over placeholders
-
-    private EObject eObject;
-
+    // ----- Getters and setters -----
     public void seteObject(EObject eObject) {
         this.eObject = eObject;
+    }
+    public String getPhColor() {
+        return phColor;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        phColor = "yellow";
     }
 
+    // ----- Instance methods -----
     /**
      * Adds values from the selected eObject to the labels next to buttons
      */
