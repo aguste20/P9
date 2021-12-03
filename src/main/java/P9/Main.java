@@ -120,7 +120,7 @@ public class Main extends Application {
 
         // Create new scene from main page root, set scene, and show stage
         scene = new Scene(mainPageParent);
-        stage.setTitle("Documentation Assist 😎");
+        stage.setTitle("ida901e21 - Documentation");
         //TODO Anne/cleanup: Skal der ske noget her?
         //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
         //stage.getIcons().add(icon);
@@ -231,7 +231,6 @@ public class Main extends Application {
         // Switch to preview page, so it is displayed to the user
         mainPageController.switchToPreviewSubPage();
 
-    }
 
     /**
      * Helper method that sets references to relevant instantiated controllers
