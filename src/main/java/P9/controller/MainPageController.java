@@ -360,7 +360,7 @@ public class MainPageController implements Initializable{
      */
     public void saveChanges(){
         //TODO: Her Anne :O!!!!
-        System.out.println("Hjælp jeg er en fisk!");
+        textEditorController.save();
     }
 
 }

@@ -84,7 +84,7 @@ public class TextEditorController implements Initializable {
      * This is controlled using a boolean and an if statement
      */
     @FXML
-    private void save() {
+    public void save() {
         if (creatingDoc) {
             saveDocumentation();
         }
@@ -136,11 +136,13 @@ public class TextEditorController implements Initializable {
                 //If the ContentBlock the user wanted to edit is a TextBlock this gets executed
                 else if (obj instanceof TextBlock) {
                     //Getting the TextBlock from the user inputs and saving in DB
-                    updateTextBlock(txtBlock, txt);
+                    System.out.println("Updated TextBlock");
+                    //updateTextBlock(txtBlock, txt);
                 }
                 else {
                     //Getting the ImageBlock from the user inputs and saving in DB
-                    updateImgBlock(img, txt);
+                    System.out.println("Updated ImageBlock");
+                    //updateImgBlock(img, txt);
                 }
         }
         mainPageController.setSavedAlertText("Saved ✅");
@@ -166,6 +168,12 @@ public class TextEditorController implements Initializable {
      *
      */
     public void saveDocumentation(){
+
+        if (!textEditorActive) {
+            System.out.println("Nu er vi inde i If-loop");
+            previewSubPageController.createTXTFromWebView();
+        }
+
         // Get text from text area
         String txt = textArea.getText();
 
@@ -177,7 +185,9 @@ public class TextEditorController implements Initializable {
 
         // Update the database with the changed doc
         EObjectDocDao dao = new EObjectDocDao();
+        System.out.println("Save or updated Doc");
         dao.addOrUpdateEObjectDoc(doc);
+        mainPageController.populateBox();
     }
 
     /**

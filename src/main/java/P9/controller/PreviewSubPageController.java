@@ -243,11 +243,11 @@ public class PreviewSubPageController implements Initializable {
                 "\n" +
                 //Buttons are created used for formatting and applied javascript function that allows formatting
                 "<button onclick=\"borto.command('bold')\">Bold</button>\n" +
-                "<button onclick=\"borto.command('italic')\"><i>I</i></button>\n" +
+                "<button onclick=\"borto.command('italic')\"><i>Italic</i></button>\n" +
                 "<select onchange=\"borto.command('heading', this.value); this.selectedIndex = 0;\">\n" +
-                "<option value=\"\">Title</option>\n" +
-                "<option value=\"h1\">Title 1</option>\n" +
-                "<option value=\"h2\">Title 2</option>\n" +
+                "<option value=\"\">Typography</option>\n" +
+                "<option value=\"h1\">Heading 1</option>\n" +
+                "<option value=\"h2\">Heading 2</option>\n" +
                 "</select>\n" +
                 "\n" +       "<span id=\"mySpan\" onLoad='document.getElementById(\"mySpan\").focus()' contenteditable=\"true\" coloronblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?> <xsl:text>";
 
