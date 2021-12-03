@@ -8,16 +8,19 @@ import javafx.scene.control.Button;
 
 public class DisplayContentBlock {
 
+    // ----- Properties -----
     private final ObjectProperty<ContentBlock> contentBlockProp = new SimpleObjectProperty<>();
     private final ObjectProperty<Button> buttonProp = new SimpleObjectProperty<>();
     private ObjectProperty<Button> editButtonProp = new SimpleObjectProperty<>();
 
+    // ----- Constructor -----
     public DisplayContentBlock(ContentBlock contentBlock, Button button, Button editBtn){
         this.contentBlockProp.set(contentBlock);
         this.buttonProp.set(button);
         this.editButtonProp.set(editBtn);
     }
 
+    // ----- Getters and setters -----
     public ContentBlock getContentBlock(){
         return contentBlockProp.get();
     }
