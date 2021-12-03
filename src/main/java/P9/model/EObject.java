@@ -191,7 +191,7 @@ public class EObject {
 
         // Set doc to equal template from database
         TextBlockDao txtDao = new TextBlockDao();
-        TextBlock txt = txtDao.getById(2);
+        TextBlock txt = txtDao.getById(4);
         doc.setXmlText(txt.getTxt());
 
     }
