@@ -185,13 +185,15 @@ public class ContentsSubPageController implements Initializable {
         mainPageController.eObjectLabel.setText("You are creating a Content Block");
         textEditorController.returnButton.setVisible(true);
         placeholdersSubPageController.callLabelsVisible();
-
     }
 
     /**
      * Called when user clicks "create new ContentBlock" in the GUI
      */
     public void createNewContentBlock() {
+        if(!textEditorController.isTextEditorActive()){
+            mainPageController.switchToTextEditorPage();
+        }
         createOrEditContentBlock();
         //Sets boolean which is used to check if a new ContentBlock is being created to true
         newCB = true;
