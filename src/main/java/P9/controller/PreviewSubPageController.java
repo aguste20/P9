@@ -154,7 +154,7 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll("</u>", "</u><xsl:text>")
                 .replaceAll("<p>", "</xsl:text><p>")
                 .replaceAll("></p>", "/></p><xsl:text>")
-                .replaceAll("<br>", " ")
+                .replaceAll("<br>", "</xsl:text><br/><xsl:text>")
                 .replaceAll(name, "</xsl:text><span id=\"name\" style=\"background-color: " + placeholdersSubPageController.phColor + ";\"><xsl:value-of select=\"eObject/name\"/>")
                 .replaceAll(version, "</xsl:text><span id=\"version\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/version\"/>")
                 .replaceAll(length, "</xsl:text><span id=\"length\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/length\"/>")
@@ -249,7 +249,7 @@ public class PreviewSubPageController implements Initializable {
                 "<option value=\"h1\">Title 1</option>\n" +
                 "<option value=\"h2\">Title 2</option>\n" +
                 "</select>\n" +
-                "\n" +       "<span id=\"mySpan\" onLoad='document.getElementById(\"mySpan\").focus()' contenteditable=\"true\" coloronblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?><xsl:text>";
+                "\n" +       "<span id=\"mySpan\" onLoad='document.getElementById(\"mySpan\").focus()' contenteditable=\"true\" coloronblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?> <xsl:text>";
 
         return  xslText;
     }
