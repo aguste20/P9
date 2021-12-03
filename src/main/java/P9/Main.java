@@ -214,7 +214,7 @@ public class Main extends Application {
         mainPageController.getPaneContentsPlaceholders().setContent(contentsSubPageParent);
     }
 
-    private void setValuesInMainPage(){
+    private void setValuesInMainPage() {
         // Set labels on placeholder page
         placeholdersSubPageController.setLabels();
 
@@ -230,8 +230,7 @@ public class Main extends Application {
 
         // Switch to preview page, so it is displayed to the user
         mainPageController.switchToPreviewSubPage();
-
-
+    }
     /**
      * Helper method that sets references to relevant instantiated controllers
      * by calling set methods in all controllers
