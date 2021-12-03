@@ -27,6 +27,7 @@ public class ContentsSubPageController implements Initializable {
     private TextEditorController textEditorController;
     private MainPageController mainPageController;
     private PlaceholdersSubPageController placeholdersSubPageController;
+    private OverviewSubPageController overviewSubPageController;
 
     // Attribute to hold the secondary stage for the "Register new Content Block" window
     //private Stage registerNewCBlockStage;
@@ -173,6 +174,7 @@ public class ContentsSubPageController implements Initializable {
             ImageBlock img = (ImageBlock) selectedCB;
             text.setText(img.getImagePath());
         }
+        overviewSubPageController.updateToc();
     }
 
     /**
@@ -180,6 +182,12 @@ public class ContentsSubPageController implements Initializable {
      * Also removes and changes certain functionality
      */
     public void createOrEditContentBlock() {
+        if(!textEditorController.isTextEditorActive()){
+            mainPageController.switchToTextEditorPage();
+        }
+        // Make eobject choice combo box invisble in main page
+        mainPageController.eObjectChoice.setVisible(false);
+
         textEditorController.setCreatingDoc(false);
         text.clear();
         mainPageController.eObjectLabel.setText("You are creating a Content Block");
@@ -191,13 +199,14 @@ public class ContentsSubPageController implements Initializable {
      * Called when user clicks "create new ContentBlock" in the GUI
      */
     public void createNewContentBlock() {
-        if(!textEditorController.isTextEditorActive()){
-            mainPageController.switchToTextEditorPage();
-        }
+
         createOrEditContentBlock();
         //Sets boolean which is used to check if a new ContentBlock is being created to true
         newCB = true;
-        mainPageController.setCheckedPreview(false);
+        //mainPageController.setCheckedPreview(false);
+        overviewSubPageController.updateToc();
+
+
     }
 
     /**
@@ -208,6 +217,7 @@ public class ContentsSubPageController implements Initializable {
         this.textEditorController = Main.getTextEditorController();
         this.mainPageController = Main.getMainPageController();
         this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
     }
 }
 
