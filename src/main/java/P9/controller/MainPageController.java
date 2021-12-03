@@ -280,27 +280,35 @@ public class MainPageController implements Initializable{
 
     //TODO Anne/cleanup: Mangler dokumentation
     public void switchToPreviewSubPage(){
-        // Update table of contents
-        overviewSubPageController.updateToc();
+        if(!textEditorController.isTextEditorActive()){ // Preview is already the active window
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Illegal action");
+            alert.setHeaderText("You are already viewing Preview");
+            alert.showAndWait();
+        }
+        else { // Text editor is active window, switch scene
+            // Update table of contents
+            overviewSubPageController.updateToc();
 
-        previewSubPageController.createXslFromTextArea();
+            previewSubPageController.createXslFromTextArea();
 
-        paneTextEditor.setContent(Main.getPreviewSubPageParent());
+            paneTextEditor.setContent(Main.getPreviewSubPageParent());
 
-        //Main.getPlaceholdersSubPageController().setTextEditor(false);
-        textEditorController.setTextEditorActive(false);
-        checkedPreview = true;
+            //Main.getPlaceholdersSubPageController().setTextEditor(false);
+            textEditorController.setTextEditorActive(false);
+            checkedPreview = true;
+        }
     }
 
     // TODO Anne/cleanup: Mangler dokumentation
     public void switchToTextEditorPage() {
-        if(textEditorController.isTextEditorActive()){
+        if(textEditorController.isTextEditorActive()){ // Text editor is already active window
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Illegal action");
             alert.setHeaderText("You are already viewing Source Text");
             alert.showAndWait();
         }
-        else {
+        else { // Preview is active window, switch scene
             if (textEditorController.getCreatingDoc()) {
                 //loads webview, if it contains any content
                 if (Main.getEngine() != null) {
