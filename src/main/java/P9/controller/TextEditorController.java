@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import org.w3c.dom.Text;
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -100,21 +101,34 @@ public class TextEditorController implements Initializable {
                 //Checks if a new Content Block is being created
                 if (contentsSubPageController.isNewCB()) {
                     //Checks whether there are any results
-                    createDialogBox().ifPresent((Results results) ->{
-                        //If the user chose the "Text" option in the Combobox this code is executed
-                        if(results.choice.equals("Text")) {
-                            //The TextBlock Object gets filled with user data and gets saved in DB
-                            txtBlock.setName(results.text);
-                            txtBlock.setTxt(txt);
-                            txtDao.addOrUpdateTxt(txtBlock);
-                        }
-                        else{
-                            //The ImageBlock gets filled with user data and gets saved in DB
-                            img.setName(results.choice);
-                            img.setImagePath(txt);
-                            imgDao.addOrUpdateImg(img);
-                        }
-                    });
+                    Dialog<Results> dialog = createDialogBox();
+                    Optional<Results> result = dialog.showAndWait();
+
+                    if (result.isEmpty()){
+
+                        return;
+                    }
+
+
+                        result.ifPresent((Results results) -> {
+                            //If the user chose the "Text" option in the Combobox this code is executed
+                            if (results.choice == null) {
+                                throw new NullPointerException();
+                            }
+                            if (results.choice.equals("Text")) {
+                                //The TextBlock Object gets filled with user data and gets saved in DB
+                                txtBlock.setName(results.text);
+                                txtBlock.setTxt(txt);
+                                System.out.println("gemt text");
+                                //txtDao.addOrUpdateTxt(txtBlock);
+                            } else {
+                                //The ImageBlock gets filled with user data and gets saved in DB
+                                img.setName(results.choice);
+                                img.setImagePath(txt);
+                                System.out.println("gemt Img");
+                                //imgDao.addOrUpdateImg(img);
+                            }
+                        });
                     //Setting the boolean used for checking if new content block back to false
                     contentsSubPageController.setNewCB(false);
                     contentsSubPageController.makeContentBlockList();
@@ -185,7 +199,7 @@ public class TextEditorController implements Initializable {
     }
 
     //TODO Anne/cleanup: Mangler dokumentation
-    public Optional<Results> createDialogBox(){
+    public Dialog<Results> createDialogBox(){
         //Creates a Dialog that is displayed in the GUI when the user is creating new Content Block and
         //presses save
         Dialog<Results> td = new Dialog<>();
@@ -216,8 +230,7 @@ public class TextEditorController implements Initializable {
             return null;
         });
         //Storing the results
-        Optional<Results> result = td.showAndWait();
-        return result;
+        return td;
     }
 
     //TODO Anne/cleanup: Mangler dokumentation
