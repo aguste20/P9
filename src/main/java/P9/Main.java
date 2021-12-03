@@ -15,6 +15,11 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 
+/**
+ * Main is the executable class.
+ * Main extends JavaFx.Application, and launches the application when executed.
+ * It holds static references to all view and controller instances.
+ */
 public class Main extends Application {
 
     // Root elements holding loaded .fxml files.
@@ -71,7 +76,7 @@ public class Main extends Application {
     public static RegisterNewContentBlockController getRegisterNewContentBlockController() { return registerNewContentBlockController; }
     public static PreviewSubPageController getPreviewSubPageController() {return previewSubPageController;}
 
-    // Webview and webengine
+    // Getters for Webview and Webengine
     public static WebView getWebview() {
         return webview;
     }
@@ -83,6 +88,7 @@ public class Main extends Application {
     /**
      * Overrides the init() method inherited from Application.
      * Loads all .fxml files into memory and stores static references to them
+     * Sets references to relevant controllers in all instantiated controllers
      * Calls this.start()
      * @throws IOException if loading fxml files fails
      */
@@ -97,13 +103,13 @@ public class Main extends Application {
 
     /**
      * Implements abstract method inherited from Application
-     * Starts the application. Sets stage, scene and root to hold contents.
+     * Starts the application.
+     * Sets stage, scene and root to hold contents.
      * @param stage primary stage provided by this.launch()
      */
     @Override
     public void start(Stage stage) {
-
-        // Load webview to display preview
+        // Load webview to display preview sub page
         loadWebViewInPreviewSubPage();
 
         // Set content roots in main page
@@ -115,7 +121,7 @@ public class Main extends Application {
         // Create new scene from main page root, set scene, and show stage
         scene = new Scene(mainPageParent);
         stage.setTitle("ida901e21 - Documentation");
-        //TODO Anne: Skal der ske noget her?
+        //TODO Anne/cleanup: Skal der ske noget her?
         //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
         //stage.getIcons().add(icon);
         stage.setScene(scene);
@@ -195,8 +201,7 @@ public class Main extends Application {
     }
 
     /**
-     * Method that sets content in the main page.
-     * Adds textEditor, overView, and contentsPlaceholders roots to main page
+     * Method that sets content in the main page to display to the user upon launch
      */
     private void setContentInMainPage() {
         //Inserts the textEditor into the middle Pane of the main page.
@@ -220,13 +225,11 @@ public class Main extends Application {
         contentsSubPageController.setText(textEditorController.getTextArea());
         contentsSubPageController.makeContentBlockList();
 
-        // Set text editor as window
+        // Set text editor as active window
         textEditorController.setTextEditorActive(true);
 
         // Switch to preview page, so it is displayed to the user
         mainPageController.switchToPreviewSubPage();
-
-    }
 
 
     /**

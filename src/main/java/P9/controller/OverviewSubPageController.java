@@ -11,6 +11,8 @@ import javafx.util.StringConverter;
 import java.net.URL;
 import java.util.*;
 
+//TODO Anne/cleanup: Mangler dokumentation
+
 public class OverviewSubPageController implements Initializable {
 
     // References to other controllers
@@ -272,6 +274,19 @@ public class OverviewSubPageController implements Initializable {
                 "placeCaretAtEnd( document.querySelectorAll('h"+ type +"').item("+ index +") );");
     }
 
+    /**
+     * Method that gets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
+    }
+
 
     /**
      * Inner class that represents a header
@@ -341,19 +356,6 @@ public class OverviewSubPageController implements Initializable {
         private void headerToTreeItem(){
             treeItem = new TreeItem<>(this);
         }
-    }
-
-    /**
-     * Method that gets references to other controllers
-     * to be able to pass data between them
-     */
-    public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
-        this.textEditorController = Main.getTextEditorController();
     }
 
 }
