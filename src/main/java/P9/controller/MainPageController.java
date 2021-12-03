@@ -294,30 +294,39 @@ public class MainPageController implements Initializable{
 
     // TODO Anne/cleanup: Mangler dokumentation
     public void switchToTextEditorPage() {
-        if (textEditorController.getCreatingDoc()) {
-            //loads webview, if it contains any content
-            if (Main.getEngine() != null) {
-                previewSubPageController.createTXTFromWebView();
-            }
-            paneTextEditor.setContent(Main.getTextEditorParent());
-            textEditorController.setTextEditorActive(true);
-
+        if(textEditorController.isTextEditorActive()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Illegal action");
+            alert.setHeaderText("You are already viewing Source Text");
+            alert.showAndWait();
         }
-        else{
-            if(checkedPreview){
+        else {
+            if (textEditorController.getCreatingDoc()) {
+                //loads webview, if it contains any content
                 if (Main.getEngine() != null) {
                     previewSubPageController.createTXTFromWebView();
                 }
                 paneTextEditor.setContent(Main.getTextEditorParent());
                 textEditorController.setTextEditorActive(true);
+
             }
-            else {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Illegal action");
-                alert.setHeaderText("This button cannot be pressed before checking preview");
-                alert.showAndWait();
+            else{
+                if(checkedPreview){
+                    if (Main.getEngine() != null) {
+                        previewSubPageController.createTXTFromWebView();
+                    }
+                    paneTextEditor.setContent(Main.getTextEditorParent());
+                    textEditorController.setTextEditorActive(true);
+                }
+                else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Illegal action");
+                    alert.setHeaderText("This button cannot be pressed before checking preview");
+                    alert.showAndWait();
+                }
             }
         }
+
     }
 
     //TODO Anne/Cleanup: Mangler dokumentation
