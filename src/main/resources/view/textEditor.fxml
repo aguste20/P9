@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -21,13 +20,13 @@
                 <menus>
                     <Menu mnemonicParsing="false">
                <graphic>
-                  <Label onMouseClicked="#save" text="Save" />
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#save" text="Save" />
                </graphic>
             </Menu>
                     <Menu mnemonicParsing="false" text="Typography">
                         <items>
-                            <CheckMenuItem fx:id="h1" mnemonicParsing="false" onAction="#createHeader" text="Heading 1 ( 30px )" />
-                            <CheckMenuItem fx:id="h2" mnemonicParsing="false" onAction="#createHeader" text="Heading 2 ( 30px )" />
+                  <MenuItem fx:id="h1" mnemonicParsing="false" onAction="#createHeader" text="Heading 1" />
+                  <MenuItem fx:id="h2" mnemonicParsing="false" onAction="#createHeader" text="Heading 2" />
                         </items>
                     </Menu>
             <Menu fx:id="returnButton" mnemonicParsing="false" onAction="#returnToDoc" text="Return to eObject documentation" visible="false">

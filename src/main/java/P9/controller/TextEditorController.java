@@ -280,7 +280,7 @@ public class TextEditorController implements Initializable {
     @FXML
     public void createHeader(ActionEvent e) {
         // Get chosen menuitem (header from typography drop down)
-        String choice = ((CheckMenuItem) e.getSource()).getId();
+        String choice = ((MenuItem) e.getSource()).getId();
 
         switch (choice) {
             case "h1": // If 'h1' is selected, surround selected text with h1 tag
