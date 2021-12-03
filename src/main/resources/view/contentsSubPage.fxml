@@ -48,7 +48,7 @@
         <columns>
           <TableColumn fx:id="insertCBlockButton" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="Insert" />
           <TableColumn fx:id="cBlockNameColumn" maxWidth="1.7976931348623157E308" minWidth="50.0" prefWidth="208.0" text="Name" />
-            <TableColumn fx:id="editCBColumn" maxWidth="-1.0" minWidth="43.0" prefWidth="-1.0" text="Edit" />
+            <TableColumn fx:id="editCBColumn" maxWidth="-1.0" minWidth="45.0" prefWidth="-1.0" text="Edit" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
