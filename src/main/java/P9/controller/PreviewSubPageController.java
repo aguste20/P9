@@ -22,11 +22,10 @@ public class PreviewSubPageController implements Initializable {
     private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
-    @FXML
-    public GridPane webGridPane;
+    // FXML Element
+    @FXML private GridPane webGridPane;
 
-    //private WebEngine engine;
-
+    // ----- Getter -----
     public GridPane getWebGridPane() {
         return webGridPane;
     }
