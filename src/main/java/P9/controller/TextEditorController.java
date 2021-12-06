@@ -266,7 +266,7 @@ public class TextEditorController implements Initializable {
         returnButton.setVisible(false);
         mainPageController.changeEObject();
         placeholdersSubPageController.updateEObjectValues();
-        mainPageController.eObjectChoice.setVisible(true);
+        mainPageController.geteObjectChoice().setVisible(true);
     }
 
     //TODO Anne/cleanup: Mangler dokumentation

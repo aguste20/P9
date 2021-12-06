@@ -35,7 +35,7 @@ public class ContentsSubPageController implements Initializable {
     @FXML private TableColumn<DisplayContentBlock, String> cBlockNameColumn;
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
     @FXML private TableColumn<DisplayContentBlock, String> editCBColumn;
-    @FXML public ComboBox<ContentBlock> cbEdit;
+    @FXML private ComboBox<ContentBlock> cbEdit;
 
     // Local DAO instance
     private ContentBlockDao cbdao = new ContentBlockDao();
@@ -47,21 +47,21 @@ public class ContentsSubPageController implements Initializable {
     private TextArea text; // Reference to the text area in text editor
     private boolean newCB = false; // Is the user currently creating a new content block?
     private ContentBlock selectedCB; // Selected content block from content block list
-    public String txt; //TODO Anne/cleanup: jeg aner ikke hvad den her dækker over
+    private String txt; //TODO Anne/cleanup: jeg aner ikke hvad den her dækker over
 
 
     // ----- Getters and setters -----
-    public void setText(TextArea text) {
-        this.text = text;
+    public ContentBlock getSelectedCB() {
+        return selectedCB;
     }
     public boolean isNewCB() {
         return newCB;
     }
+    public void setText(TextArea text) {
+        this.text = text;
+    }
     public void setNewCB(boolean newCB) {
         this.newCB = newCB;
-    }
-    public ContentBlock getSelectedCB() {
-        return selectedCB;
     }
     public void setSelectedCB(ContentBlock selectedCB) {
         this.selectedCB = selectedCB;
@@ -180,11 +180,11 @@ public class ContentsSubPageController implements Initializable {
             mainPageController.switchToTextEditorPage();
         }
         // Make eobject choice combo box invisble in main page
-        mainPageController.eObjectChoice.setVisible(false);
+        mainPageController.geteObjectChoice().setVisible(false);
 
         textEditorController.setCreatingDoc(false);
         text.clear();
-        mainPageController.eObjectLabel.setText("You are creating a Content Block");
+        mainPageController.geteObjectLabel().setText("You are creating a Content Block");
         textEditorController.getReturnButton().setVisible(true);
         placeholdersSubPageController.callLabelsVisible();
     }

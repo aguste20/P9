@@ -68,11 +68,11 @@ public class MainPageController implements Initializable{
     @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
-    @FXML public ComboBox<EObject> eObjectChoice;
-    @FXML public Button exportPDFButton;
-    @FXML public Label eObjectLabel;
-    @FXML public Label lastEditLabel;
-    @FXML public Label lastUserLabel;
+    @FXML private ComboBox<EObject> eObjectChoice;
+    @FXML private Button exportPDFButton;
+    @FXML private Label eObjectLabel;
+    @FXML private Label lastEditLabel;
+    @FXML private Label lastUserLabel;
     @FXML private Label savedAlert;
 
     // Local DAO instances
@@ -81,7 +81,7 @@ public class MainPageController implements Initializable{
     private EObjectDao eDao = new EObjectDao();
 
     private EObject eObject; // Reference to the engineering object that the user is working on
-    String PDF_output = "src/main/resources/html2pdf.pdf"; // Path to pdf
+    private String PDF_output = "src/main/resources/html2pdf.pdf"; // Path to pdf
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
@@ -94,6 +94,12 @@ public class MainPageController implements Initializable{
     public UserDao getUserDAO() { return userDAO; }
     public Label getSavedAlert() {
         return savedAlert;
+    }
+    public ComboBox<EObject> geteObjectChoice() {
+        return eObjectChoice;
+    }
+    public Label geteObjectLabel() {
+        return eObjectLabel;
     }
 
 
