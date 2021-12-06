@@ -182,6 +182,7 @@ public class MainPageController implements Initializable{
      * It changes the eObject values to the currently selected by changing the
      * label, the placeholder values, the TextEditor, and the preview page.
      */
+    @FXML
     public void changeEObject() {
         eObject = eObjectChoice.getValue();
         loadEObject();
