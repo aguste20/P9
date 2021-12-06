@@ -42,6 +42,7 @@ public class TextEditorController implements Initializable {
     // Local DAO instances
     private TextBlockDao txtDao = new TextBlockDao();
     private ImageBlockDao imgDao = new ImageBlockDao();
+    private EObjectDocDao eObjectDocDao = new EObjectDocDao();
 
     private EObject eObject;
     private EObjectDoc doc;
@@ -213,9 +214,8 @@ public class TextEditorController implements Initializable {
         doc.setLastEdit(Date.valueOf(LocalDate.now()));
 
         // Update the database with the changed doc
-        EObjectDocDao dao = new EObjectDocDao();
         System.out.println("Save or updated Doc");
-        dao.addOrUpdateEObjectDoc(doc);
+        eObjectDocDao.addOrUpdateEObjectDoc(doc);
         mainPageController.populateBox();
     }
 
