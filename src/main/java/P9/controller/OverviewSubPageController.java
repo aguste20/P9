@@ -33,6 +33,19 @@ public class OverviewSubPageController implements Initializable {
     private String text; // Text from the textarea
 
     /**
+     * Method that sets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
+    }
+
+    /**
      * Method that initializes a controller object after its root element has been loaded.
      * Inherited from Initializable.
      * @param url
@@ -48,6 +61,7 @@ public class OverviewSubPageController implements Initializable {
     /**
      * Method that updates the table of contents
      */
+    @FXML
     public void updateToc() {
         allH1s.clear();
         allH2s.clear();
@@ -89,18 +103,6 @@ public class OverviewSubPageController implements Initializable {
         }
     }
 
-    /**
-     * Method that gets references to other controllers
-     * to be able to pass data between them
-     */
-    public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
-        this.textEditorController = Main.getTextEditorController();
-    }
 
     // ----- Private instance methods -----
 

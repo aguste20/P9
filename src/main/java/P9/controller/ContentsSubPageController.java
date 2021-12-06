@@ -47,7 +47,7 @@ public class ContentsSubPageController implements Initializable {
     private TextArea text; // Reference to the text area in text editor
     private boolean newCB = false; // Is the user currently creating a new content block?
     private ContentBlock selectedCB; // Selected content block from content block list
-    private String txt; //TODO Anne/cleanup: jeg aner ikke hvad den her dækker over
+    private String txt;
 
 
     // ----- Getters and setters -----
@@ -65,6 +65,17 @@ public class ContentsSubPageController implements Initializable {
     }
     public void setSelectedCB(ContentBlock selectedCB) {
         this.selectedCB = selectedCB;
+    }
+
+    /**
+     * Method that sets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.textEditorController = Main.getTextEditorController();
+        this.mainPageController = Main.getMainPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
     }
 
     /**
@@ -136,8 +147,9 @@ public class ContentsSubPageController implements Initializable {
 
     }
 
+    // ----- Private instance methods -----
     // TODO Anne/cleanup: Mangler dokumentation
-    public void insertContentBlockInHTML(String cb) {
+    private void insertContentBlockInHTML(String cb) {
         Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
                 "var selectionContents = range.extractContents();" +
                 "var span = document.createElement(\"span\");" +
@@ -151,14 +163,14 @@ public class ContentsSubPageController implements Initializable {
      * Gets caret position from TextEditorController
      * @return Returns caret position
      */
-    public int getCaretPosition(){
+    private int getCaretPosition(){
         return textEditorController.getTextArea().getCaretPosition();
     }
 
     /**
      * Called when user clicks on a ContentBlock they want to edit in the GUI
      */
-    public void editContentBlock() {
+    private void editContentBlock() {
         createOrEditContentBlock();
         //If the ContentBlock they clicked on is a TextBlock this is executed
         if(selectedCB instanceof TextBlock txtBlock) {
@@ -175,7 +187,7 @@ public class ContentsSubPageController implements Initializable {
      * Changes a number of things in the GUI to show user they are creating a ContentBlock
      * Also removes and changes certain functionality
      */
-    public void createOrEditContentBlock() {
+    private void createOrEditContentBlock() {
         if(!textEditorController.isTextEditorActive()){
             mainPageController.switchToTextEditorPage();
         }
@@ -192,26 +204,12 @@ public class ContentsSubPageController implements Initializable {
     /**
      * Called when user clicks "create new ContentBlock" in the GUI
      */
-    public void createNewContentBlock() {
-
+    @FXML private void createNewContentBlock() {
         createOrEditContentBlock();
         //Sets boolean which is used to check if a new ContentBlock is being created to true
         newCB = true;
         //mainPageController.setCheckedPreview(false);
         overviewSubPageController.updateToc();
-
-
-    }
-
-    /**
-     * Method that gets references to other controllers
-     * to be able to pass data between them
-     */
-    public void setControllers(){
-        this.textEditorController = Main.getTextEditorController();
-        this.mainPageController = Main.getMainPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
     }
 }
 

@@ -46,6 +46,20 @@ public class PlaceholdersSubPageController implements Initializable {
         return phColor;
     }
 
+    /**
+     * Method that sets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.mainPageController = Main.getMainPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         phColor = "yellow";
@@ -75,11 +89,34 @@ public class PlaceholdersSubPageController implements Initializable {
     }
 
     /**
+     * runs script to insert picture at caret position.
+     * the picture is inserted inside p tags as a string containing the image source
+     * @param src image source
+     */
+    public void insertImage(String src){
+
+        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
+                "var image = '<p><img src=" + src + " width=\"500\"/></p>';\n" +
+                "node = range.createContextualFragment(image);\n" +
+                "range.insertNode(node);");
+    }
+
+    /**
+     * Updates the eObject labels in the GUI with the latest eObject values from DB
+     */
+    public void updateEObjectValues(){
+        eObject = mainPageController.geteObject();
+        callLabelsVisible();
+        setLabels();
+    }
+
+    // ----- Private instance methods -----
+    /**
      * Changes the visibility of the labels displaying the eObject's values, depending on the
      * creating doc variable from TextEditorController
      * @param nodes The method can take an unlimited number of arguments of type node
      */
-    public void setLabelsVisible(Node... nodes){
+    private void setLabelsVisible(Node... nodes){
         for (Node node : nodes){
             if (!textEditorController.getCreatingDoc()){
                 node.setVisible(false);
@@ -97,7 +134,8 @@ public class PlaceholdersSubPageController implements Initializable {
      * @param e ActionEvent is defined in the fxml. Method activates when button in GUI
      *          is pressed
      */
-    public void insertPlaceholder(ActionEvent e) {
+    @FXML
+    private void insertPlaceholder(ActionEvent e) {
         String choice = ((Button) e.getSource()).getId();
 
         TextArea text = textEditorController.getTextArea();
@@ -174,7 +212,7 @@ public class PlaceholdersSubPageController implements Initializable {
      * @param pn placeholder name, used as id
      * @param color background color for placeholder in html. Making it recognisable
      */
-    public void insertPlaceholderInHtml(String ph, String pn, String color){
+    private void insertPlaceholderInHtml(String ph, String pn, String color){
         Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
                 "var selectionContents = range.extractContents();" +
                 "var span = document.createElement(\"span\");" +
@@ -184,41 +222,4 @@ public class PlaceholdersSubPageController implements Initializable {
                 "span.appendChild(selectionContents);" +
                 "range.insertNode(span);");
     }
-
-    /**
-     * runs script to insert picture at caret position.
-     * the picture is inserted inside p tags as a string containing the image source
-     * @param src image source
-     */
-    public void insertImage(String src){
-
-        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
-                "var image = '<p><img src=" + src + " width=\"500\"/></p>';\n" +
-                "node = range.createContextualFragment(image);\n" +
-                "range.insertNode(node);");
-    }
-
-    /**
-     * Updates the eObject labels in the GUI with the latest eObject values from DB
-     */
-    public void updateEObjectValues(){
-        eObject = mainPageController.geteObject();
-        callLabelsVisible();
-        setLabels();
-    }
-
-    /**
-     * Method that gets references to other controllers
-     * to be able to pass data between them
-     */
-    public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.mainPageController = Main.getMainPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
-        this.textEditorController = Main.getTextEditorController();
-    }
-
 }

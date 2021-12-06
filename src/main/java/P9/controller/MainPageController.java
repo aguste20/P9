@@ -102,6 +102,18 @@ public class MainPageController implements Initializable{
         return eObjectLabel;
     }
 
+    /**
+     * Method that sets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
+    }
 
     /**
      * This method initializes a controller after its root element has already been processed.
@@ -137,25 +149,6 @@ public class MainPageController implements Initializable{
     }
 
     /**
-     * Method used to change eObject when user changes in the GUI
-     */
-    public void loadEObject(){
-        if (eObject == null){
-            eObject = eDao.getById(1);
-        }
-
-        // Set name on label and combo box
-        String name = eObject.getName();
-        eObjectLabel.setText(name);
-        eObjectChoice.setPromptText(name);
-
-        // If eObject has no doc, create one for it, and set it to the template in the DB
-        if (eObject.getDoc() == null){
-            eObject.createNewDoc();
-        }
-    }
-
-    /**
      * Populates the ComboBox with all eObjects in the database
      */
     public void populateBox() {
@@ -183,16 +176,6 @@ public class MainPageController implements Initializable{
         });
     }
 
-    /**
-     * Fetches the eObject in the DB, when the update button is pressed in the GUI,
-     * thereby updating the eObject
-     */
-    public void updateEObject() {
-
-        eObject = eDao.getById(eObject.geteObjectId());
-        eObjectLabel.setText(eObject.getName());
-        placeholdersSubPageController.updateEObjectValues();
-    }
 
     /**
      * Method called when user changes eObject in the GUI ComboBox.
@@ -209,9 +192,41 @@ public class MainPageController implements Initializable{
     }
 
     /**
+     * Fetches the eObject in the DB, when the update button is pressed in the GUI,
+     * thereby updating the eObject
+     */
+    @FXML public void updateEObject() {
+
+        eObject = eDao.getById(eObject.geteObjectId());
+        eObjectLabel.setText(eObject.getName());
+        placeholdersSubPageController.updateEObjectValues();
+    }
+
+    // ----- Private instance methods -----
+    /**
+     * Method used to change eObject when user changes in the GUI
+     */
+    private void loadEObject(){
+        if (eObject == null){
+            eObject = eDao.getById(1);
+        }
+
+        // Set name on label and combo box
+        String name = eObject.getName();
+        eObjectLabel.setText(name);
+        eObjectChoice.setPromptText(name);
+
+        // If eObject has no doc, create one for it, and set it to the template in the DB
+        if (eObject.getDoc() == null){
+            eObject.createNewDoc();
+        }
+    }
+
+    /**
      * Converts the HTML in the fancy editor to a PDF document
      */
-    public void exportPDF() throws IOException {
+    @FXML
+    private void exportPDF() throws IOException {
         //Storing HTML from fancy editor in a String
         String inputHTML = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
 
@@ -245,7 +260,7 @@ public class MainPageController implements Initializable{
     /**
      * Method for inserting the date of the last time the document was saved.
      */
-    public void insertLastEditUserInLabels(){
+    private void insertLastEditUserInLabels(){
         // Get doc from eObject
         EObjectDoc doc = eObject.getDoc();
         //Variable that stores the last edit of the document.
@@ -265,8 +280,8 @@ public class MainPageController implements Initializable{
      * Method for saving the changes made to either contentBlocks,
      * the Source Text editor, or the Preview editor
      */
-    @FXML // Event handler for "Save changes" button
-    public void saveChanges(){
+    @FXML
+    private void saveChanges(){
         textEditorController.save();
     }
 
@@ -274,11 +289,14 @@ public class MainPageController implements Initializable{
      * Methods for changing the contents of the middle AnchorPane of the mainPage.fxml.
      * When user presses one of the buttons, the interface shows the associated viewfile.
      */
+
+    @FXML
     public void switchToPlaceholdersSubPage(){
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
 
     //TODO Anne/cleanup: Mangler dokumentation
+    @FXML
     public void switchToPreviewSubPage(){
         if(!textEditorController.isTextEditorActive()){ // Preview is already the active window
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -300,6 +318,7 @@ public class MainPageController implements Initializable{
     }
 
     // TODO Anne/cleanup: Mangler dokumentation
+    @FXML
     public void switchToTextEditorPage() {
         if(textEditorController.isTextEditorActive()){ // Text editor is already active window
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -320,22 +339,12 @@ public class MainPageController implements Initializable{
     }
 
     //TODO Anne/Cleanup: Mangler dokumentation
+    @FXML
     public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
 
-    /**
-     * Method that gets references to other controllers
-     * to be able to pass data between them
-     */
-    public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
-        this.textEditorController = Main.getTextEditorController();
-    }
+
 }
 
 
