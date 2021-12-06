@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 //TODO Anne/cleanup: Mangler dokumentation
 
 public class PreviewSubPageController implements Initializable {
-
+    // ----- Properties -----
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private MainPageController mainPageController;

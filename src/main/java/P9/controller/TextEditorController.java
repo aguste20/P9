@@ -146,6 +146,7 @@ public class TextEditorController implements Initializable {
     /**
      * Inner class used to get and store the user input from the dialog when user tries to save a new ContentBlock
      */
+    // TODO Anne: @mads hvorfor er denne klasse static?
     public static class Results{
 
         final String text;
