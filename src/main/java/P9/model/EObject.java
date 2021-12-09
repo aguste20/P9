@@ -52,7 +52,7 @@ public class EObject {
 
     // Maps a many-to-many relation between eObject and other eObjects (components), cascading all actions
     // An eObject has a list of all its "first-layer" components
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.EAGER)
     // The association uses the join/link table "e_object_has_e_object"
     @JoinTable(name = "e_object_has_e_object",
             // The two columns are foreign keys to id columns in the user table and the eObject table
