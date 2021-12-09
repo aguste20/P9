@@ -139,55 +139,55 @@ public class PlaceholdersSubPageController implements Initializable {
         String choice = ((Button) e.getSource()).getId();
 
         TextArea text = textEditorController.getTextArea();
-        int pos = textEditorController.getTextArea().getCaretPosition();
+        int pos = text.getCaretPosition();
 
-        boolean textEditorActive = textEditorController.isTextEditorActive();
+        boolean sourceTextActive = textEditorController.isSourceTextActive();
 
         switch (choice) {
             case "name":
-                if (textEditorActive) {
+                if (sourceTextActive) {
                     text.insertText(pos, "</xsl:text><span id=\"name\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/name\"/></span><xsl:text>");
                 } else {
                     insertPlaceholderInHtml(eObject.getName(), "name", phColor);
                 }
                 break;
             case "version":
-                if (textEditorActive) {
+                if (sourceTextActive) {
                     text.insertText(pos, "</xsl:text><span id=\"version\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/version\"/></span><xsl:text>");
                 } else {
                     insertPlaceholderInHtml(eObject.getVersion().toString(), "version", phColor);
                 }
                 break;
             case "length":
-                if (textEditorActive) {
+                if (sourceTextActive) {
                     text.insertText(pos, "</xsl:text><span id=\"length\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/length\"/></span><xsl:text>");
                 } else {
                     insertPlaceholderInHtml(eObject.getLength().toString(), "length", phColor);
                 }
                 break;
             case "height":
-                if (textEditorActive) {
+                if (sourceTextActive) {
                     text.insertText(pos, "</xsl:text><span id=\"height\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/height\"/></span><xsl:text>");
                 } else {
                     insertPlaceholderInHtml(eObject.getHeight().toString(), "height", phColor);
                 }
                 break;
             case "width":
-                if (textEditorActive) {
+                if (sourceTextActive) {
                     text.insertText(pos, "</xsl:text><span id=\"width\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/width\"/></span><xsl:text>");
                 } else {
                     insertPlaceholderInHtml(eObject.getWidth().toString(), "width", phColor);
                 }
                 break;
             case "weight":
-                if (textEditorActive) {
+                if (sourceTextActive) {
                     text.insertText(pos, "</xsl:text><span id=\"weight\" style=\"background-color: " + phColor + ";\"><xsl:value-of select=\"eObject/weight\"/></span><xsl:text>");
                 } else {
                     insertPlaceholderInHtml(eObject.getWeight().toString(), "weight", phColor);
                 }
                 break;
             case "image":
-                if (textEditorActive) {
+                if (sourceTextActive) {
                     text.insertText(pos, "</xsl:text><p><img src=\"" + imageTextField.getText() + "\" width=\"500\"/></p><xsl:text>");
                 } else {
                     insertImage(imageTextField.getText());
@@ -195,7 +195,7 @@ public class PlaceholdersSubPageController implements Initializable {
                 break;
             //insertImage("https://tailandfur.com/wp-content/uploads/2014/03/Funny-pictures-of-animals-41.jpg")
             case "components":
-                if (textEditorActive) {
+                if (sourceTextActive) {
                     // TODO next iteration: Insert in text area
                 } else {
                     // TODO next iteration: Insert in html

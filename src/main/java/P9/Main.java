@@ -1,8 +1,6 @@
 package P9;
 
 import P9.controller.*;
-import P9.model.User;
-import P9.persistence.UserDao;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +11,6 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 
 /**
  * Main is the executable class.
@@ -226,7 +223,7 @@ public class Main extends Application {
         contentsSubPageController.makeContentBlockList();
 
         // Set text editor as active window
-        textEditorController.setTextEditorActive(true);
+        textEditorController.setSourceTextActive(true);
 
         // Switch to preview page, so it is displayed to the user
         mainPageController.switchToPreviewSubPage();

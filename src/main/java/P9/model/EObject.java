@@ -196,7 +196,6 @@ public class EObject {
         TextBlockDao txtDao = new TextBlockDao();
         TextBlock txt = txtDao.getById(4);
         doc.setXmlText(txt.getTxt());
-
     }
 
     /**

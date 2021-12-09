@@ -3,7 +3,6 @@ package P9.controller;
 import P9.Main;
 import P9.model.*;
 import P9.persistence.*;
-import com.sun.jdi.InvocationException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,12 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -47,11 +42,11 @@ public class TextEditorController implements Initializable {
     private EObject eObject;
     private EObjectDoc doc;
     private boolean creatingDoc = true;
-    private boolean textEditorActive;
+    private boolean sourceTextActive;
 
     // ----- Getters and setters -----
-    public boolean isTextEditorActive() {
-        return textEditorActive;
+    public boolean isSourceTextActive() {
+        return sourceTextActive;
     }
     public TextArea getTextArea() {
         return textArea;
@@ -62,8 +57,8 @@ public class TextEditorController implements Initializable {
     public Menu getReturnButton() {
         return returnButton;
     }
-    public void setTextEditorActive(boolean textEditorActive) {
-        this.textEditorActive = textEditorActive;
+    public void setSourceTextActive(boolean sourceTextActive) {
+        this.sourceTextActive = sourceTextActive;
     }
     public void setCreatingDoc(boolean bool){this.creatingDoc = bool;}
 
@@ -199,7 +194,7 @@ public class TextEditorController implements Initializable {
      */
     private void saveDocumentation(){
 
-        if (!textEditorActive) {
+        if (!sourceTextActive) {
             System.out.println("Nu er vi inde i If-loop");
             previewSubPageController.createTXTFromWebView();
         }

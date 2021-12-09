@@ -3,43 +3,25 @@ package P9.controller;
 import P9.Main;
 import P9.model.EObject;
 import P9.model.EObjectDoc;
-import P9.model.TextBlock;
 import P9.model.User;
-import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDao;
 import P9.persistence.TextBlockDao;
 import P9.persistence.UserDao;
 import com.lowagie.text.DocumentException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.web.WebView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.StringConverter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import javax.persistence.Column;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,7 +29,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -299,7 +280,7 @@ public class MainPageController implements Initializable{
     //TODO Anne/cleanup: Mangler dokumentation
     @FXML
     public void switchToPreviewSubPage(){
-        if(!textEditorController.isTextEditorActive()){ // Preview is already the active window
+        if(!textEditorController.isSourceTextActive()){ // Preview is already the active window
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Illegal action");
             alert.setHeaderText("You are already viewing Preview");
@@ -314,14 +295,14 @@ public class MainPageController implements Initializable{
             paneTextEditor.setContent(Main.getPreviewSubPageParent());
 
             //Main.getPlaceholdersSubPageController().setTextEditor(false);
-            textEditorController.setTextEditorActive(false);
+            textEditorController.setSourceTextActive(false);
         }
     }
 
     // TODO Anne/cleanup: Mangler dokumentation
     @FXML
     public void switchToTextEditorPage() {
-        if(textEditorController.isTextEditorActive()){ // Text editor is already active window
+        if(textEditorController.isSourceTextActive()){ // Text editor is already active window
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Illegal action");
             alert.setHeaderText("You are already viewing Source Text");
@@ -334,7 +315,7 @@ public class MainPageController implements Initializable{
                     previewSubPageController.createTXTFromWebView();
                 }
                 paneTextEditor.setContent(Main.getTextEditorParent());
-                textEditorController.setTextEditorActive(true);
+                textEditorController.setSourceTextActive(true);
             }
         }
     }

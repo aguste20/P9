@@ -70,7 +70,7 @@ public class OverviewSubPageController implements Initializable {
         tocView.getRoot().getChildren().clear();
 
         // Get text from text area or preview html, depending on which view is currently active
-        if (textEditorController.isTextEditorActive()){ // If "Source text" window is active
+        if (textEditorController.isSourceTextActive()){ // If "Source text" window is active
             text = textEditorController.getTextArea().getText();
         }
         else { // If "Preview" window is active
@@ -222,7 +222,7 @@ public class OverviewSubPageController implements Initializable {
         Header h = tocView.getSelectionModel().getSelectedItem().getValue();
 
         // Move cursor to either text area window or preview window
-        if(textEditorController.isTextEditorActive()){ // If text editor window active
+        if(textEditorController.isSourceTextActive()){ // If text editor window active
             //Move cursor to selected header in text area
             setCursorInTextAreaAtIndex(h.startIndex);
         }

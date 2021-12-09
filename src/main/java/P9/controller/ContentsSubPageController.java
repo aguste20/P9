@@ -12,10 +12,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.StringConverter;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -112,14 +110,14 @@ public class ContentsSubPageController implements Initializable {
             insertBtn.setOnAction(actionEvent -> {
                     //If the current object in the cbList is a TextBlock this is executed
                     if(cbList.get(finalI1) instanceof TextBlock){
-                        if (textEditorController.isTextEditorActive()) {
+                        if (textEditorController.isSourceTextActive()) {
                             //Inserting the text at the caret position
                             text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt());
                         }
                         else {txt = ((TextBlock) cbList.get(finalI1)).getTxt().lines().collect(Collectors.joining(" ")); insertContentBlockInHTML(txt);}
                     }
                     else {
-                        if (textEditorController.isTextEditorActive()) {
+                        if (textEditorController.isSourceTextActive()) {
                             //Inserting the image at the caret position
                             text.insertText(getCaretPosition(), "</xsl:text><p><img src=\"" +
                                     ((ImageBlock) cbList.get(finalI1)).getImagePath() + "\" width=\"500\"/></p><xsl:text>");
@@ -188,7 +186,7 @@ public class ContentsSubPageController implements Initializable {
      * Also removes and changes certain functionality
      */
     private void createOrEditContentBlock() {
-        if(!textEditorController.isTextEditorActive()){
+        if(!textEditorController.isSourceTextActive()){
             mainPageController.switchToTextEditorPage();
         }
         // Make eobject choice combo box invisble in main page
