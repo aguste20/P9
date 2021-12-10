@@ -3,7 +3,6 @@ package P9.controller;
 import P9.Main;
 import P9.model.*;
 import P9.persistence.*;
-import com.sun.jdi.InvocationException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,12 +10,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import org.w3c.dom.Text;
 
 import java.io.*;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -25,7 +20,7 @@ import java.util.*;
 //TODO Anne/cleanup: Mangler dokumentation
 
 public class TextEditorController implements Initializable {
-
+    // ----- Properties -----
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private MainPageController mainPageController;
@@ -35,48 +30,57 @@ public class TextEditorController implements Initializable {
     private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
+    // FXML elements
+    @FXML private TextArea textArea;
+    @FXML private Menu returnButton;
 
-    @FXML
-    public TextArea textArea;
-
-    //@FXML public Menu save;
-    @FXML public Menu returnButton;
-
-    private Stage stage;
-    private final FileChooser fileChooser = new FileChooser();
+    // Local DAO instances
+    private TextBlockDao txtDao = new TextBlockDao();
+    private ImageBlockDao imgDao = new ImageBlockDao();
+    private EObjectDocDao eObjectDocDao = new EObjectDocDao();
 
     private EObject eObject;
     private EObjectDoc doc;
     private boolean creatingDoc = true;
-    private boolean textEditorActive;
-    private TextBlockDao txtDao = new TextBlockDao();
-    private ImageBlockDao imgDao = new ImageBlockDao();
+    private boolean sourceTextActive;
 
-    public void setCreatingDoc(boolean bool){this.creatingDoc = bool;}
-
+    // ----- Getters and setters -----
+    public boolean isSourceTextActive() {
+        return sourceTextActive;
+    }
+    public TextArea getTextArea() {
+        return textArea;
+    }
     public boolean getCreatingDoc(){
         return creatingDoc;
     }
-
-    // ----- Getters and setters -----
-    public boolean isTextEditorActive() {
-        return textEditorActive;
+    public Menu getReturnButton() {
+        return returnButton;
     }
-    public void setTextEditorActive(boolean textEditorActive) {
-        this.textEditorActive = textEditorActive;
+    public void setSourceTextActive(boolean sourceTextActive) {
+        this.sourceTextActive = sourceTextActive;
+    }
+    public void setCreatingDoc(boolean bool){this.creatingDoc = bool;}
+
+    /**
+     * Method that sets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.mainPageController = Main.getMainPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
     }
 
+    // TODO Anne/cleanup: Mangler dokumentation
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
-    public void init(Stage myStage) {
-        this.stage = myStage;
-    }
-
-    public TextArea getTextArea() {
-        return textArea;
-    }
 
     /**
      * Method that saves content from text area in the database. The method has two different functions. Firstly,
@@ -149,27 +153,48 @@ public class TextEditorController implements Initializable {
         removeSavedAlert();
     }
 
-    /**
-     * Inner class used to get and store the user input from the dialog when user tries to save a new ContentBlock
-     */
-    public static class Results{
+    //TODO Anne/cleanup: Mangler dokumentation
+    // sets the textArea to the text of the opened file
+    public void readText(File file) {
+        String text;
 
-        final String text;
-        final String choice;
-
-        public Results(String text, String choice){
-            this.text = text;
-            this.choice = choice;
+        try (BufferedReader buffReader = new BufferedReader(new FileReader(file))) {
+            while ((text = buffReader.readLine()) != null) {
+                textArea.appendText(text + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
+    /**
+     * Method that gets xml text from the loaded eObject
+     * and inserts it into the textArea
+     */
+    public void insertXmlTextInTextArea() {
+
+        textArea.clear();
+        // Get loaded eObject from mainPageController
+        eObject = mainPageController.geteObject();
+
+        // Get doc from eObject
+        doc = eObject.getDoc();
+
+        // Ensure that eObject, documentation, and xml text are not null
+        if (eObject != null && eObject.getDoc() != null && eObject.getDoc().getXmlText() != null) {
+            //Insert the loaded xml text at index 0
+            textArea.insertText(0, eObject.getDoc().getXmlText());
+        }
+    }
+
+    // ----- Private instance methods -----
     //TODO Anne/cleanup: Mangler dokumentation
     /**
      *
      */
-    public void saveDocumentation(){
+    private void saveDocumentation(){
 
-        if (!textEditorActive) {
+        if (!sourceTextActive) {
             System.out.println("Nu er vi inde i If-loop");
             previewSubPageController.createTXTFromWebView();
         }
@@ -184,9 +209,8 @@ public class TextEditorController implements Initializable {
         doc.setLastEdit(Date.valueOf(LocalDate.now()));
 
         // Update the database with the changed doc
-        EObjectDocDao dao = new EObjectDocDao();
         System.out.println("Save or updated Doc");
-        dao.addOrUpdateEObjectDoc(doc);
+        eObjectDocDao.addOrUpdateEObjectDoc(doc);
         mainPageController.populateBox();
     }
 
@@ -195,21 +219,22 @@ public class TextEditorController implements Initializable {
      * @param txtBlock
      * @param txt
      */
-    public void updateTextBlock(TextBlock txtBlock, String txt){
+    //TODO Anne/Cleanup: Mangler dokumentation
+    private void updateTextBlock(TextBlock txtBlock, String txt){
         txtBlock = (TextBlock) contentsSubPageController.getSelectedCB();
         txtBlock.setTxt(txt);
         txtDao.addOrUpdateTxt(txtBlock);
     }
 
     //TODO Anne/cleanup: Mangler dokumentation
-    public void updateImgBlock(ImageBlock img, String txt){
+    private void updateImgBlock(ImageBlock img, String txt){
         img = (ImageBlock) contentsSubPageController.getSelectedCB();
         img.setImagePath(txt);
         imgDao.addOrUpdateImg(img);
     }
 
     //TODO Anne/cleanup: Mangler dokumentation
-    public Dialog<Results> createDialogBox(){
+    private Dialog<Results> createDialogBox(){
         //Creates a Dialog that is displayed in the GUI when the user is creating new Content Block and
         //presses save
         Dialog<Results> td = new Dialog<>();
@@ -244,7 +269,7 @@ public class TextEditorController implements Initializable {
     }
 
     //TODO Anne/cleanup: Mangler dokumentation
-    public void removeSavedAlert(){
+    private void removeSavedAlert(){
         //Creates a new TimerTask that will set the "gemt" alert message to false after the TimerTask is over
         TimerTask task = new TimerTask() {
             @Override
@@ -266,33 +291,19 @@ public class TextEditorController implements Initializable {
      * is now editing in their documentation again.
      */
     @FXML
-    public void returnToDoc() {
+    private void returnToDoc() {
         creatingDoc = true;
         returnButton.setVisible(false);
         mainPageController.changeEObject();
         placeholdersSubPageController.updateEObjectValues();
-        mainPageController.eObjectChoice.setVisible(true);
-    }
-
-    //TODO Anne/cleanup: Mangler dokumentation
-    // sets the textArea to the text of the opened file
-    public void readText(File file) {
-        String text;
-
-        try (BufferedReader buffReader = new BufferedReader(new FileReader(file))) {
-            while ((text = buffReader.readLine()) != null) {
-                textArea.appendText(text + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        mainPageController.geteObjectChoice().setVisible(true);
     }
 
     /**
      * Method to enclose selected text in tags (<> </>)
      * @param tag String for the tag (eg. "h1")
      */
-    public void tagSelectedText(String tag){
+    private void tagSelectedText(String tag){
         // Get index range for selected text in text area
         IndexRange range = textArea.getSelection();
 
@@ -309,7 +320,7 @@ public class TextEditorController implements Initializable {
      * @param e Event fired by the dropdown menuitem
      */
     @FXML
-    public void createHeader(ActionEvent e) {
+    private void createHeader(ActionEvent e) {
         // Get chosen menuitem (header from typography drop down)
         String choice = ((MenuItem) e.getSource()).getId();
 
@@ -324,37 +335,17 @@ public class TextEditorController implements Initializable {
     }
 
     /**
-     * Method that gets xml text from the loaded eObject
-     * and inserts it into the textArea
+     * Inner class used to get and store the user input from the dialog when user tries to save a new ContentBlock
      */
-    public void insertXmlTextInTextArea() {
+    // TODO Anne: @mads hvorfor er denne klasse static?
+    public static class Results{
 
-        textArea.clear();
-        // Get loaded eObject from mainPageController
-        eObject = mainPageController.geteObject();
+        final String text;
+        final String choice;
 
-        // Get doc from eObject
-        doc = eObject.getDoc();
-
-        // Ensure that eObject, documentation, and xml text are not null
-        if (eObject != null && eObject.getDoc() != null && eObject.getDoc().getXmlText() != null) {
-            //Insert the loaded xml text at index 0
-            textArea.insertText(0, eObject.getDoc().getXmlText());
+        public Results(String text, String choice){
+            this.text = text;
+            this.choice = choice;
         }
-    }
-
-
-    /**
-     * Method that gets references to other controllers
-     * to be able to pass data between them
-     */
-    public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.mainPageController = Main.getMainPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
-        this.textEditorController = Main.getTextEditorController();
     }
 }

@@ -16,7 +16,6 @@ import java.util.List;
 public class Organisation {
 
     // ----- Properties -----
-
     @Id
     @Column(name = "organisation_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
@@ -34,7 +33,6 @@ public class Organisation {
     private List<User> userList = new ArrayList<>();
 
     // ----- Constructors -----
-
     /**
      * Empty constructor
      */
@@ -46,7 +44,6 @@ public class Organisation {
     }
 
     // ----- Getters and setters -----
-
     public Integer getOrganisationId() {
         return organisationId;
     }

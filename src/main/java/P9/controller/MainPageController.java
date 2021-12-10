@@ -3,43 +3,25 @@ package P9.controller;
 import P9.Main;
 import P9.model.EObject;
 import P9.model.EObjectDoc;
-import P9.model.TextBlock;
 import P9.model.User;
-import P9.persistence.ContentBlockDao;
 import P9.persistence.EObjectDao;
 import P9.persistence.TextBlockDao;
 import P9.persistence.UserDao;
 import com.lowagie.text.DocumentException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.web.WebView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.StringConverter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import javax.persistence.Column;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,7 +29,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -55,7 +36,7 @@ import java.util.ResourceBundle;
 
 public class MainPageController implements Initializable{
 
-
+    // ----- Properties -----
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private OverviewSubPageController overviewSubPageController;
@@ -64,62 +45,55 @@ public class MainPageController implements Initializable{
     private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
-    //We annotate the containers of the mainPage.fxml
+    // FXML elements
     @FXML private ScrollPane paneTextEditor;
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
-    //Annotating label and button
-
-    @FXML public ComboBox<EObject> eObjectChoice;
-    @FXML public Button exportPDFButton;
-
-    @FXML public Label eObjectLabel;
-    @FXML public Label lastEditLabel;
-    @FXML public Label lastUserLabel;
+    @FXML private ComboBox<EObject> eObjectChoice;
+    @FXML private Button exportPDFButton;
+    @FXML private Label eObjectLabel;
+    @FXML private Label lastEditLabel;
+    @FXML private Label lastUserLabel;
     @FXML private Label savedAlert;
 
-    // Reference to the engineering object that the user is working on
-    EObject eObject;
-    // Reference to DAO objects.
-    UserDao userDAO = new UserDao();
-    TextBlockDao txtDao = new TextBlockDao();
-    EObjectDao eDao = new EObjectDao();
-    //path to pdf
-    String PDF_output = "src/main/resources/html2pdf.pdf";
-    //boolean used for context blocks to check whether preview is checked or not
-    private boolean checkedPreview;
+    // Local DAO instances
+    private UserDao userDAO = new UserDao();
+    private TextBlockDao txtDao = new TextBlockDao();
+    private EObjectDao eDao = new EObjectDao();
 
+    private EObject eObject; // Reference to the engineering object that the user is working on
+    private String PDF_output = "src/main/resources/html2pdf.pdf"; // Path to pdf
 
     // ---- Getters ----
     // Returns the containers of the mainPage.fxml
     public ScrollPane getPaneTextEditor() { return paneTextEditor; }
     public ScrollPane getPaneOverviewSubPage() { return paneOverviewSubPage; }
     public ScrollPane getPaneContentsPlaceholders() { return paneContentsPlaceholders; }
-
     public EObject geteObject() {
         return eObject;
     }
     public UserDao getUserDAO() { return userDAO; }
-
-    public boolean isCheckedPreview() {
-        return checkedPreview;
-    }
-
-    public void setCheckedPreview(boolean checkedPreview) {
-        this.checkedPreview = checkedPreview;
-    }
-
     public Label getSavedAlert() {
         return savedAlert;
     }
-
-    public void setSavedAlertText(String text) {
-        this.savedAlert.setText(text);
-        savedAlert.setVisible(true);
+    public ComboBox<EObject> geteObjectChoice() {
+        return eObjectChoice;
+    }
+    public Label geteObjectLabel() {
+        return eObjectLabel;
     }
 
-    public void removeSavedAlert(){
-        savedAlert.setVisible(false);
+    /**
+     * Method that sets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
     }
 
     /**
@@ -130,7 +104,6 @@ public class MainPageController implements Initializable{
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-
         //Loads eObject selected by user in GUI
         loadEObject();
 
@@ -141,26 +114,19 @@ public class MainPageController implements Initializable{
         eObject.eObjectToXML();
 
         insertLastEditUserInLabels();
-
     }
 
-    /**
-     * Method used to change eObject when user changes in the GUI
-     */
-    public void loadEObject(){
-        if (eObject == null){
-            eObject = eDao.getById(1);
-        }
 
-        // Set name on label and combo box
-        String name = eObject.getName();
-        eObjectLabel.setText(name);
-        eObjectChoice.setPromptText(name);
+    // ----- Instance methods -----
+    // TODO Anne/cleanup: Mangler dokumentation
+    public void setSavedAlertText(String text) {
+        this.savedAlert.setText(text);
+        savedAlert.setVisible(true);
+    }
 
-        // If eObject has no doc, create one for it, and set it to the template in the DB
-        if (eObject.getDoc() == null){
-            eObject.createNewDoc();
-        }
+    // TODO Anne/cleanup: Mangler dokumentation
+    public void removeSavedAlert(){
+        savedAlert.setVisible(false);
     }
 
     /**
@@ -193,21 +159,11 @@ public class MainPageController implements Initializable{
 
 
     /**
-     * Fetches the eObject in the DB, when the update button is pressed in the GUI,
-     * thereby updating the eObject
-     */
-    public void updateEObject() {
-
-        eObject = eDao.getById(eObject.geteObjectId());
-        eObjectLabel.setText(eObject.getName());
-        placeholdersSubPageController.updateEObjectValues();
-    }
-
-    /**
      * Method called when user changes eObject in the GUI ComboBox.
      * It changes the eObject values to the currently selected by changing the
      * label, the placeholder values, the TextEditor, and the preview page.
      */
+    @FXML
     public void changeEObject() {
         eObject = eObjectChoice.getValue();
         loadEObject();
@@ -218,9 +174,41 @@ public class MainPageController implements Initializable{
     }
 
     /**
+     * Fetches the eObject in the DB, when the update button is pressed in the GUI,
+     * thereby updating the eObject
+     */
+    @FXML public void updateEObject() {
+
+        eObject = eDao.getById(eObject.geteObjectId());
+        eObjectLabel.setText(eObject.getName());
+        placeholdersSubPageController.updateEObjectValues();
+    }
+
+    // ----- Private instance methods -----
+    /**
+     * Method used to change eObject when user changes in the GUI
+     */
+    private void loadEObject(){
+        if (eObject == null){
+            eObject = eDao.getById(1);
+        }
+
+        // Set name on label and combo box
+        String name = eObject.getName();
+        eObjectLabel.setText(name);
+        eObjectChoice.setPromptText(name);
+
+        // If eObject has no doc, create one for it, and set it to the template in the DB
+        if (eObject.getDoc() == null){
+            eObject.createNewDoc();
+        }
+    }
+
+    /**
      * Converts the HTML in the fancy editor to a PDF document
      */
-    public void exportPDF() throws IOException {
+    @FXML
+    private void exportPDF() throws IOException {
         //Storing HTML from fancy editor in a String
         String inputHTML = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
 
@@ -254,7 +242,7 @@ public class MainPageController implements Initializable{
     /**
      * Method for inserting the date of the last time the document was saved.
      */
-    public void insertLastEditUserInLabels(){
+    private void insertLastEditUserInLabels(){
         // Get doc from eObject
         EObjectDoc doc = eObject.getDoc();
         //Variable that stores the last edit of the document.
@@ -271,16 +259,28 @@ public class MainPageController implements Initializable{
     }
 
     /**
+     * Method for saving the changes made to either contentBlocks,
+     * the Source Text editor, or the Preview editor
+     */
+    @FXML
+    private void saveChanges(){
+        textEditorController.save();
+    }
+
+    /**
      * Methods for changing the contents of the middle AnchorPane of the mainPage.fxml.
      * When user presses one of the buttons, the interface shows the associated viewfile.
      */
+
+    @FXML
     public void switchToPlaceholdersSubPage(){
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
 
     //TODO Anne/cleanup: Mangler dokumentation
+    @FXML
     public void switchToPreviewSubPage(){
-        if(!textEditorController.isTextEditorActive()){ // Preview is already the active window
+        if(!textEditorController.isSourceTextActive()){ // Preview is already the active window
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Illegal action");
             alert.setHeaderText("You are already viewing Preview");
@@ -295,14 +295,14 @@ public class MainPageController implements Initializable{
             paneTextEditor.setContent(Main.getPreviewSubPageParent());
 
             //Main.getPlaceholdersSubPageController().setTextEditor(false);
-            textEditorController.setTextEditorActive(false);
-            checkedPreview = true;
+            textEditorController.setSourceTextActive(false);
         }
     }
 
     // TODO Anne/cleanup: Mangler dokumentation
+    @FXML
     public void switchToTextEditorPage() {
-        if(textEditorController.isTextEditorActive()){ // Text editor is already active window
+        if(textEditorController.isSourceTextActive()){ // Text editor is already active window
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Illegal action");
             alert.setHeaderText("You are already viewing Source Text");
@@ -315,53 +315,17 @@ public class MainPageController implements Initializable{
                     previewSubPageController.createTXTFromWebView();
                 }
                 paneTextEditor.setContent(Main.getTextEditorParent());
-                textEditorController.setTextEditorActive(true);
-
-            }
-            else{
-                if(checkedPreview){
-                    if (Main.getEngine() != null) {
-                        previewSubPageController.createTXTFromWebView();
-                    }
-                    paneTextEditor.setContent(Main.getTextEditorParent());
-                    textEditorController.setTextEditorActive(true);
-                }
-                else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Illegal action");
-                    alert.setHeaderText("This button cannot be pressed before checking preview");
-                    alert.showAndWait();
-                }
+                textEditorController.setSourceTextActive(true);
             }
         }
-
     }
 
     //TODO Anne/Cleanup: Mangler dokumentation
+    @FXML
     public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());
     }
 
-    /**
-     * Method that gets references to other controllers
-     * to be able to pass data between them
-     */
-    public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
-        this.textEditorController = Main.getTextEditorController();
-    }
-
-    /**
-     * Method for saving the changes made to either contentBlocks, the Source Text editor, or the Preview editor
-     */
-    public void saveChanges(){
-        //TODO: Her Anne :O!!!!
-        textEditorController.save();
-    }
 
 }
 

@@ -20,8 +20,7 @@ public class TextBlock extends ContentBlock{
     // ----- Properties -----
     private String text;
 
-    // ----- Constructors -----
-
+    // ----- Constructor -----
     /**
      * Empty constructor
      */
@@ -33,7 +32,6 @@ public class TextBlock extends ContentBlock{
     }
 
     // ----- Getters and setters -----
-
     public String getTxt() {
         return text;
     }

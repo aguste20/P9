@@ -21,7 +21,6 @@ import java.util.List;
 public class EObjectDoc {
 
     // ----- Properties -----
-
     @Id
     @Column(name = "e_object_doc_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
@@ -53,8 +52,7 @@ public class EObjectDoc {
     @JoinColumn(name = "e_object_id", referencedColumnName = "e_object_id")
     private EObject eObject;
 
-    // ----- Constructors -----
-
+    // ----- Constructor -----
     /**
      * Empty constructor
      */
@@ -62,7 +60,6 @@ public class EObjectDoc {
     }
 
     // ----- Getters and setters -----
-
     public Integer geteObjectDocId() {
         return eObjectDocId;
     }

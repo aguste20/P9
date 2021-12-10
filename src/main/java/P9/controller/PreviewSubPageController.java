@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 //TODO Anne/cleanup: Mangler dokumentation
 
 public class PreviewSubPageController implements Initializable {
-
+    // ----- Properties -----
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private MainPageController mainPageController;
@@ -22,13 +22,26 @@ public class PreviewSubPageController implements Initializable {
     private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
-    @FXML
-    public GridPane webGridPane;
+    // FXML Element
+    @FXML private GridPane webGridPane;
 
-    //private WebEngine engine;
-
+    // ----- Getter -----
     public GridPane getWebGridPane() {
         return webGridPane;
+    }
+
+    /**
+     * Method that sets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.contentsSubPageController = Main.getContentsSubPageController();
+        this.mainPageController = Main.getMainPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.previewSubPageController = Main.getPreviewSubPageController();
+        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
+        this.textEditorController = Main.getTextEditorController();
     }
 
     /**
@@ -42,24 +55,7 @@ public class PreviewSubPageController implements Initializable {
     public void initialize(URL arg0, ResourceBundle arg1) {
     }
 
-    //TODO Anne/cleanup: Mangler dokumentation
-    public void overwriteFile(String fileString, String path){
-
-        // Write to file with string
-        File file = new File(path);
-
-        try {
-            PrintWriter savedText = new PrintWriter(file);
-            BufferedWriter out = new BufferedWriter(savedText);
-            out.write(fileString);
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
+    // ----- Instance methods -----
     /**
      * function used to create txt from textarea content
      * default start text is called through the function getXslText()
@@ -90,34 +86,6 @@ public class PreviewSubPageController implements Initializable {
 
     }
 
-    /**
-     * function called when converting html to txt/xsl/xml when we want to replace text inside tags
-     * we find the start tag and the id from which we determine the replacement value
-     * @param html string that contains the whole html content
-     * @param startTag string that contains the start tag
-     * @param closingTag string that contains the end tag
-     * @return
-     */
-    public String placeHolderReplacement(String html, String startTag, String closingTag){
-        int index = 0;
-        int endIndex = 0;
-
-        // string to contain substring when iterating through html
-        // default value is something that will have 0 occurrences
-        String change = "///%%%&&&";
-
-        // Store index and keep looking for occurrences, while any text left
-        while (index >= 0) {  // indexOf returns -1 if no match found
-
-            // Update indexes to match indexes for next occurrence
-            index = html.indexOf(startTag, index + startTag.length());
-            endIndex = html.indexOf(closingTag, index);
-            if (index>0) {
-                change = html.substring(index, endIndex);
-            }
-        }
-        return change;
-    }
 
     //TODO Anne/cleanup: Hvorfor ligger den her her?
     int i = 0;
@@ -129,7 +97,6 @@ public class PreviewSubPageController implements Initializable {
      * clears txt and inserts the new text
      */
     public void createTXTFromWebView() {
-
         //creates string from webview content
         String html = (String) Main.getEngine().executeScript("document.getElementById(\"mySpan\").innerHTML");
 
@@ -155,12 +122,12 @@ public class PreviewSubPageController implements Initializable {
                 .replaceAll("<p>", "</xsl:text><p>")
                 .replaceAll("></p>", "/></p><xsl:text>")
                 .replaceAll("<br>", "</xsl:text><br/><xsl:text>")
-                .replaceAll(name, "</xsl:text><span id=\"name\" style=\"background-color: " + placeholdersSubPageController.phColor + ";\"><xsl:value-of select=\"eObject/name\"/>")
-                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/version\"/>")
-                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/length\"/>")
-                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/height\"/>")
-                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/width\"/>")
-                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"background-color: "+ placeholdersSubPageController.phColor +";\"><xsl:value-of select=\"eObject/weight\"/>")
+                .replaceAll(name, "</xsl:text><span id=\"name\" style=\"background-color: " + placeholdersSubPageController.getPhColor() + ";\"><xsl:value-of select=\"eObject/name\"/>")
+                .replaceAll(version, "</xsl:text><span id=\"version\" style=\"background-color: "+ placeholdersSubPageController.getPhColor() +";\"><xsl:value-of select=\"eObject/version\"/>")
+                .replaceAll(length, "</xsl:text><span id=\"length\" style=\"background-color: "+ placeholdersSubPageController.getPhColor() +";\"><xsl:value-of select=\"eObject/length\"/>")
+                .replaceAll(height, "</xsl:text><span id=\"height\" style=\"background-color: "+ placeholdersSubPageController.getPhColor() +";\"><xsl:value-of select=\"eObject/height\"/>")
+                .replaceAll(width, "</xsl:text><span id=\"width\" style=\"background-color: "+ placeholdersSubPageController.getPhColor() +";\"><xsl:value-of select=\"eObject/width\"/>")
+                .replaceAll(weight, "</xsl:text><span id=\"weight\" style=\"background-color: "+ placeholdersSubPageController.getPhColor() +";\"><xsl:value-of select=\"eObject/weight\"/>")
                 .replaceAll("<span style", "</xsl:text><span style")
                 .replaceAll("</span>", "</span><xsl:text>");
 
@@ -175,13 +142,44 @@ public class PreviewSubPageController implements Initializable {
 
     }
 
+
+    // ----- Private instance methods -----
+    /**
+     * function called when converting html to txt/xsl/xml when we want to replace text inside tags
+     * we find the start tag and the id from which we determine the replacement value
+     * @param html string that contains the whole html content
+     * @param startTag string that contains the start tag
+     * @param closingTag string that contains the end tag
+     * @return
+     */
+    private String placeHolderReplacement(String html, String startTag, String closingTag){
+        int index = 0;
+        int endIndex = 0;
+
+        // string to contain substring when iterating through html
+        // default value is something that will have 0 occurrences
+        String change = "///%%%&&&";
+
+        // Store index and keep looking for occurrences, while any text left
+        while (index >= 0) {  // indexOf returns -1 if no match found
+
+            // Update indexes to match indexes for next occurrence
+            index = html.indexOf(startTag, index + startTag.length());
+            endIndex = html.indexOf(closingTag, index);
+            if (index>0) {
+                change = html.substring(index, endIndex);
+            }
+        }
+        return change;
+    }
+
     /**
      * contains default start text for the xsl file
      * output method is declared as html
      * two javascript functions is called. One, that temporary saves changes in engine. One that adds headers and formatting to buttons
      * @return
      */
-    public String getXslText(){
+    private String getXslText(){
         String xslText = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
                 "\n" +
                 "<xsl:stylesheet version=\"1.0\"\n" +
@@ -254,18 +252,22 @@ public class PreviewSubPageController implements Initializable {
         return  xslText;
     }
 
-    /**
-     * Method that gets references to other controllers
-     * to be able to pass data between them
-     */
-    public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.mainPageController = Main.getMainPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
-        this.textEditorController = Main.getTextEditorController();
+    //TODO Anne/cleanup: Mangler dokumentation
+    private void overwriteFile(String fileString, String path){
+
+        // Write to file with string
+        File file = new File(path);
+
+        try {
+            PrintWriter savedText = new PrintWriter(file);
+            BufferedWriter out = new BufferedWriter(savedText);
+            out.write(fileString);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

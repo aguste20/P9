@@ -21,8 +21,7 @@ public class ImageBlock extends ContentBlock{
     @Column(name = "image_path")
     private String imagePath;
 
-    // ----- Constructors -----
-
+    // ----- Constructor -----
     /**
      * Empty constructor
      */
@@ -30,7 +29,6 @@ public class ImageBlock extends ContentBlock{
     }
 
     // ----- Getters and setters -----
-
     public String getImagePath() {
         return imagePath;
     }

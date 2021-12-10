@@ -16,7 +16,6 @@ import java.util.List;
 public class User {
 
     // ----- Properties -----
-
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
@@ -35,8 +34,7 @@ public class User {
     )
     private List<EObject> eObjectList = new ArrayList<>();
 
-    // ----- Constructors -----
-
+    // ----- Constructor -----
     /**
      * Empty constructor
      */
@@ -44,7 +42,6 @@ public class User {
     }
 
     // ----- Getters and setters -----
-
     public Integer getUserId() {
         return userId;
     }

@@ -12,10 +12,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.StringConverter;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -23,33 +21,59 @@ import java.util.stream.Collectors;
 
 public class ContentsSubPageController implements Initializable {
 
+    // ----- Properties -----
     // References to other controllers
     private TextEditorController textEditorController;
     private MainPageController mainPageController;
     private PlaceholdersSubPageController placeholdersSubPageController;
     private OverviewSubPageController overviewSubPageController;
 
-    // Attribute to hold the secondary stage for the "Register new Content Block" window
-    //private Stage registerNewCBlockStage;
-
+    // FXML elements
     @FXML private TableView<DisplayContentBlock> contentBlockTableView;
     @FXML private TableColumn<DisplayContentBlock, String> cBlockNameColumn;
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
     @FXML private TableColumn<DisplayContentBlock, String> editCBColumn;
-    @FXML public ComboBox<ContentBlock> cbEdit;
+    @FXML private ComboBox<ContentBlock> cbEdit;
 
-    // TODO Anne/cleanup: ryd op og gør private, måske ikke instantiation og declaration i samme linje?
-    ContentBlockDao cbdao = new ContentBlockDao();
-    ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
-    ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
-    private TextArea text;
-    private boolean newCB = false;
-    private ContentBlock selectedCB;
-    public String txt;
+    // Local DAO instance
+    private ContentBlockDao cbdao = new ContentBlockDao();
+
+    // List of content blocks from the database
+    private ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
+    // List of content blocks to display
+    private ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
+    private TextArea text; // Reference to the text area in text editor
+    private boolean newCB = false; // Is the user currently creating a new content block?
+    private ContentBlock selectedCB; // Selected content block from content block list
+    private String txt;
 
 
+    // ----- Getters and setters -----
+    public ContentBlock getSelectedCB() {
+        return selectedCB;
+    }
+    public boolean isNewCB() {
+        return newCB;
+    }
     public void setText(TextArea text) {
         this.text = text;
+    }
+    public void setNewCB(boolean newCB) {
+        this.newCB = newCB;
+    }
+    public void setSelectedCB(ContentBlock selectedCB) {
+        this.selectedCB = selectedCB;
+    }
+
+    /**
+     * Method that sets references to other controllers
+     * to be able to pass data between them
+     */
+    public void setControllers(){
+        this.textEditorController = Main.getTextEditorController();
+        this.mainPageController = Main.getMainPageController();
+        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
+        this.overviewSubPageController = Main.getOverviewSubPageController();
     }
 
     /**
@@ -60,34 +84,14 @@ public class ContentsSubPageController implements Initializable {
      */
     @Override
     public void initialize(URL arg0, ResourceBundle arg1){
-        //CBlockNameColumnContentsSubPage.setCellValueFactory(new PropertyValueFactory("name"));
-
-        //ContentBlockTableViewContentsSubPage.setPlaceholder(new Text("No content blocks currently exists. Use the 'Create new content blcok'-button to create new block."));
-
     }
 
-    public boolean isNewCB() {
-        return newCB;
-    }
-
-    public void setNewCB(boolean newCB) {
-        this.newCB = newCB;
-    }
-
-    public ContentBlock getSelectedCB() {
-        return selectedCB;
-    }
-
-    public void setSelectedCB(ContentBlock selectedCB) {
-        this.selectedCB = selectedCB;
-    }
-
+    // ----- Instance methods -----
     /**
      * Populates the listview in the GUI with all the ContentBlocks in the DB.
      * Also adds a corresponding button that inserts the ContentBlock into the TextArea.
      */
     public void makeContentBlockList(){
-
         cbList.clear();
         displayCB.clear();
         contentBlockTableView.getItems().clear();
@@ -106,14 +110,14 @@ public class ContentsSubPageController implements Initializable {
             insertBtn.setOnAction(actionEvent -> {
                     //If the current object in the cbList is a TextBlock this is executed
                     if(cbList.get(finalI1) instanceof TextBlock){
-                        if (textEditorController.isTextEditorActive()) {
+                        if (textEditorController.isSourceTextActive()) {
                             //Inserting the text at the caret position
                             text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt());
                         }
                         else {txt = ((TextBlock) cbList.get(finalI1)).getTxt().lines().collect(Collectors.joining(" ")); insertContentBlockInHTML(txt);}
                     }
                     else {
-                        if (textEditorController.isTextEditorActive()) {
+                        if (textEditorController.isSourceTextActive()) {
                             //Inserting the image at the caret position
                             text.insertText(getCaretPosition(), "</xsl:text><p><img src=\"" +
                                     ((ImageBlock) cbList.get(finalI1)).getImagePath() + "\" width=\"500\"/></p><xsl:text>");
@@ -126,7 +130,6 @@ public class ContentsSubPageController implements Initializable {
             editBtn.setOnAction(actionEvent -> {
                 selectedCB = cbList.get(finalI1);
                 editContentBlock();
-                mainPageController.setCheckedPreview(false);
             });
 
             //Adds the object and the button to the displayCB list
@@ -142,8 +145,9 @@ public class ContentsSubPageController implements Initializable {
 
     }
 
+    // ----- Private instance methods -----
     // TODO Anne/cleanup: Mangler dokumentation
-    public void insertContentBlockInHTML(String cb) {
+    private void insertContentBlockInHTML(String cb) {
         Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
                 "var selectionContents = range.extractContents();" +
                 "var span = document.createElement(\"span\");" +
@@ -157,14 +161,14 @@ public class ContentsSubPageController implements Initializable {
      * Gets caret position from TextEditorController
      * @return Returns caret position
      */
-    public int getCaretPosition(){
+    private int getCaretPosition(){
         return textEditorController.getTextArea().getCaretPosition();
     }
 
     /**
      * Called when user clicks on a ContentBlock they want to edit in the GUI
      */
-    public void editContentBlock() {
+    private void editContentBlock() {
         createOrEditContentBlock();
         //If the ContentBlock they clicked on is a TextBlock this is executed
         if(selectedCB instanceof TextBlock txtBlock) {
@@ -181,43 +185,29 @@ public class ContentsSubPageController implements Initializable {
      * Changes a number of things in the GUI to show user they are creating a ContentBlock
      * Also removes and changes certain functionality
      */
-    public void createOrEditContentBlock() {
-        if(!textEditorController.isTextEditorActive()){
+    private void createOrEditContentBlock() {
+        if(!textEditorController.isSourceTextActive()){
             mainPageController.switchToTextEditorPage();
         }
         // Make eobject choice combo box invisble in main page
-        mainPageController.eObjectChoice.setVisible(false);
+        mainPageController.geteObjectChoice().setVisible(false);
 
         textEditorController.setCreatingDoc(false);
         text.clear();
-        mainPageController.eObjectLabel.setText("You are creating a Content Block");
-        textEditorController.returnButton.setVisible(true);
+        mainPageController.geteObjectLabel().setText("You are creating a Content Block");
+        textEditorController.getReturnButton().setVisible(true);
         placeholdersSubPageController.callLabelsVisible();
     }
 
     /**
      * Called when user clicks "create new ContentBlock" in the GUI
      */
-    public void createNewContentBlock() {
-
+    @FXML private void createNewContentBlock() {
         createOrEditContentBlock();
         //Sets boolean which is used to check if a new ContentBlock is being created to true
         newCB = true;
         //mainPageController.setCheckedPreview(false);
         overviewSubPageController.updateToc();
-
-
-    }
-
-    /**
-     * Method that gets references to other controllers
-     * to be able to pass data between them
-     */
-    public void setControllers(){
-        this.textEditorController = Main.getTextEditorController();
-        this.mainPageController = Main.getMainPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
     }
 }
 

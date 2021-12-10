@@ -24,7 +24,6 @@ import java.util.List;
 public class EObjectCategory {
 
     // ----- Properties -----
-
     @Id
     @Column(name = "e_object_category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
@@ -48,8 +47,7 @@ public class EObjectCategory {
     )
     private List<ContentBlock> contentBlockList = new ArrayList<>();
 
-    // ----- Constructors -----
-
+    // ----- Constructor -----
     /**
      * Empty constructor
      */
@@ -57,7 +55,6 @@ public class EObjectCategory {
     }
 
     // ----- Getters and setters -----
-
     public Integer geteObjectCatId() {
         return eObjectCatId;
     }

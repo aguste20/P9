@@ -24,15 +24,19 @@ import java.util.List;
  * An EObject holds information we assume is available in the Bluestar PLM solution.
  *
  * The class is mapped with Hibernate JPA. See: https://www.baeldung.com/jpa-entities
- * JPA many to many mapping: https://www.baeldung.com/hibernate-many-to-many
+ * JPA many to many mapping, see https://www.baeldung.com/hibernate-many-to-many
+ *
+ * The class is mapped with XML.bind annotations.
+ * See: https://docs.oracle.com/javase/8/docs/api/javax/xml/bind/annotation/package-summary.html
  */
+
+
 @XmlRootElement
 @Entity
 @Table(name = "e_object")
 public class EObject {
 
     // ----- Properties ----
-
     @Id
     @Column(name = "e_object_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Generates an unique value for every identity
@@ -48,7 +52,7 @@ public class EObject {
 
     // Maps a many-to-many relation between eObject and other eObjects (components), cascading all actions
     // An eObject has a list of all its "first-layer" components
-    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.EAGER)
     // The association uses the join/link table "e_object_has_e_object"
     @JoinTable(name = "e_object_has_e_object",
             // The two columns are foreign keys to id columns in the user table and the eObject table
@@ -70,8 +74,7 @@ public class EObject {
     @OneToOne(mappedBy = "eObject")
     private EObjectDoc doc;
 
-    // ----- Constructors -----
-
+    // ----- Constructor -----
     /**
      * Empty constructor
      */
@@ -79,7 +82,6 @@ public class EObject {
     }
 
     // ----- Getters and setters -----
-
     public Integer geteObjectId() {
         return eObjectId;
     }
@@ -179,6 +181,7 @@ public class EObject {
         this.doc = doc;
     }
 
+    // ----- Instance methods -----
     /**
      * Method that creates a new Doc object and associates it with the eObject instance
      */
@@ -193,7 +196,6 @@ public class EObject {
         TextBlockDao txtDao = new TextBlockDao();
         TextBlock txt = txtDao.getById(4);
         doc.setXmlText(txt.getTxt());
-
     }
 
     /**
