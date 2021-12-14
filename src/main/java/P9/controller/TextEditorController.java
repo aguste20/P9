@@ -171,7 +171,7 @@ public class TextEditorController implements Initializable {
      * Method that gets xml text from the loaded eObject
      * and inserts it into the textArea
      */
-    public void insertXmlTextInTextArea() {
+    public void insertTextInTextArea() {
 
         textArea.clear();
         // Get loaded eObject from mainPageController
@@ -181,9 +181,9 @@ public class TextEditorController implements Initializable {
         doc = eObject.getDoc();
 
         // Ensure that eObject, documentation, and xml text are not null
-        if (eObject != null && eObject.getDoc() != null && eObject.getDoc().getXmlText() != null) {
+        if (eObject != null && eObject.getDoc() != null && eObject.getDoc().getText() != null) {
             //Insert the loaded xml text at index 0
-            textArea.insertText(0, eObject.getDoc().getXmlText());
+            textArea.insertText(0, eObject.getDoc().getText());
         }
     }
 
@@ -203,7 +203,7 @@ public class TextEditorController implements Initializable {
         String txt = textArea.getText();
 
         // Set xml text in doc
-        doc.setXmlText(txt);
+        doc.setText(txt);
 
         // Set last edit to today's date
         doc.setLastEdit(Date.valueOf(LocalDate.now()));

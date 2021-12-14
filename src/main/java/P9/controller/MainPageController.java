@@ -168,7 +168,7 @@ public class MainPageController implements Initializable{
         eObject = eObjectChoice.getValue();
         loadEObject();
         placeholdersSubPageController.updateEObjectValues();
-        textEditorController.insertXmlTextInTextArea();
+        textEditorController.insertTextInTextArea();
         previewSubPageController.createXslFromTextArea();
         overviewSubPageController.updateToc();
     }
