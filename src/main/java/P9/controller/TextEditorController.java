@@ -36,10 +36,10 @@ public class TextEditorController implements Initializable {
     private final ImageBlockDao imgDao = new ImageBlockDao();
     private final EObjectDocDao eObjectDocDao = new EObjectDocDao();
 
-    private EObject eObject;
-    private EObjectDoc doc;
-    private boolean creatingDoc = true;
-    private boolean sourceTextActive;
+    private EObject eObject; // Eobject, the user is working on
+    private EObjectDoc doc; // Documentation the user is working on
+    private boolean creatingDoc = true; // State used to determine if the user is currently creating documentation
+    private boolean sourceTextActive; // State used to determine if the source text window is currently active
 
     // ----- Getters and setters -----
     public boolean isSourceTextActive() {
