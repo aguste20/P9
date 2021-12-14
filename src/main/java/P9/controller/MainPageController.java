@@ -59,7 +59,7 @@ public class MainPageController implements Initializable{
     private final EObjectDao eDao = new EObjectDao();
 
     private EObject eObject; // Reference to the engineering object that the user is working on
-    private String PDF_output = "src/main/resources/html2pdf.pdf"; // Path to pdf
+    private final String PDF_output = "src/main/resources/html2pdf.pdf"; // Path to pdf
 
     // ---- Getters ----
     public ScrollPane getPaneTextEditor() { return paneTextEditor; }

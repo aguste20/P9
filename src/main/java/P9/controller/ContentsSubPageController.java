@@ -38,10 +38,10 @@ public class ContentsSubPageController implements Initializable {
     // Local DAO instance
     private final ContentBlockDao cbdao = new ContentBlockDao();
 
-    private ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll()); // List of content blocks from the database
-    private ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList(); // List of content blocks to display
+    private ObservableList<ContentBlock> cbList; // List of content blocks from the database
+    private ObservableList<DisplayContentBlock> displayCB; // List of content blocks to display
     private TextArea text; // Reference to the text area in text editor
-    private boolean newCB = false; // Is the user currently creating a new content block?
+    private boolean newCB; // Is the user currently creating a new content block?
     private ContentBlock selectedCB; // Selected content block from content block list
     private String txt;
 
@@ -80,6 +80,9 @@ public class ContentsSubPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
+        cbList = FXCollections.observableArrayList(cbdao.listAll());
+        displayCB = FXCollections.observableArrayList();
+        newCB = false;
     }
 
     // ----- Instance methods -----

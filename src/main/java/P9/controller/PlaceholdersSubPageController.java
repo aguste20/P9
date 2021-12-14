@@ -29,7 +29,7 @@ public class PlaceholdersSubPageController implements Initializable {
     @FXML private Label objComponents;
     @FXML private TextField imageTextField;
 
-    private String phColor; // Background color for placeholders in preview
+    private final String phColor = "yellow"; // Background color for placeholders in preview
     private EObject eObject; // EObject the user is currently working on
 
 
@@ -59,7 +59,6 @@ public class PlaceholdersSubPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        phColor = "yellow";
     }
 
     // ----- Instance methods -----

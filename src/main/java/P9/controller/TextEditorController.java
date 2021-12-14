@@ -38,7 +38,7 @@ public class TextEditorController implements Initializable {
 
     private EObject eObject; // Eobject, the user is working on
     private EObjectDoc doc; // Documentation the user is working on
-    private boolean creatingDoc = true; // State used to determine if the user is currently creating documentation
+    private boolean creatingDoc; // State used to determine if the user is currently creating documentation
     private boolean sourceTextActive; // State used to determine if the source text window is currently active
 
     // ----- Getters and setters -----
@@ -79,6 +79,7 @@ public class TextEditorController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        creatingDoc = true;
     }
 
 
