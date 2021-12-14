@@ -153,24 +153,25 @@ public class PreviewSubPageController implements Initializable {
      * @return
      */
     private String placeHolderReplacement(String html, String startTag, String closingTag){
-        int index = 0;
-        int endIndex = 0;
+        int index;
+        int endIndex;
 
-        // string to contain substring when iterating through html
-        // default value is something that will have 0 occurrences
+        // String to hold value of substring to be replaced.
+        // Initialized to something that would never be found
         String change = "///%%%&&&";
-
-        // Store index and keep looking for occurrences, while any text left
-        while (index >= 0) {  // indexOf returns -1 if no match found
-
-            // Update indexes to match indexes for next occurrence
-            index = html.indexOf(startTag, index + startTag.length());
-            if(index == -1){
-                break;
-            }
+        
+        // Find index of matching occurrence, starting at index 0
+        index = html.indexOf(startTag);
+        
+        // If match is found (method returns -1 if no match)
+        if (index > 0){
+            //Find end index of match
             endIndex = html.indexOf(closingTag, index);
+
+            // Store total substring that needs to be replaced
             change = html.substring(index, endIndex);
         }
+
         return change;
     }
 
