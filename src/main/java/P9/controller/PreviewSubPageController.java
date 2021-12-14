@@ -14,12 +14,7 @@ import java.util.ResourceBundle;
 public class PreviewSubPageController implements Initializable {
     // ----- Properties -----
     // References to other controllers
-    private ContentsSubPageController contentsSubPageController;
-    private MainPageController mainPageController;
-    private OverviewSubPageController overviewSubPageController;
     private PlaceholdersSubPageController placeholdersSubPageController;
-    private PreviewSubPageController previewSubPageController;
-    private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
     // FXML Element
@@ -35,12 +30,7 @@ public class PreviewSubPageController implements Initializable {
      * to be able to pass data between them
      */
     public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.mainPageController = Main.getMainPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
         this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
         this.textEditorController = Main.getTextEditorController();
     }
 

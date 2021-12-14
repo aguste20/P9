@@ -24,11 +24,8 @@ public class TextEditorController implements Initializable {
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private MainPageController mainPageController;
-    private OverviewSubPageController overviewSubPageController;
     private PlaceholdersSubPageController placeholdersSubPageController;
     private PreviewSubPageController previewSubPageController;
-    private RegisterNewContentBlockController registerNewContentBlockController;
-    private TextEditorController textEditorController;
 
     // FXML elements
     @FXML private TextArea textArea;
@@ -69,11 +66,8 @@ public class TextEditorController implements Initializable {
     public void setControllers(){
         this.contentsSubPageController = Main.getContentsSubPageController();
         this.mainPageController = Main.getMainPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
         this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
         this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
-        this.textEditorController = Main.getTextEditorController();
     }
 
     // TODO Anne/cleanup: Mangler dokumentation
