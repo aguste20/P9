@@ -55,9 +55,9 @@ public class MainPageController implements Initializable{
     @FXML private Label savedAlert;
 
     // Local DAO instances
-    private UserDao userDAO = new UserDao();
-    private TextBlockDao txtDao = new TextBlockDao();
-    private EObjectDao eDao = new EObjectDao();
+    private final UserDao userDAO = new UserDao();
+    private final TextBlockDao txtDao = new TextBlockDao();
+    private final EObjectDao eDao = new EObjectDao();
 
     private EObject eObject; // Reference to the engineering object that the user is working on
     private String PDF_output = "src/main/resources/html2pdf.pdf"; // Path to pdf

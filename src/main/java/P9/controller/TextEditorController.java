@@ -32,9 +32,9 @@ public class TextEditorController implements Initializable {
     @FXML private Menu returnButton;
 
     // Local DAO instances
-    private TextBlockDao txtDao = new TextBlockDao();
-    private ImageBlockDao imgDao = new ImageBlockDao();
-    private EObjectDocDao eObjectDocDao = new EObjectDocDao();
+    private final TextBlockDao txtDao = new TextBlockDao();
+    private final ImageBlockDao imgDao = new ImageBlockDao();
+    private final EObjectDocDao eObjectDocDao = new EObjectDocDao();
 
     private EObject eObject;
     private EObjectDoc doc;
