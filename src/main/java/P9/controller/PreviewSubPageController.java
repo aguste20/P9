@@ -165,10 +165,11 @@ public class PreviewSubPageController implements Initializable {
 
             // Update indexes to match indexes for next occurrence
             index = html.indexOf(startTag, index + startTag.length());
-            endIndex = html.indexOf(closingTag, index);
-            if (index>0) {
-                change = html.substring(index, endIndex);
+            if(index == -1){
+                break;
             }
+            endIndex = html.indexOf(closingTag, index);
+            change = html.substring(index, endIndex);
         }
         return change;
     }
