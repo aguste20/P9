@@ -175,7 +175,6 @@ public class MainPageController implements Initializable{
      * thereby updating the eObject
      */
     @FXML public void updateEObject() {
-
         eObject = eDao.getById(eObject.geteObjectId());
         eObjectLabel.setText(eObject.getName());
         placeholdersSubPageController.updateEObjectValues();

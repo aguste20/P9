@@ -213,14 +213,14 @@ public class TextEditorController implements Initializable {
      * @param txtBlock
      * @param txt
      */
-    //TODO Anne/Cleanup: Mangler dokumentation
+    //TODO Anne/Cleanup: Mangler dokumentation, skal den slettes?
     private void updateTextBlock(TextBlock txtBlock, String txt){
         txtBlock = (TextBlock) contentsSubPageController.getSelectedCB();
         txtBlock.setTxt(txt);
         txtDao.addOrUpdateTxt(txtBlock);
     }
 
-    //TODO Anne/cleanup: Mangler dokumentation
+    //TODO Anne/cleanup: Mangler dokumentation, skal den slettes?
     private void updateImgBlock(ImageBlock img, String txt){
         img = (ImageBlock) contentsSubPageController.getSelectedCB();
         img.setImagePath(txt);

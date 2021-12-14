@@ -36,12 +36,10 @@ public class ContentsSubPageController implements Initializable {
     @FXML private ComboBox<ContentBlock> cbEdit;
 
     // Local DAO instance
-    private ContentBlockDao cbdao = new ContentBlockDao();
+    private final ContentBlockDao cbdao = new ContentBlockDao();
 
-    // List of content blocks from the database
-    private ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
-    // List of content blocks to display
-    private ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
+    private ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll()); // List of content blocks from the database
+    private ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList(); // List of content blocks to display
     private TextArea text; // Reference to the text area in text editor
     private boolean newCB = false; // Is the user currently creating a new content block?
     private ContentBlock selectedCB; // Selected content block from content block list
