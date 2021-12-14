@@ -59,9 +59,6 @@ public class ContentsSubPageController implements Initializable {
     public void setNewCB(boolean newCB) {
         this.newCB = newCB;
     }
-    public void setSelectedCB(ContentBlock selectedCB) {
-        this.selectedCB = selectedCB;
-    }
 
     /**
      * Method that sets references to other controllers

@@ -63,16 +63,11 @@ public class MainPageController implements Initializable{
     private String PDF_output = "src/main/resources/html2pdf.pdf"; // Path to pdf
 
     // ---- Getters ----
-    // Returns the containers of the mainPage.fxml
     public ScrollPane getPaneTextEditor() { return paneTextEditor; }
     public ScrollPane getPaneOverviewSubPage() { return paneOverviewSubPage; }
     public ScrollPane getPaneContentsPlaceholders() { return paneContentsPlaceholders; }
     public EObject geteObject() {
         return eObject;
-    }
-    public UserDao getUserDAO() { return userDAO; }
-    public Label getSavedAlert() {
-        return savedAlert;
     }
     public ComboBox<EObject> geteObjectChoice() {
         return eObjectChoice;
