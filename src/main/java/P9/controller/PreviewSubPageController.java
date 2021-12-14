@@ -161,7 +161,7 @@ public class PreviewSubPageController implements Initializable {
         int index = html.indexOf(startTag);
         
         // If match is found (method returns -1 if no match)
-        if (index > 0){
+        if (index >= 0){
             //Find end index of match
             int endIndex = html.indexOf(closingTag, index);
 
