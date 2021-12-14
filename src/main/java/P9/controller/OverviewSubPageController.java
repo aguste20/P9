@@ -38,6 +38,7 @@ public class OverviewSubPageController implements Initializable {
     /**
      * Method that initializes a controller object after its root element has been loaded.
      * Inherited from Initializable.
+     * Called by the fxmlloader.
      * @param url
      * @param resourceBundle
      */

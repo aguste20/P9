@@ -70,9 +70,15 @@ public class TextEditorController implements Initializable {
         this.previewSubPageController = Main.getPreviewSubPageController();
     }
 
-    // TODO Anne/cleanup: Mangler dokumentation
+    /**
+     * Method that initializes a controller object after its root element has been loaded.
+     * Inherited from Initializable.
+     * Called by the fxmlloader.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
 
