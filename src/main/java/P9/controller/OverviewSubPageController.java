@@ -17,11 +17,6 @@ public class OverviewSubPageController implements Initializable {
 
     // ----- Properties -----
     // References to other controllers
-    private ContentsSubPageController contentsSubPageController;
-    private OverviewSubPageController overviewSubPageController;
-    private PlaceholdersSubPageController placeholdersSubPageController;
-    private PreviewSubPageController previewSubPageController;
-    private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
     // FXML elements
@@ -37,11 +32,6 @@ public class OverviewSubPageController implements Initializable {
      * to be able to pass data between them
      */
     public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
         this.textEditorController = Main.getTextEditorController();
     }
 
