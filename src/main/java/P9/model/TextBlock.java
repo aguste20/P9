@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "text")
+@Table(name = "text_block")
 // Maps inheritance between content block and text block,
 // using the join column "text" in the content block table
 @PrimaryKeyJoinColumn(name = "content_block_id")

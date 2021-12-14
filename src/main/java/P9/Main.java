@@ -216,7 +216,7 @@ public class Main extends Application {
         placeholdersSubPageController.setLabels();
 
         // Insert text and user information in text editor
-        textEditorController.insertXmlTextInTextArea();
+        textEditorController.insertTextInTextArea();
 
         // Send text to content block controller
         contentsSubPageController.setText(textEditorController.getTextArea());

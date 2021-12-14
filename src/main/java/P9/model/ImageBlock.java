@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "image")
+@Table(name = "image_block")
 // Maps inheritance between content block and image block,
 // using the join column "image_id" in the content block table
 @PrimaryKeyJoinColumn(name = "content_block_id")
