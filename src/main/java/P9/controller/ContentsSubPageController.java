@@ -33,7 +33,7 @@ public class ContentsSubPageController implements Initializable {
     @FXML private TableColumn<DisplayContentBlock, String> cBlockNameColumn;
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
     @FXML private TableColumn<DisplayContentBlock, String> editCBColumn;
-    @FXML private ComboBox<ContentBlock> cbEdit;
+    @FXML private ComboBox<ContentBlock> cbEdit; // TODO kan denne slettes?
 
     // Local DAO instance
     private final ContentBlockDao cbdao = new ContentBlockDao();
