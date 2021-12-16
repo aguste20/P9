@@ -33,17 +33,15 @@ public class ContentsSubPageController implements Initializable {
     @FXML private TableColumn<DisplayContentBlock, String> cBlockNameColumn;
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
     @FXML private TableColumn<DisplayContentBlock, String> editCBColumn;
-    @FXML private ComboBox<ContentBlock> cbEdit;
+    @FXML private ComboBox<ContentBlock> cbEdit; // TODO kan denne slettes?
 
     // Local DAO instance
-    private ContentBlockDao cbdao = new ContentBlockDao();
+    private final ContentBlockDao cbdao = new ContentBlockDao();
 
-    // List of content blocks from the database
-    private ObservableList<ContentBlock> cbList = FXCollections.observableArrayList(cbdao.listAll());
-    // List of content blocks to display
-    private ObservableList<DisplayContentBlock> displayCB = FXCollections.observableArrayList();
+    private ObservableList<ContentBlock> cbList; // List of content blocks from the database
+    private ObservableList<DisplayContentBlock> displayCB; // List of content blocks to display
     private TextArea text; // Reference to the text area in text editor
-    private boolean newCB = false; // Is the user currently creating a new content block?
+    private boolean newCB; // Is the user currently creating a new content block?
     private ContentBlock selectedCB; // Selected content block from content block list
     private String txt;
 
@@ -61,9 +59,6 @@ public class ContentsSubPageController implements Initializable {
     public void setNewCB(boolean newCB) {
         this.newCB = newCB;
     }
-    public void setSelectedCB(ContentBlock selectedCB) {
-        this.selectedCB = selectedCB;
-    }
 
     /**
      * Method that sets references to other controllers
@@ -77,13 +72,17 @@ public class ContentsSubPageController implements Initializable {
     }
 
     /**
-     * This method initializes a controller after its root element has already been processed.
-     * I think this means that this method is needed to keep content in the view pages updated visually.
-     * @param arg0
-     * @param arg1
+     * Method that initializes a controller object after its root element has been loaded.
+     * Inherited from Initializable.
+     * Called by the fxmlloader.
+     * @param url
+     * @param resourceBundle
      */
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1){
+    public void initialize(URL url, ResourceBundle resourceBundle){
+        cbList = FXCollections.observableArrayList(cbdao.listAll());
+        displayCB = FXCollections.observableArrayList();
+        newCB = false;
     }
 
     // ----- Instance methods -----

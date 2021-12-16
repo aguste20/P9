@@ -38,11 +38,9 @@ public class MainPageController implements Initializable{
 
     // ----- Properties -----
     // References to other controllers
-    private ContentsSubPageController contentsSubPageController;
     private OverviewSubPageController overviewSubPageController;
     private PlaceholdersSubPageController placeholdersSubPageController;
     private PreviewSubPageController previewSubPageController;
-    private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
     // FXML elements
@@ -57,24 +55,18 @@ public class MainPageController implements Initializable{
     @FXML private Label savedAlert;
 
     // Local DAO instances
-    private UserDao userDAO = new UserDao();
-    private TextBlockDao txtDao = new TextBlockDao();
-    private EObjectDao eDao = new EObjectDao();
+    private final UserDao userDAO = new UserDao();
+    private final EObjectDao eDao = new EObjectDao();
 
     private EObject eObject; // Reference to the engineering object that the user is working on
-    private String PDF_output = "src/main/resources/html2pdf.pdf"; // Path to pdf
+    private final String PDF_output = "src/main/resources/html2pdf.pdf"; // Path to pdf
 
     // ---- Getters ----
-    // Returns the containers of the mainPage.fxml
     public ScrollPane getPaneTextEditor() { return paneTextEditor; }
     public ScrollPane getPaneOverviewSubPage() { return paneOverviewSubPage; }
     public ScrollPane getPaneContentsPlaceholders() { return paneContentsPlaceholders; }
     public EObject geteObject() {
         return eObject;
-    }
-    public UserDao getUserDAO() { return userDAO; }
-    public Label getSavedAlert() {
-        return savedAlert;
     }
     public ComboBox<EObject> geteObjectChoice() {
         return eObjectChoice;
@@ -88,22 +80,22 @@ public class MainPageController implements Initializable{
      * to be able to pass data between them
      */
     public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
         this.overviewSubPageController = Main.getOverviewSubPageController();
         this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
         this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
         this.textEditorController = Main.getTextEditorController();
     }
 
+
     /**
-     * This method initializes a controller after its root element has already been processed.
-     * I think this means that this method is needed to keep content in the view pages updated visually.
-     * @param arg0
-     * @param arg1
+     * Method that initializes a controller object after its root element has been loaded.
+     * Inherited from Initializable.
+     * Called by the fxmlloader.
+     * @param url
+     * @param resourceBundle
      */
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1){
+    public void initialize(URL url, ResourceBundle resourceBundle){
         //Loads eObject selected by user in GUI
         loadEObject();
 
@@ -178,7 +170,6 @@ public class MainPageController implements Initializable{
      * thereby updating the eObject
      */
     @FXML public void updateEObject() {
-
         eObject = eDao.getById(eObject.geteObjectId());
         eObjectLabel.setText(eObject.getName());
         placeholdersSubPageController.updateEObjectValues();

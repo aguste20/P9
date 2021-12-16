@@ -17,19 +17,14 @@ public class OverviewSubPageController implements Initializable {
 
     // ----- Properties -----
     // References to other controllers
-    private ContentsSubPageController contentsSubPageController;
-    private OverviewSubPageController overviewSubPageController;
-    private PlaceholdersSubPageController placeholdersSubPageController;
-    private PreviewSubPageController previewSubPageController;
-    private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
     // FXML elements
     @FXML private Button refreshTocButton; // Button to refresh the table of contents
     @FXML private TreeView<Header> tocView; // The tree view that holds all header elements
 
-    private List<Header> allH1s = new ArrayList<>(); // All h1 headers in the text
-    private List<Header> allH2s = new ArrayList<>(); // All h2 headers in the text
+    private List<Header> allH1s; // All h1 headers in the text
+    private List<Header> allH2s; // All h2 headers in the text
     private String text; // Text from the textarea
 
     /**
@@ -37,22 +32,21 @@ public class OverviewSubPageController implements Initializable {
      * to be able to pass data between them
      */
     public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
         this.textEditorController = Main.getTextEditorController();
     }
 
     /**
      * Method that initializes a controller object after its root element has been loaded.
      * Inherited from Initializable.
+     * Called by the fxmlloader.
      * @param url
      * @param resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        allH1s = new ArrayList<>();
+        allH2s = new ArrayList<>();
+
         // Prepare table of contents tree view
         prepareToc();
     }

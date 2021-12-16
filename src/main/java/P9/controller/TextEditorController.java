@@ -24,25 +24,22 @@ public class TextEditorController implements Initializable {
     // References to other controllers
     private ContentsSubPageController contentsSubPageController;
     private MainPageController mainPageController;
-    private OverviewSubPageController overviewSubPageController;
     private PlaceholdersSubPageController placeholdersSubPageController;
     private PreviewSubPageController previewSubPageController;
-    private RegisterNewContentBlockController registerNewContentBlockController;
-    private TextEditorController textEditorController;
 
     // FXML elements
     @FXML private TextArea textArea;
     @FXML private Menu returnButton;
 
     // Local DAO instances
-    private TextBlockDao txtDao = new TextBlockDao();
-    private ImageBlockDao imgDao = new ImageBlockDao();
-    private EObjectDocDao eObjectDocDao = new EObjectDocDao();
+    private final TextBlockDao txtDao = new TextBlockDao();
+    private final ImageBlockDao imgDao = new ImageBlockDao();
+    private final EObjectDocDao eObjectDocDao = new EObjectDocDao();
 
-    private EObject eObject;
-    private EObjectDoc doc;
-    private boolean creatingDoc = true;
-    private boolean sourceTextActive;
+    private EObject eObject; // Eobject, the user is working on
+    private EObjectDoc doc; // Documentation the user is working on
+    private boolean creatingDoc; // State used to determine if the user is currently creating documentation
+    private boolean sourceTextActive; // State used to determine if the source text window is currently active
 
     // ----- Getters and setters -----
     public boolean isSourceTextActive() {
@@ -69,16 +66,20 @@ public class TextEditorController implements Initializable {
     public void setControllers(){
         this.contentsSubPageController = Main.getContentsSubPageController();
         this.mainPageController = Main.getMainPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
         this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
         this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
-        this.textEditorController = Main.getTextEditorController();
     }
 
-    // TODO Anne/cleanup: Mangler dokumentation
+    /**
+     * Method that initializes a controller object after its root element has been loaded.
+     * Inherited from Initializable.
+     * Called by the fxmlloader.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        creatingDoc = true;
     }
 
 
@@ -219,14 +220,14 @@ public class TextEditorController implements Initializable {
      * @param txtBlock
      * @param txt
      */
-    //TODO Anne/Cleanup: Mangler dokumentation
+    //TODO Anne/Cleanup: Mangler dokumentation, skal den slettes?
     private void updateTextBlock(TextBlock txtBlock, String txt){
         txtBlock = (TextBlock) contentsSubPageController.getSelectedCB();
         txtBlock.setTxt(txt);
         txtDao.addOrUpdateTxt(txtBlock);
     }
 
-    //TODO Anne/cleanup: Mangler dokumentation
+    //TODO Anne/cleanup: Mangler dokumentation, skal den slettes?
     private void updateImgBlock(ImageBlock img, String txt){
         img = (ImageBlock) contentsSubPageController.getSelectedCB();
         img.setImagePath(txt);

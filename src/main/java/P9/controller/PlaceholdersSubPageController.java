@@ -16,12 +16,7 @@ import java.util.ResourceBundle;
 public class PlaceholdersSubPageController implements Initializable {
     // ----- Properties -----
     // References to other controllers
-    private ContentsSubPageController contentsSubPageController;
     private MainPageController mainPageController;
-    private OverviewSubPageController overviewSubPageController;
-    private PlaceholdersSubPageController placeholdersSubPageController;
-    private PreviewSubPageController previewSubPageController;
-    private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
     // FXML elements
@@ -34,7 +29,7 @@ public class PlaceholdersSubPageController implements Initializable {
     @FXML private Label objComponents;
     @FXML private TextField imageTextField;
 
-    private String phColor; // Background color for placeholders in preview
+    private final String phColor = "yellow"; // Background color for placeholders in preview
     private EObject eObject; // EObject the user is currently working on
 
 
@@ -51,18 +46,19 @@ public class PlaceholdersSubPageController implements Initializable {
      * to be able to pass data between them
      */
     public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
         this.mainPageController = Main.getMainPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
-        this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
         this.textEditorController = Main.getTextEditorController();
     }
 
+    /**
+     * Method that initializes a controller object after its root element has been loaded.
+     * Inherited from Initializable.
+     * Called by the fxmlloader.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        phColor = "yellow";
+    public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
     // ----- Instance methods -----

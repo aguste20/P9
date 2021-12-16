@@ -14,12 +14,7 @@ import java.util.ResourceBundle;
 public class PreviewSubPageController implements Initializable {
     // ----- Properties -----
     // References to other controllers
-    private ContentsSubPageController contentsSubPageController;
-    private MainPageController mainPageController;
-    private OverviewSubPageController overviewSubPageController;
     private PlaceholdersSubPageController placeholdersSubPageController;
-    private PreviewSubPageController previewSubPageController;
-    private RegisterNewContentBlockController registerNewContentBlockController;
     private TextEditorController textEditorController;
 
     // FXML Element
@@ -35,24 +30,19 @@ public class PreviewSubPageController implements Initializable {
      * to be able to pass data between them
      */
     public void setControllers(){
-        this.contentsSubPageController = Main.getContentsSubPageController();
-        this.mainPageController = Main.getMainPageController();
-        this.overviewSubPageController = Main.getOverviewSubPageController();
         this.placeholdersSubPageController = Main.getPlaceholdersSubPageController();
-        this.previewSubPageController = Main.getPreviewSubPageController();
-        this.registerNewContentBlockController = Main.getRegisterNewContentBlockController();
         this.textEditorController = Main.getTextEditorController();
     }
 
     /**
-     * This method initializes a controller after its root element has already been processed.
-     * I think this means that this method is needed to keep content in the view pages updated visually.
-     *
-     * @param arg0
-     * @param arg1
+     * Method that initializes a controller object after its root element has been loaded.
+     * Inherited from Initializable.
+     * Called by the fxmlloader.
+     * @param url
+     * @param resourceBundle
      */
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
     }
 
     // ----- Instance methods -----
@@ -153,24 +143,22 @@ public class PreviewSubPageController implements Initializable {
      * @return
      */
     private String placeHolderReplacement(String html, String startTag, String closingTag){
-        int index = 0;
-        int endIndex = 0;
-
-        // string to contain substring when iterating through html
-        // default value is something that will have 0 occurrences
+        // String to hold value of substring to be replaced.
+        // Initialized to something that would never be found
         String change = "///%%%&&&";
+        
+        // Find index of matching occurrence, starting at index 0
+        int index = html.indexOf(startTag);
+        
+        // If match is found (method returns -1 if no match)
+        if (index >= 0){
+            //Find end index of match
+            int endIndex = html.indexOf(closingTag, index);
 
-        // Store index and keep looking for occurrences, while any text left
-        while (index >= 0) {  // indexOf returns -1 if no match found
-
-            // Update indexes to match indexes for next occurrence
-            index = html.indexOf(startTag, index + startTag.length());
-            if(index == -1){
-                break;
-            }
-            endIndex = html.indexOf(closingTag, index);
+            // Store total substring that needs to be replaced
             change = html.substring(index, endIndex);
         }
+
         return change;
     }
 
