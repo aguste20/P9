@@ -11,7 +11,11 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//TODO Anne/cleanup: Mangler dokumentation
+/**
+ * Objects from this class controls the Placeholder GUI elements.
+ * An object of the class is initialised, when placeholdersSubPage.fxml is loaded
+ */
+
 
 public class PlaceholdersSubPageController implements Initializable {
     // ----- Properties -----
@@ -85,15 +89,15 @@ public class PlaceholdersSubPageController implements Initializable {
     }
 
     /**
-     * runs script to insert picture at caret position.
+     * Runs script to insert picture at caret position.
      * the picture is inserted inside p tags as a string containing the image source
      * @param src image source
      */
     public void insertImage(String src){
 
-        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
-                "var image = '<p><img src=" + src + " width=\"500\"/></p>';\n" +
-                "node = range.createContextualFragment(image);\n" +
+        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
+                "var image = '<p><img src=" + src + " width=\"500\"/></p>';" +
+                "node = range.createContextualFragment(image);" +
                 "range.insertNode(node);");
     }
 
@@ -113,13 +117,9 @@ public class PlaceholdersSubPageController implements Initializable {
      * @param nodes The method can take an unlimited number of arguments of type node
      */
     private void setLabelsVisible(Node... nodes){
+        boolean creatingDoc = textEditorController.isCreatingDoc();
         for (Node node : nodes){
-            if (!textEditorController.getCreatingDoc()){
-                node.setVisible(false);
-            }
-            else {
-                node.setVisible(true);
-            }
+            node.setVisible(creatingDoc);
         }
     }
 
@@ -201,7 +201,7 @@ public class PlaceholdersSubPageController implements Initializable {
     }
 
     /**
-     * runs script that inserts placeholder value inside span tags with id span
+     * Runs script that inserts placeholder value inside span tags with id span
      * the placeholder gets inserted at caret position or start of selection
      * a background color is applied. the function is called when clicking at placeholder buttons
      * @param ph placeholder value

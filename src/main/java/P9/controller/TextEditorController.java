@@ -15,9 +15,15 @@ import java.io.*;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Optional;
+import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
-//TODO Anne/cleanup: Mangler dokumentation
+/**
+ * Objects from this class controls the TextEditor GUI element.
+ * An object of the class is initialised, when textEditor.fxml is loaded
+ */
 
 public class TextEditorController implements Initializable {
     // ----- Properties -----
@@ -48,7 +54,7 @@ public class TextEditorController implements Initializable {
     public TextArea getTextArea() {
         return textArea;
     }
-    public boolean getCreatingDoc(){
+    public boolean isCreatingDoc(){
         return creatingDoc;
     }
     public Menu getReturnButton() {
@@ -110,11 +116,8 @@ public class TextEditorController implements Initializable {
                     Optional<Results> result = dialog.showAndWait();
 
                     if (result.isEmpty()){
-
                         return;
                     }
-
-
                         result.ifPresent((Results results) -> {
                             //If the user chose the "Text" option in the Combobox this code is executed
                             if (results.choice == null) {
@@ -142,20 +145,22 @@ public class TextEditorController implements Initializable {
                 else if (obj instanceof TextBlock) {
                     //Getting the TextBlock from the user inputs and saving in DB
                     System.out.println("Updated TextBlock");
-                    //updateTextBlock(txtBlock, txt);
+                    updateTextBlock(txt);
                 }
                 else {
                     //Getting the ImageBlock from the user inputs and saving in DB
                     System.out.println("Updated ImageBlock");
-                    //updateImgBlock(img, txt);
+                    updateImgBlock(txt);
                 }
         }
         mainPageController.setSavedAlertText("Saved ✅");
         removeSavedAlert();
     }
 
-    //TODO Anne/cleanup: Mangler dokumentation
-    // sets the textArea to the text of the opened file
+    /**
+     * Sets the textArea to the text of the opened file
+     * @param file The file that will be inserted into the view
+     */
     public void readText(File file) {
         String text;
 
@@ -189,9 +194,9 @@ public class TextEditorController implements Initializable {
     }
 
     // ----- Private instance methods -----
-    //TODO Anne/cleanup: Mangler dokumentation
+
     /**
-     *
+     * Saves documentation to DB containing today's date. Is used in the save() method
      */
     private void saveDocumentation(){
 
@@ -216,25 +221,29 @@ public class TextEditorController implements Initializable {
     }
 
     /**
-     * Updating image block
-     * @param txtBlock
-     * @param txt
+     * Saves TextBlock to the DB. Is called in the save() method
+     * @param txt The text from the TextArea that is being saved in DB
      */
-    //TODO Anne/Cleanup: Mangler dokumentation, skal den slettes?
-    private void updateTextBlock(TextBlock txtBlock, String txt){
-        txtBlock = (TextBlock) contentsSubPageController.getSelectedCB();
+    private void updateTextBlock(String txt){
+        TextBlock txtBlock = (TextBlock) contentsSubPageController.getSelectedCB();
         txtBlock.setTxt(txt);
         txtDao.addOrUpdateTxt(txtBlock);
     }
 
-    //TODO Anne/cleanup: Mangler dokumentation, skal den slettes?
-    private void updateImgBlock(ImageBlock img, String txt){
-        img = (ImageBlock) contentsSubPageController.getSelectedCB();
+    /**
+     * Saves ImageBlock to the DB. Is called in the save() method
+     * @param txt The image path from the TextArea that is being saved in DB
+     */
+    private void updateImgBlock(String txt){
+        ImageBlock img = (ImageBlock) contentsSubPageController.getSelectedCB();
         img.setImagePath(txt);
         imgDao.addOrUpdateImg(img);
     }
 
-    //TODO Anne/cleanup: Mangler dokumentation
+    /**
+     * Creates the dialog box that pops-up when the user wants to save a new ContentBlock
+     * @return Returns the dialog box containing the result of the user button press.
+     */
     private Dialog<Results> createDialogBox(){
         //Creates a Dialog that is displayed in the GUI when the user is creating new Content Block and
         //presses save
@@ -269,7 +278,9 @@ public class TextEditorController implements Initializable {
         return td;
     }
 
-    //TODO Anne/cleanup: Mangler dokumentation
+    /**
+     * Removes the saved label from the GUI after 3 seconds. Called by save() method.
+     */
     private void removeSavedAlert(){
         //Creates a new TimerTask that will set the "gemt" alert message to false after the TimerTask is over
         TimerTask task = new TimerTask() {
@@ -301,7 +312,7 @@ public class TextEditorController implements Initializable {
     }
 
     /**
-     * Method to enclose selected text in tags (<> </>)
+     * Method to enclose selected text in tags
      * @param tag String for the tag (eg. "h1")
      */
     private void tagSelectedText(String tag){
@@ -338,8 +349,7 @@ public class TextEditorController implements Initializable {
     /**
      * Inner class used to get and store the user input from the dialog when user tries to save a new ContentBlock
      */
-    // TODO Anne: @mads hvorfor er denne klasse static?
-    public static class Results{
+    public class Results{
 
         final String text;
         final String choice;

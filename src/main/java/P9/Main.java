@@ -25,7 +25,6 @@ public class Main extends Application {
     private static Parent contentsSubPageParent;
     private static Parent overviewSubPageParent;
     private static Parent placeholdersSubPageParent;
-    private static Parent registerNewContentBlockPageParent;
     private static Parent previewSubPageParent;
 
     // Controllers
@@ -34,12 +33,7 @@ public class Main extends Application {
     private static ContentsSubPageController contentsSubPageController;
     private static OverviewSubPageController overviewSubPageController;
     private static PlaceholdersSubPageController placeholdersSubPageController;
-    private static RegisterNewContentBlockController registerNewContentBlockController;
     private static PreviewSubPageController previewSubPageController;
-
-    // Currently active stage and scene
-    private static Stage stage;
-    private static Scene scene;
 
     // Webview and webview engine displaying the documentation preview
     private static WebView webview;
@@ -53,7 +47,6 @@ public class Main extends Application {
     public static Parent getContentsSubPageParent() { return contentsSubPageParent; }
     public static Parent getOverviewSubPageParent() { return overviewSubPageParent; }
     public static Parent getPlaceholdersSubPageParent() { return placeholdersSubPageParent; }
-    public static Parent getRegisterNewContentBlockPageParent() { return registerNewContentBlockPageParent; }
     public static Parent getPreviewSubPageParent () {return previewSubPageParent;}
 
     //Getters for controllers
@@ -70,7 +63,6 @@ public class Main extends Application {
         return overviewSubPageController;
     }
     public static PlaceholdersSubPageController getPlaceholdersSubPageController() { return placeholdersSubPageController; }
-    public static RegisterNewContentBlockController getRegisterNewContentBlockController() { return registerNewContentBlockController; }
     public static PreviewSubPageController getPreviewSubPageController() {return previewSubPageController;}
 
     // Getters for Webview and Webengine
@@ -116,11 +108,9 @@ public class Main extends Application {
         setValuesInMainPage();
 
         // Create new scene from main page root, set scene, and show stage
-        scene = new Scene(mainPageParent);
+        // Currently active scene
+        Scene scene = new Scene(mainPageParent);
         stage.setTitle("ida901e21 - Documentation");
-        //TODO Anne/cleanup: Skal der ske noget her?
-        //Image icon = new Image("https://github.com/Sighlund/P8/blob/main/src/main/resources/img/Logo.PNG?raw=true");
-        //stage.getIcons().add(icon);
         stage.setScene(scene);
         stage.show();
     }
@@ -168,11 +158,6 @@ public class Main extends Application {
         FXMLLoader loader5 = new FXMLLoader();
         placeholdersSubPageParent = loader5.load(getClass().getResource("../view/placeholdersSubPage.fxml").openStream());
         placeholdersSubPageController = loader5.getController();
-
-        //Same as above
-        FXMLLoader loader6 = new FXMLLoader();
-        registerNewContentBlockPageParent = loader6.load(getClass().getResource("../view/registerNewContentBlockPage.fxml").openStream());
-        registerNewContentBlockController = loader6.getController();
 
         //Same as above
         FXMLLoader loader7 = new FXMLLoader();

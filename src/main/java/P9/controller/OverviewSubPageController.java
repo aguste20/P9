@@ -9,9 +9,14 @@ import javafx.scene.web.WebView;
 import javafx.util.StringConverter;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
-//TODO Anne/cleanup: Mangler dokumentation
+/**
+ * Objects from this class controls the TOC GUI elements.
+ * An object of the class is initialised, when overviewSubPage.fxml is loaded
+ */
 
 public class OverviewSubPageController implements Initializable {
 
@@ -20,7 +25,7 @@ public class OverviewSubPageController implements Initializable {
     private TextEditorController textEditorController;
 
     // FXML elements
-    @FXML private Button refreshTocButton; // Button to refresh the table of contents
+    // Button to refresh the table of contents
     @FXML private TreeView<Header> tocView; // The tree view that holds all header elements
 
     private List<Header> allH1s; // All h1 headers in the text
@@ -131,7 +136,7 @@ public class OverviewSubPageController implements Initializable {
      * Overloaded method that returns a list of Header objects for the given type
      * @param type Type of header to be found (1 or 2)
      * @param parentH Parent header
-     * @return
+     * @return Returns list of all headers
      */
     private List<Header> findAllH(Integer type, Header parentH){
         // List to return

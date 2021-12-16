@@ -5,7 +5,6 @@ import P9.model.EObject;
 import P9.model.EObjectDoc;
 import P9.model.User;
 import P9.persistence.EObjectDao;
-import P9.persistence.TextBlockDao;
 import P9.persistence.UserDao;
 import com.lowagie.text.DocumentException;
 import javafx.collections.FXCollections;
@@ -13,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.util.StringConverter;
@@ -22,7 +20,7 @@ import org.jsoup.nodes.Document;
 import org.xhtmlrenderer.layout.SharedContext;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -32,7 +30,10 @@ import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-//TODO Anne/cleanup: Mangler dokumentation
+/**
+ * Objects from this class controls various GUI elements on the edges of the view.
+ * An object of the class is initialised, when mainPage.fxml is loaded
+ */
 
 public class MainPageController implements Initializable{
 
@@ -48,7 +49,6 @@ public class MainPageController implements Initializable{
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
     @FXML private ComboBox<EObject> eObjectChoice;
-    @FXML private Button exportPDFButton;
     @FXML private Label eObjectLabel;
     @FXML private Label lastEditLabel;
     @FXML private Label lastUserLabel;
@@ -110,13 +110,19 @@ public class MainPageController implements Initializable{
 
 
     // ----- Instance methods -----
-    // TODO Anne/cleanup: Mangler dokumentation
+
+    /**
+     * Is used to define what the label displayed when saving should say
+     * @param text The text that defines the label
+     */
     public void setSavedAlertText(String text) {
         this.savedAlert.setText(text);
         savedAlert.setVisible(true);
     }
 
-    // TODO Anne/cleanup: Mangler dokumentation
+    /**
+     * Removes the saved alert from the GUI
+     */
     public void removeSavedAlert(){
         savedAlert.setVisible(false);
     }
@@ -196,7 +202,7 @@ public class MainPageController implements Initializable{
     }
 
     /**
-     * Converts the HTML in the fancy editor to a PDF document
+     * Converts the HTML in the Preview to a PDF document
      */
     @FXML
     private void exportPDF() throws IOException {
@@ -262,13 +268,14 @@ public class MainPageController implements Initializable{
      * Methods for changing the contents of the middle AnchorPane of the mainPage.fxml.
      * When user presses one of the buttons, the interface shows the associated viewfile.
      */
-
     @FXML
     public void switchToPlaceholdersSubPage(){
         paneContentsPlaceholders.setContent(Main.getPlaceholdersSubPageParent());
     }
 
-    //TODO Anne/cleanup: Mangler dokumentation
+    /**
+     * Used when switching to PreviewSubPage
+     */
     @FXML
     public void switchToPreviewSubPage(){
         if(!textEditorController.isSourceTextActive()){ // Preview is already the active window
@@ -290,7 +297,9 @@ public class MainPageController implements Initializable{
         }
     }
 
-    // TODO Anne/cleanup: Mangler dokumentation
+    /**
+     * Used when switching to TextEditor
+     */
     @FXML
     public void switchToTextEditorPage() {
         if(textEditorController.isSourceTextActive()){ // Text editor is already active window
@@ -300,7 +309,7 @@ public class MainPageController implements Initializable{
             alert.showAndWait();
         }
         else { // Preview is active window, switch scene
-            if (textEditorController.getCreatingDoc()) {
+            if (textEditorController.isCreatingDoc()) {
                 //loads webview, if it contains any content
                 if (Main.getEngine() != null) {
                     previewSubPageController.createTXTFromWebView();
@@ -311,7 +320,9 @@ public class MainPageController implements Initializable{
         }
     }
 
-    //TODO Anne/Cleanup: Mangler dokumentation
+    /**
+     * Used when switching to ContentsSubPage
+     */
     @FXML
     public void switchToContentsSubPage(){
         paneContentsPlaceholders.setContent(Main.getContentsSubPageParent());

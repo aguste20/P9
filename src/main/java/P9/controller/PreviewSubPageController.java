@@ -9,7 +9,10 @@ import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//TODO Anne/cleanup: Mangler dokumentation
+/**
+ * Objects from this class controls the Preview GUI element.
+ * An object of the class is initialised, when previewSubPage.fxml is loaded
+ */
 
 public class PreviewSubPageController implements Initializable {
     // ----- Properties -----
@@ -76,10 +79,6 @@ public class PreviewSubPageController implements Initializable {
 
     }
 
-
-    //TODO Anne/cleanup: Hvorfor ligger den her her?
-    int i = 0;
-
     /**
      * Converts html text to a txt that is ready to be saved as xsl
      * adds xsl:text start and end tags to the default html tags
@@ -140,7 +139,7 @@ public class PreviewSubPageController implements Initializable {
      * @param html string that contains the whole html content
      * @param startTag string that contains the start tag
      * @param closingTag string that contains the end tag
-     * @return
+     * @return Returns SubString to be changed
      */
     private String placeHolderReplacement(String html, String startTag, String closingTag){
         // String to hold value of substring to be replaced.
@@ -163,10 +162,10 @@ public class PreviewSubPageController implements Initializable {
     }
 
     /**
-     * contains default start text for the xsl file
+     * Contains default start text for the xsl file
      * output method is declared as html
      * two javascript functions is called. One, that temporary saves changes in engine. One that adds headers and formatting to buttons
-     * @return
+     * @return Returns XSL text needed for creating HTML
      */
     private String getXslText(){
         String xslText = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -238,10 +237,14 @@ public class PreviewSubPageController implements Initializable {
                 "</select>\n" +
                 "\n" +       "<span id=\"mySpan\" onLoad='document.getElementById(\"mySpan\").focus()' contenteditable=\"true\" coloronblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?> <xsl:text>";
 
-        return  xslText;
+        return xslText;
     }
 
-    //TODO Anne/cleanup: Mangler dokumentation
+    /**
+     * Used to overwrite files used when converting between Source Text and preview
+     * @param fileString The String that will be written into the file
+     * @param path The path to the file that will be overwritten. Currently, style.xsl and webTxt.txt
+     */
     private void overwriteFile(String fileString, String path){
 
         // Write to file with string
@@ -252,8 +255,6 @@ public class PreviewSubPageController implements Initializable {
             BufferedWriter out = new BufferedWriter(savedText);
             out.write(fileString);
             out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

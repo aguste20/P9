@@ -4,14 +4,16 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
 
-//TODO Anne/cleanup: Mangler dokumentation
 
+/**
+ * Wrapper class used to display ContentBlocks in a TableView in the ContentsSubPage controller
+ */
 public class DisplayContentBlock {
 
     // ----- Properties -----
     private final ObjectProperty<ContentBlock> contentBlockProp = new SimpleObjectProperty<>();
     private final ObjectProperty<Button> buttonProp = new SimpleObjectProperty<>();
-    private ObjectProperty<Button> editButtonProp = new SimpleObjectProperty<>();
+    private final ObjectProperty<Button> editButtonProp = new SimpleObjectProperty<>();
 
     // ----- Constructor -----
     public DisplayContentBlock(ContentBlock contentBlock, Button button, Button editBtn){
