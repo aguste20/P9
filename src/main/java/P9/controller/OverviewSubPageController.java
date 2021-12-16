@@ -25,7 +25,7 @@ public class OverviewSubPageController implements Initializable {
     private TextEditorController textEditorController;
 
     // FXML elements
-    @FXML private Button refreshTocButton; // Button to refresh the table of contents
+    // Button to refresh the table of contents
     @FXML private TreeView<Header> tocView; // The tree view that holds all header elements
 
     private List<Header> allH1s; // All h1 headers in the text

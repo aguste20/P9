@@ -139,7 +139,7 @@ public class PreviewSubPageController implements Initializable {
      * @param html string that contains the whole html content
      * @param startTag string that contains the start tag
      * @param closingTag string that contains the end tag
-     * @return
+     * @return Returns SubString to be changed
      */
     private String placeHolderReplacement(String html, String startTag, String closingTag){
         // String to hold value of substring to be replaced.
@@ -255,8 +255,6 @@ public class PreviewSubPageController implements Initializable {
             BufferedWriter out = new BufferedWriter(savedText);
             out.write(fileString);
             out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

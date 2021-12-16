@@ -54,7 +54,7 @@ public class TextEditorController implements Initializable {
     public TextArea getTextArea() {
         return textArea;
     }
-    public boolean getCreatingDoc(){
+    public boolean isCreatingDoc(){
         return creatingDoc;
     }
     public Menu getReturnButton() {

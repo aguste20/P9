@@ -117,13 +117,9 @@ public class PlaceholdersSubPageController implements Initializable {
      * @param nodes The method can take an unlimited number of arguments of type node
      */
     private void setLabelsVisible(Node... nodes){
+        boolean creatingDoc = textEditorController.isCreatingDoc();
         for (Node node : nodes){
-            if (!textEditorController.getCreatingDoc()){
-                node.setVisible(false);
-            }
-            else {
-                node.setVisible(true);
-            }
+            node.setVisible(creatingDoc);
         }
     }
 

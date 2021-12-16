@@ -35,10 +35,6 @@ public class Main extends Application {
     private static PlaceholdersSubPageController placeholdersSubPageController;
     private static PreviewSubPageController previewSubPageController;
 
-    // Currently active stage and scene
-    private static Stage stage;
-    private static Scene scene;
-
     // Webview and webview engine displaying the documentation preview
     private static WebView webview;
     private static WebEngine engine;
@@ -112,7 +108,8 @@ public class Main extends Application {
         setValuesInMainPage();
 
         // Create new scene from main page root, set scene, and show stage
-        scene = new Scene(mainPageParent);
+        // Currently active scene
+        Scene scene = new Scene(mainPageParent);
         stage.setTitle("ida901e21 - Documentation");
         stage.setScene(scene);
         stage.show();

@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.util.StringConverter;
@@ -50,7 +49,6 @@ public class MainPageController implements Initializable{
     @FXML private ScrollPane paneOverviewSubPage;
     @FXML private ScrollPane paneContentsPlaceholders;
     @FXML private ComboBox<EObject> eObjectChoice;
-    @FXML private Button exportPDFButton;
     @FXML private Label eObjectLabel;
     @FXML private Label lastEditLabel;
     @FXML private Label lastUserLabel;
@@ -311,7 +309,7 @@ public class MainPageController implements Initializable{
             alert.showAndWait();
         }
         else { // Preview is active window, switch scene
-            if (textEditorController.getCreatingDoc()) {
+            if (textEditorController.isCreatingDoc()) {
                 //loads webview, if it contains any content
                 if (Main.getEngine() != null) {
                     previewSubPageController.createTXTFromWebView();

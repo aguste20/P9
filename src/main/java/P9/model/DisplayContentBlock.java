@@ -13,7 +13,7 @@ public class DisplayContentBlock {
     // ----- Properties -----
     private final ObjectProperty<ContentBlock> contentBlockProp = new SimpleObjectProperty<>();
     private final ObjectProperty<Button> buttonProp = new SimpleObjectProperty<>();
-    private ObjectProperty<Button> editButtonProp = new SimpleObjectProperty<>();
+    private final ObjectProperty<Button> editButtonProp = new SimpleObjectProperty<>();
 
     // ----- Constructor -----
     public DisplayContentBlock(ContentBlock contentBlock, Button button, Button editBtn){
