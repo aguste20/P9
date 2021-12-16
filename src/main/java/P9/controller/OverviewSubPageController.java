@@ -11,7 +11,10 @@ import javafx.util.StringConverter;
 import java.net.URL;
 import java.util.*;
 
-//TODO Anne/cleanup: Mangler dokumentation
+/**
+ * Objects from this class controls the TOC GUI elements.
+ * An object of the class is initialised, when overviewSubPage.fxml is loaded
+ */
 
 public class OverviewSubPageController implements Initializable {
 

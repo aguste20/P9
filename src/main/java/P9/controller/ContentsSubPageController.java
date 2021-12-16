@@ -17,7 +17,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-//TODO Anne/cleanup: Mangler dokumentation
+/**
+ * Objects from this class controls the ContentBlock GUI elements.
+ * An object of the class is initialised, when contentsSubPage.fxml is loaded
+ */
+
 
 public class ContentsSubPageController implements Initializable {
 

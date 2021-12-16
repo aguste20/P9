@@ -11,7 +11,11 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//TODO Anne/cleanup: Mangler dokumentation
+/**
+ * Objects from this class controls the Placeholder GUI elements.
+ * An object of the class is initialised, when placeholdersSubPage.fxml is loaded
+ */
+
 
 public class PlaceholdersSubPageController implements Initializable {
     // ----- Properties -----

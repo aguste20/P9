@@ -32,7 +32,10 @@ import java.sql.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-//TODO Anne/cleanup: Mangler dokumentation
+/**
+ * Objects from this class controls various GUI elements on the edges of the view.
+ * An object of the class is initialised, when mainPage.fxml is loaded
+ */
 
 public class MainPageController implements Initializable{
 

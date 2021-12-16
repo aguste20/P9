@@ -9,7 +9,10 @@ import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//TODO Anne/cleanup: Mangler dokumentation
+/**
+ * Objects from this class controls the Preview GUI element.
+ * An object of the class is initialised, when previewSubPage.fxml is loaded
+ */
 
 public class PreviewSubPageController implements Initializable {
     // ----- Properties -----

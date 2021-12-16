@@ -34,7 +34,6 @@ public class Main extends Application {
     private static ContentsSubPageController contentsSubPageController;
     private static OverviewSubPageController overviewSubPageController;
     private static PlaceholdersSubPageController placeholdersSubPageController;
-    private static RegisterNewContentBlockController registerNewContentBlockController;
     private static PreviewSubPageController previewSubPageController;
 
     // Currently active stage and scene
@@ -70,7 +69,6 @@ public class Main extends Application {
         return overviewSubPageController;
     }
     public static PlaceholdersSubPageController getPlaceholdersSubPageController() { return placeholdersSubPageController; }
-    public static RegisterNewContentBlockController getRegisterNewContentBlockController() { return registerNewContentBlockController; }
     public static PreviewSubPageController getPreviewSubPageController() {return previewSubPageController;}
 
     // Getters for Webview and Webengine
@@ -168,11 +166,6 @@ public class Main extends Application {
         FXMLLoader loader5 = new FXMLLoader();
         placeholdersSubPageParent = loader5.load(getClass().getResource("../view/placeholdersSubPage.fxml").openStream());
         placeholdersSubPageController = loader5.getController();
-
-        //Same as above
-        FXMLLoader loader6 = new FXMLLoader();
-        registerNewContentBlockPageParent = loader6.load(getClass().getResource("../view/registerNewContentBlockPage.fxml").openStream());
-        registerNewContentBlockController = loader6.getController();
 
         //Same as above
         FXMLLoader loader7 = new FXMLLoader();
