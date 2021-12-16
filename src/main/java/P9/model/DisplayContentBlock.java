@@ -4,8 +4,10 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
 
-//TODO Anne/cleanup: Mangler dokumentation
 
+/**
+ * Wrapper class used to display ContentBlocks in a TableView in the ContentsSubPage controller
+ */
 public class DisplayContentBlock {
 
     // ----- Properties -----

@@ -79,10 +79,6 @@ public class PreviewSubPageController implements Initializable {
 
     }
 
-
-    //TODO Anne/cleanup: Hvorfor ligger den her her?
-    int i = 0;
-
     /**
      * Converts html text to a txt that is ready to be saved as xsl
      * adds xsl:text start and end tags to the default html tags
@@ -166,10 +162,10 @@ public class PreviewSubPageController implements Initializable {
     }
 
     /**
-     * contains default start text for the xsl file
+     * Contains default start text for the xsl file
      * output method is declared as html
      * two javascript functions is called. One, that temporary saves changes in engine. One that adds headers and formatting to buttons
-     * @return
+     * @return Returns XSL text needed for creating HTML
      */
     private String getXslText(){
         String xslText = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
@@ -241,10 +237,14 @@ public class PreviewSubPageController implements Initializable {
                 "</select>\n" +
                 "\n" +       "<span id=\"mySpan\" onLoad='document.getElementById(\"mySpan\").focus()' contenteditable=\"true\" coloronblur=\"saveChanges()\"><?php include(\"myText.txt\"); ?> <xsl:text>";
 
-        return  xslText;
+        return xslText;
     }
 
-    //TODO Anne/cleanup: Mangler dokumentation
+    /**
+     * Used to overwrite files used when converting between Source Text and preview
+     * @param fileString The String that will be written into the file
+     * @param path The path to the file that will be overwritten. Currently, style.xsl and webTxt.txt
+     */
     private void overwriteFile(String fileString, String path){
 
         // Write to file with string

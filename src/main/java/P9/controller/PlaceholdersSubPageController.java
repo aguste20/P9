@@ -89,7 +89,7 @@ public class PlaceholdersSubPageController implements Initializable {
     }
 
     /**
-     * runs script to insert picture at caret position.
+     * Runs script to insert picture at caret position.
      * the picture is inserted inside p tags as a string containing the image source
      * @param src image source
      */
@@ -205,7 +205,7 @@ public class PlaceholdersSubPageController implements Initializable {
     }
 
     /**
-     * runs script that inserts placeholder value inside span tags with id span
+     * Runs script that inserts placeholder value inside span tags with id span
      * the placeholder gets inserted at caret position or start of selection
      * a background color is applied. the function is called when clicking at placeholder buttons
      * @param ph placeholder value

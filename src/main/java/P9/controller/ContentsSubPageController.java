@@ -37,7 +37,6 @@ public class ContentsSubPageController implements Initializable {
     @FXML private TableColumn<DisplayContentBlock, String> cBlockNameColumn;
     @FXML private TableColumn<DisplayContentBlock, String> insertCBlockButton;
     @FXML private TableColumn<DisplayContentBlock, String> editCBColumn;
-    @FXML private ComboBox<ContentBlock> cbEdit; // TODO kan denne slettes?
 
     // Local DAO instance
     private final ContentBlockDao cbdao = new ContentBlockDao();
@@ -47,7 +46,7 @@ public class ContentsSubPageController implements Initializable {
     private TextArea text; // Reference to the text area in text editor
     private boolean newCB; // Is the user currently creating a new content block?
     private ContentBlock selectedCB; // Selected content block from content block list
-    private String txt;
+    private String txt; //Used to store text from ContentBlock
 
 
     // ----- Getters and setters -----
@@ -117,7 +116,9 @@ public class ContentsSubPageController implements Initializable {
                             //Inserting the text at the caret position
                             text.insertText(getCaretPosition(), ((TextBlock) cbList.get(finalI1)).getTxt());
                         }
-                        else {txt = ((TextBlock) cbList.get(finalI1)).getTxt().lines().collect(Collectors.joining(" ")); insertContentBlockInHTML(txt);}
+                        else {txt = ((TextBlock) cbList.get(finalI1)).getTxt().lines().collect(Collectors.joining(" "));
+                            insertContentBlockInHTML(txt);
+                        }
                     }
                     else {
                         if (textEditorController.isSourceTextActive()) {
@@ -126,7 +127,8 @@ public class ContentsSubPageController implements Initializable {
                                     ((ImageBlock) cbList.get(finalI1)).getImagePath() + "\" width=\"500\"/></p><xsl:text>");
                         }
                         else {txt = ((ImageBlock) cbList.get(finalI1)).getImagePath().lines().collect(Collectors.joining(" "));
-                            placeholdersSubPageController.insertImage(txt);}
+                            placeholdersSubPageController.insertImage(txt);
+                        }
                     }
                     });
 
@@ -149,7 +151,11 @@ public class ContentsSubPageController implements Initializable {
     }
 
     // ----- Private instance methods -----
-    // TODO Anne/cleanup: Mangler dokumentation
+
+    /**
+     * Used to insert TextBlocks in Preview editor
+     * @param cb The TextBlock that is being inserted
+     */
     private void insertContentBlockInHTML(String cb) {
         Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
                 "var selectionContents = range.extractContents();" +
