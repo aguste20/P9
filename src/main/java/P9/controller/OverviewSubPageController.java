@@ -9,7 +9,9 @@ import javafx.scene.web.WebView;
 import javafx.util.StringConverter;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Objects from this class controls the TOC GUI elements.
@@ -134,7 +136,7 @@ public class OverviewSubPageController implements Initializable {
      * Overloaded method that returns a list of Header objects for the given type
      * @param type Type of header to be found (1 or 2)
      * @param parentH Parent header
-     * @return
+     * @return Returns list of all headers
      */
     private List<Header> findAllH(Integer type, Header parentH){
         // List to return

@@ -25,7 +25,6 @@ public class Main extends Application {
     private static Parent contentsSubPageParent;
     private static Parent overviewSubPageParent;
     private static Parent placeholdersSubPageParent;
-    private static Parent registerNewContentBlockPageParent;
     private static Parent previewSubPageParent;
 
     // Controllers
@@ -52,7 +51,6 @@ public class Main extends Application {
     public static Parent getContentsSubPageParent() { return contentsSubPageParent; }
     public static Parent getOverviewSubPageParent() { return overviewSubPageParent; }
     public static Parent getPlaceholdersSubPageParent() { return placeholdersSubPageParent; }
-    public static Parent getRegisterNewContentBlockPageParent() { return registerNewContentBlockPageParent; }
     public static Parent getPreviewSubPageParent () {return previewSubPageParent;}
 
     //Getters for controllers

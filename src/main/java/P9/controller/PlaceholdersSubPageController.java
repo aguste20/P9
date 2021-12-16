@@ -95,9 +95,9 @@ public class PlaceholdersSubPageController implements Initializable {
      */
     public void insertImage(String src){
 
-        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);\n" +
-                "var image = '<p><img src=" + src + " width=\"500\"/></p>';\n" +
-                "node = range.createContextualFragment(image);\n" +
+        Main.getEngine().executeScript("var range = window.getSelection().getRangeAt(0);" +
+                "var image = '<p><img src=" + src + " width=\"500\"/></p>';" +
+                "node = range.createContextualFragment(image);" +
                 "range.insertNode(node);");
     }
 
